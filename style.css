@@ -20,10 +20,10 @@ body {
     background-size: cover;
 }
 .layer.back {
-    background-image: url('background.jpg');
+    background-image: url('Images/background.jpg');
     transform: translateZ(-2px) scale(3);
 }
 .layer.front {
-    background-image: url('foreground.png');
+    background-image: url('Images/foreground.png');
     transform: translateZ(-1px) scale(2);
 }
