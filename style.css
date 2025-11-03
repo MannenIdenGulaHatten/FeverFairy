@@ -1,3 +1,9 @@
 img:hover {
     filter: drop-shadow(0 0 0 red) drop-shadow(0 0 5px red);
   } 
+
+#testCanvas {
+  border: 1px
+  solid
+  black
+}
