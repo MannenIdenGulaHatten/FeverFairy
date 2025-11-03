@@ -1,13 +1,8 @@
-const testCanvas = document.getElementById("testCanvas")
-const ctx = canvas.getContext("2d")
+const testCanvas = document.getElementById("testCanvas");
+const ctx = canvas.getContext("2d");
 
-class monsterImage{
-    constructor(x,y,width,height,img) {
-    this.x=x;
-    this.y=y;
-    this.width=width;
-    this.height=height;
-    this.img=img;
-    }
-}
-
+const image = new image();
+img.src="testbanan-removebg-preview.png"
+img.onload = function() {
+    ctx.drawImage(img, 50, 50);
+};
