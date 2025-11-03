@@ -1,8 +1,12 @@
 const testCanvas = document.getElementById("testCanvas");
-const ctx = canvas.getContext("2d");
+const ctx = testCanvas.getContext("2d");
 
-const image = new image();
-img.src="testbanan-removebg-preview.png"
-img.onload = function() {
-    ctx.drawImage(img, 50, 50);
+const imgBanana = new Image();
+imgBanana.src="testbanan-removebg-preview.png"
+imgBanana.onload = function() {
+    ctx.drawImage(imgBanana, 250, 250);
 };
+
+imgBanana.addEventListener("mouseover", () => {
+    imgBanana.src="testbananBorder.png"
+})
