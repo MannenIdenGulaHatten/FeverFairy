@@ -1,14 +1,17 @@
 window.addEventListener("DOMContentLoaded", (event) => {
-    const parallax = document.querySelector('.parallax');
+    const follower = document.querySelector('.follower');
 
-    parallax.addEventListener('mousemove', function(event) {
-        const x = (event.clientX / window.innerWidth) - 0.5;
-        const y = (event.clientY / window.innerHeight) - 0.5;
+    function clamp(num, min, max) {
+        return Math.max(Math.min(num, max), min)
+    }
 
-        const backLayer = document.querySelector('.layer.back');
-        const frontLayer = document.querySelector('.layer.front');
+    document.addEventListener('mousemove', function(event) {
+        const x = event.clientX;
+        const y = event.clientY;
+        const width = window.innerWidth
+        const height = window.innerHeight
 
-        backLayer.style.transform = `translateX(${x * 20}px) translateY(${y * 20}px)`;
-        frontLayer.style.transform = `translateX(${x * 40}px) translateY(${y * 40}px)`;
+        follower.style.left = `${clamp(x, height/4, width - height/4)}px`;
+        follower.style.top = `${clamp(y, height/4, height - height/4)}px`;
     });
 });

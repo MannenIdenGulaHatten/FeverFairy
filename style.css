@@ -1,29 +1,9 @@
-body {
-    margin: 0;
-    overflow: hidden;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    perspective: 1000px;
-}
-.parallax {
-    position: relative;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-}
-.layer {
+.follower {
+    height: 50%;
+    aspect-ratio: 1;
+    background-color: red;
+    border-radius: 50%;
     position: absolute;
-    width: 200%;
-    height: 200%;
-    background-size: cover;
-}
-.layer.back {
-    background-image: url('Images/background.jpg');
-    transform: translateZ(-2px) scale(3);
-}
-.layer.front {
-    background-image: url('Images/foreground.png');
-    transform: translateZ(-1px) scale(2);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
