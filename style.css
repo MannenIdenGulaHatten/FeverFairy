@@ -1,7 +1,4 @@
-
-
-monster.hover {
-body{
+body {
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -32,7 +29,6 @@ body{
   height: 500px;
   z-index: 2;
 }
-
 
 .follower {
   height: 50%;
