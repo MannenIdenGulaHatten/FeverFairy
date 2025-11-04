@@ -8,6 +8,11 @@ body {
   width: 100%;
 }
 
+.background {
+  height: 150%;
+  width: 150%;
+}
+
 .follower {
     height: 50%;
     aspect-ratio: 1;
