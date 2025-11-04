@@ -26,8 +26,8 @@ window.addEventListener("DOMContentLoaded", (event) => {
             follower.style.left = `${lerp(cLeft, clamp(mouseX, height/4, width - height/4), 0.05)}px`;
             follower.style.top = `${lerp(cTop, clamp(mouseY, height/4, height - height/4), 0.05)}px`;
 
-            background.style.left = `${lerp(bgLeft, clamp((width - mouseX * 1.5) - width/0.75, -width*0.75, 0), 0.05)}px`;
-            background.style.top = `${lerp(bgTop, clamp((height - mouseY * 1.5) - height/0.75, -width*0.75, 0), 0.05)}px`;
+            background.style.left = `${lerp(bgLeft, clamp((width - mouseX * 1.5) - width/0.75, -width*1, width*1), 0.05)}px`;
+            background.style.top = `${lerp(bgTop, clamp((height - mouseY * 1.5) - height/0.75, -height*1.5, height*1), 0.05)}px`;
         }; 
     };
 
