@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-
     <link rel="stylesheet" href="style.css">
 
     <script type="text/javascript" src="Scripts/playerView.js"></script>
-    <script src="Scripts/removeImage.js"></script>
+    <script src="Scripts/removeImage.js" defer></script>
     <script src="Scripts/canvas.js" defer></script>
 </head>
 
@@ -18,14 +17,12 @@
         <img class="background" src="Images/GameONKitchen.png">
         <div class="jeffer"></div>
     </div>
+    <div>
+        <button id="removeButton" onclick="removeMonster(this)">
+            <img class="monster" src="Images/BollTEST3 mindre.png">
+        </button>
+    </div>
 
-    <button id="removeButton" onclick="removeMonster(this)">
-        <img class="monster" src="/Images/testbanan-removebg-preview.png">
-    </button>
-
-    <img src="Images/tempboll.png">
-    <img src="Images/BollTEST3 mindre.png">
-
-    <canvas id="kitchenCanvas" style="border:1px solid #000000 ;"></canvas>
+    <!-- <canvas id="kitchenCanvas" style="border:1px solid #000000 ;"></canvas> -->
 </body>
 </html>

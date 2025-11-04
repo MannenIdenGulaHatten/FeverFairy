@@ -1,4 +1,7 @@
-body {
+
+
+monster.hover {
+body{
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -22,6 +25,14 @@ body {
   mask: radial-gradient(circle var(--radius, 100px) at var(--x, 50%) var(--y, 50%), transparent 80%, black 100%);
   -webkit-mask: radial-gradient(circle var(--radius, 100px) at var(--x, 50%) var(--y, 50%), transparent 80%, black 100%);
 }
+
+#removeButton {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  z-index: 2;
+}
+
 
 .follower {
   height: 50%;
@@ -49,6 +60,17 @@ body {
   outline: none;
 
   cursor:pointer;
+}
+
+.follower {
+    height: 50%;
+    aspect-ratio: 1;
+    background-color: red;
+    opacity: 30%;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 #kitchenCanvas {
