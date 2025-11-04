@@ -1,4 +1,11 @@
-monster.hover {
+body{
+  margin: 0;
+  overflow: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+.monster.hover {
     filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
   } 
 
