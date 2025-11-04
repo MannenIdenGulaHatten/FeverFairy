@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-img:hover {
+monster.hover {
     filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
   } 
 
@@ -13,7 +12,6 @@ img:hover {
   cursor:pointer;
 }
 
-=======
 .follower {
     height: 50%;
     aspect-ratio: 1;
@@ -23,4 +21,7 @@ img:hover {
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
->>>>>>> 3d75e995276efe064f8c173b19da4bdf5c22f595
+
+#canvasKitchen {
+  background-image: src="kitchen.png"
+}
