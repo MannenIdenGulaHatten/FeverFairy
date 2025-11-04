@@ -1,3 +1,13 @@
+body {
+  margin: 0;
+  overflow: hidden;
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
 .follower {
     height: 50%;
     aspect-ratio: 1;

@@ -16,7 +16,7 @@ window.addEventListener("DOMContentLoaded", (event) => {
         const style = window.getComputedStyle(follower);
         const left = parseFloat(style.left);
         const top = parseFloat(style.top);
-        const leave = height / 5;
+        const leave = height / 6;
 
         if (mouseX > left + leave || mouseX < left - leave || mouseY > top + leave || mouseY < top - leave) {
             follower.style.left = `${lerp(left, clamp(mouseX, height/4, width - height/4), 0.05)}px`;
