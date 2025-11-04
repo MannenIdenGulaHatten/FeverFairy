@@ -31,6 +31,12 @@ body {
   pointer-events: none;
 }
 
+.background {
+  position: absolute;
+}
+
 #kitchenCanvas {
   background-image: url('Images/kitchen.png');
+  height: 150%;
+  width: 150%;
 }

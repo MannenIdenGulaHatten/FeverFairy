@@ -1,5 +1,6 @@
 window.addEventListener("DOMContentLoaded", (event) => {
     const follower = document.querySelector('.follower');
+    const background = document.querySelector('.background');
     let mouseX = 0;
     let mouseY = 0;
 
@@ -10,19 +11,25 @@ window.addEventListener("DOMContentLoaded", (event) => {
         return x * (1 - a) + y * a;
     }
 
-    function updateCirclePos() {
+    function updatePositions() {
         const width = window.innerWidth;
         const height = window.innerHeight;
-        const style = window.getComputedStyle(follower);
-        const left = parseFloat(style.left);
-        const top = parseFloat(style.top);
+        const circleStyle = window.getComputedStyle(follower);
+        const cLeft = parseFloat(circleStyle.left);
+        const cTop = parseFloat(circleStyle.top);
         const leave = height / 5;
+        const bgStyle = window.getComputedStyle(background);
+        const bgLeft = parseFloat(bgStyle.left);
+        const bgTop = parseFloat(bgStyle.top);
 
-        if (mouseX > left + leave || mouseX < left - leave || mouseY > top + leave || mouseY < top - leave) {
-            follower.style.left = `${lerp(left, clamp(mouseX, height/4, width - height/4), 0.05)}px`;
-            follower.style.top = `${lerp(top, clamp(mouseY, height/4, height - height/4), 0.05)}px`;
+        if (mouseX > cLeft + leave || mouseX < cLeft - leave || mouseY > cTop + leave || mouseY < cTop - leave) {
+            follower.style.left = `${lerp(cLeft, clamp(mouseX, height/4, width - height/4), 0.05)}px`;
+            follower.style.top = `${lerp(cTop, clamp(mouseY, height/4, height - height/4), 0.05)}px`;
+
+            background.style.left = `${lerp(bgLeft, clamp((width - mouseX * 1.5) - width/0.75, -width*0.75, 0), 0.05)}px`;
+            background.style.top = `${lerp(bgTop, clamp((height - mouseY * 1.5) - height/0.75, -width*0.75, 0), 0.05)}px`;
         }; 
-    }
+    };
 
     document.addEventListener('mousemove', function(event) {
         const x = event.clientX;
@@ -32,5 +39,5 @@ window.addEventListener("DOMContentLoaded", (event) => {
         mouseY = y;
     });
 
-    setInterval(updateCirclePos, 16);
+    setInterval(updatePositions, 16);
 });
