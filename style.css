@@ -21,4 +21,21 @@ body {
     position: absolute;
     transform: translate(-50%, -50%);
     pointer-events: none;
+img:hover {
+    filter: drop-shadow(0 0 0 red) drop-shadow(0 0 5px red);
+  } 
+
+#testCanvas {
+  border: 1px
+  solid
+  black
+}
+
+removeButton:disabled{
+  display:none;
+}
+
+removeButton.visible{
+  display: inline-block;
+  cursor: pointer;
 }
