@@ -1,24 +1,55 @@
-body {
+body{
   margin: 0;
   overflow: hidden;
-  overflow-y: hidden;
-  overflow-x: hidden;
   position: fixed;
   height: 100%;
   width: 100%;
 }
 
 .background {
-  height: 150%;
-  width: 150%;
+  position: absolute;
+  z-index: 1;
+}
+
+.follower {
+  height: 50%;
+  aspect-ratio: 1;
+  background-color: red;
+  opacity: 30%;
+  border-radius: 50%;
+  position: relative;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.monster.hover {
+  filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
+} 
+
+#removeButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+
+  cursor:pointer;
 }
 
 .follower {
     height: 50%;
     aspect-ratio: 1;
     background-color: red;
+    opacity: 30%;
     border-radius: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
     pointer-events: none;
+}
+
+#kitchenCanvas {
+  background-image: url('Images/kitchen.png');
+  height: 150%;
+  width: 150%;
 }
