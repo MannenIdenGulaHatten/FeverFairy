@@ -7,3 +7,12 @@ img:hover {
   solid
   black
 }
+
+removeButton:disabled{
+  display:none;
+}
+
+removeButton.visible{
+  display: inline-block;
+  cursor: pointer;
+}
