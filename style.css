@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 img:hover {
     filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
   } 
@@ -12,3 +13,14 @@ img:hover {
   cursor:pointer;
 }
 
+=======
+.follower {
+    height: 50%;
+    aspect-ratio: 1;
+    background-color: red;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+>>>>>>> 3d75e995276efe064f8c173b19da4bdf5c22f595
