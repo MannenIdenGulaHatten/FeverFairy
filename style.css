@@ -1,18 +1,14 @@
 img:hover {
-    filter: drop-shadow(0 0 0 red) drop-shadow(0 0 5px red);
+    filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
   } 
 
-#testCanvas {
-  border: 1px
-  solid
-  black
+#removeButton {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  outline: none;
+
+  cursor:pointer;
 }
 
-removeButton:disabled{
-  display:none;
-}
-
-removeButton.visible{
-  display: inline-block;
-  cursor: pointer;
-}
