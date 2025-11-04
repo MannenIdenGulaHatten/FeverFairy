@@ -1,3 +1,6 @@
+
+
+monster.hover {
 body{
   margin: 0;
   overflow: hidden;
@@ -23,12 +26,13 @@ body{
     height: 50%;
     aspect-ratio: 1;
     background-color: red;
+    opacity: 30%;
     border-radius: 50%;
     position: absolute;
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
 
-#canvasKitchen {
-  background-image: src="kitchen.png"
+#kitchenCanvas {
+  background-image: url('Images/kitchen.png');
 }
