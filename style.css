@@ -1,6 +1,3 @@
-
-
-monster.hover {
 body{
   margin: 0;
   overflow: hidden;
@@ -21,7 +18,9 @@ body{
 
   cursor:pointer;
 }
-
+#startButton{
+  margin: 3000px;
+}
 .follower {
     height: 50%;
     aspect-ratio: 1;
