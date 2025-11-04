@@ -1,16 +1,14 @@
-
-
-monster.hover {
-body{
+body {
   margin: 0;
   overflow: hidden;
   position: fixed;
   height: 100%;
   width: 100%;
 }
+
 .monster.hover {
-    filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
-  } 
+  filter: drop-shadow(0 0 0 rgb(0, 0, 0)) drop-shadow(0 0 5px rgb(0, 0, 0));
+} 
 
 #removeButton {
   background: none;
@@ -23,14 +21,14 @@ body{
 }
 
 .follower {
-    height: 50%;
-    aspect-ratio: 1;
-    background-color: red;
-    opacity: 30%;
-    border-radius: 50%;
-    position: absolute;
-    transform: translate(-50%, -50%);
-    pointer-events: none;
+  height: 50%;
+  aspect-ratio: 1;
+  background-color: red;
+  opacity: 30%;
+  border-radius: 50%;
+  position: absolute;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
 }
 
 #kitchenCanvas {

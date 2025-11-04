@@ -1,7 +1,5 @@
 let color = "red"
-
 const button = document.getElementById("removeButton");
-
 
 if (color === "red") {
     button.style.display = "inline-block"
@@ -9,10 +7,6 @@ if (color === "red") {
     button.style.display = "none"
 }
 
-
-
-
 function removeMonster(button) {
     button.style.display = "none"; // hides the button but with inline style
-  }
-
+}
