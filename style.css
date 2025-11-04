@@ -11,16 +11,30 @@ body {
   z-index: 1;
 }
 
+.jeffer {
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  opacity: 80%;
+  top: -50vh;
+  height: 100vh;
+  width: 100vw;
+  z-index: 2;
+  mask: radial-gradient(circle var(--radius, 100px) at var(--x, 50%) var(--y, 50%), transparent 80%, black 100%);
+  -webkit-mask: radial-gradient(circle var(--radius, 100px) at var(--x, 50%) var(--y, 50%), transparent 80%, black 100%);
+}
+
 .follower {
   height: 50%;
   aspect-ratio: 1;
-  background-color: red;
-  opacity: 30%;
   border-radius: 50%;
+  border: 2px solid red;
   position: relative;
   transform: translate(-50%, -50%);
+  transition: top 0.1s, left 0.1s;
   pointer-events: none;
-  z-index: 2;
+  top: 100%;
+  left: 50%;
+  z-index: 3;
 }
 
 .monster.hover {
