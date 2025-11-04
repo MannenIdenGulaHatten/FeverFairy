@@ -1,4 +1,7 @@
-body {
+
+
+monster.hover {
+body{
   margin: 0;
   overflow: hidden;
   position: fixed;
@@ -43,6 +46,17 @@ body {
   outline: none;
 
   cursor:pointer;
+}
+
+.follower {
+    height: 50%;
+    aspect-ratio: 1;
+    background-color: red;
+    opacity: 30%;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
 }
 
 #kitchenCanvas {
