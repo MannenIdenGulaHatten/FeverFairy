@@ -14,6 +14,14 @@ body{
   z-index: 1;
 }
 
+#removeButton {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  z-index: 2;
+}
+
+
 .follower {
   height: 50%;
   aspect-ratio: 1;
