@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="playerView.js"></script>
-    <script src="removeImage.js"></script>
-</head>
-<body>
-    <canvas id="kitchenCanvas" width="2880px" height="1620px"style="border:1px solid #000000 ;"></canvas>
-    <button id="removeButton" onclick="removeMonster(this)">
-         <img class="monster" src="/Images/testbanan-removebg-preview.png">
-    </button>
-      <img src="tempboll.png">
-      <img src="BollTEST3 mindre.png">
-    <div class="follower"></div>
-    <div><img class="background" src="Images/kitchen.png"></div>
-    
 
+    <!-- <script type="text/javascript" src="Scripts/playerView.js"></script> -->
+    <script src="Scripts/removeImage.js" defer></script>
+    <script src="Scripts/canvas.js" defer></script>
+</head>
+
+<body>  
+    <!-- <div class="follower"></div>
+     <div style="position:relative">
+        <img class="background" src="Images/GameONKitchen.png">
+        <div class="jeffer"></div>
+    </div> -->
+    <div>
+        <button id="removeButton" onclick="removeMonster(this)">
+            <img class="monster" src="Images/BollTEST3 mindre.png">
+        </button>
+    </div>
+
+    <canvas id="kitchenCanvas" style="border:1px solid #000000 ;"></canvas>
 </body>
 </html>
