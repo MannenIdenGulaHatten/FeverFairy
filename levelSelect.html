@@ -4,10 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="redirect.js"></script>
+    <script src="Scripts/redirect.js"></script>
+    <script src="Scripts/levelSelectCanvas.js" defer></script>
 </head>
-<body>
-<button onclick="redirectLevelSelect()">l</button>
-    <img src="hardLevel.png" alt="hardLevel">
+<body> 
+    <canvas id="levelSelect" width="800" height="500" style="border:1px solid #000;"></canvas>
+
+        <div style="display:none;">
+            <img id="easy" src="Images/easyLevel.png">
+        </div>
+
+    </canvas>
 </body>
-</html>
+</html> 
+
