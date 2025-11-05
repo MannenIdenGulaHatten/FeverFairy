@@ -17,7 +17,6 @@ canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-  alert(x + ' ' + y);
 
   if ((x >= 215 && x <= 290) || (x >= 515 && x <= 580)) {
     if (currentImg == img) {
