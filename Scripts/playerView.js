@@ -64,5 +64,14 @@ window.addEventListener("DOMContentLoaded", (event) => {
         mouseChanged = true;
     });
 
+    document.addEventListener('click', function(event) {
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const x = event.clientX;
+        const y = event.clientY;
+
+        console.log(x, y)
+    });
+
     setInterval(updatePositions, 16);
 });

@@ -5,7 +5,13 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const img = new Image();
-img.src = 'Images/GameOnKitchen.png'; // backround ima ge
+let room = "Kitchen"
+img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
+
+const door1 = new Image();
+door1.src = 'Images/Door1.png'; // door image
+const door2 = new Image();
+door2.src = 'Images/Door1.png'; // door image
 
 let mouseX = canvas.width / 2; // gör så att "ljuset" börjar i mitten av skärmen
 let mouseY = canvas.height / 2;
@@ -16,6 +22,13 @@ const radius = 80;
 const maxShiftX = 200;
 const maxShiftY = 200;
 
+// game variables (set when select difficulty)
+let fever = 0;
+let maxFever = 67;
+let difficulty = "None";
+let objectsFound = 0;
+let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
+
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
@@ -23,6 +36,11 @@ function clamp(num, min, max) {
 }
 function lerp(x, y, a) {
     return x * (1 - a) + y * a;
+}
+function getImgScaled(x, y) {
+    const scaleX = x * canvas.width / 2880;
+    const scaleY = y * canvas.height / 1620;
+    return {X: scaleX, Y: scaleY};
 }
 
 let currentX = mouseX; //circle at mouse position
@@ -52,7 +70,13 @@ function draw() {
     ctx.beginPath();
     ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
     ctx.clip();
+
     ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);
+
+    let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
+    ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
+    let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
+    ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
     
     ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a red color light with 10 % oppacity
     ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -65,6 +89,18 @@ function draw() {
 window.addEventListener('resize', () => {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
+});
+
+window.addEventListener('click', function(event) {
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const x = event.clientX;
+    const y = event.clientY;
+
+    if (room == "Kitchen" && context.isPointInPath(inBath, x, y)) {
+        room = "Bathroom"
+        img.src = 'Images/GameOn' + room + '.png';
+    }
 });
 
 img.onload = draw;

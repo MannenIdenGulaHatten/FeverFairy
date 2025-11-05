@@ -52,6 +52,7 @@ body {
   padding: 0;
   margin: 0;
   outline: none;
+  z-index: 1;
 
   cursor:pointer;
 }
@@ -67,5 +68,6 @@ body {
     pointer-events: none;
 }
 
-/*#kitchenCanvas {
-} */
+#kitchenCanvas {
+  z-index: 2;
+} 
