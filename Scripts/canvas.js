@@ -8,6 +8,9 @@ const img = new Image();
 let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 
+const sten = new Image();
+sten.src = 'Images/BollTEST3 mindre.png'; // stone
+
 const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
 const door2 = new Image();
@@ -49,6 +52,7 @@ let currentY = mouseY;
 document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    console.log (mouseX + ' ' + mouseY)
 });
 
 function draw() {
@@ -72,7 +76,7 @@ function draw() {
     ctx.clip();
 
     ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);
-
+    ctx.drawImage(sten,277, 327, 50, 50);
     let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
     ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
     let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
@@ -97,7 +101,7 @@ window.addEventListener('click', function(event) {
     const x = event.clientX;
     const y = event.clientY;
 
-    if (room == "Kitchen" && context.isPointInPath(inBath, x, y)) {
+    if (room == "Kitchen" && ctx.isPointInPath(inBath, x, y)) {
         room = "Bathroom"
         img.src = 'Images/GameOn' + room + '.png';
     }
