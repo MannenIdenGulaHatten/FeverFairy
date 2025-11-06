@@ -67,6 +67,18 @@ body {
     transform: translate(-50%, -50%);
     pointer-events: none;
 }
+.follower {
+    height: 50%;
+    aspect-ratio: 1;
+    background-color: red;
+    opacity: 30%;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+}
+
+
 
 #kitchenCanvas {
   z-index: 2;

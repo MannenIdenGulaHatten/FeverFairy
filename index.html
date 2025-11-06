@@ -4,25 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-
-    <script type="text/javascript" src="Scripts/playerView.js"></script>
-    <script src="Scripts/removeImage.js" defer></script>
-    <script src="Scripts/canvas.js" defer></script>
+    <script src="Scripts/redirect.js"></script>
+    <script src="Scripts/titleScreenCanvas.js" defer></script>
 </head>
+<body> 
+    <canvas id="titleScreen" width="800" height="500" style="border:1px solid #000;"></canvas>
 
-<body>  
-    <div class="follower"></div>
-    <div style="position:relative">
-        <img class="background" src="Images/GameONKitchen.png">
-        <div class="jeffer"></div>
-    </div>
-    <div>
-        <button id="removeButton" onclick="removeMonster(this)">
-            <img class="monster" src="Images/BollTEST3 mindre.png">
-        </button>
-    </div>
+        <div style="display:none;">
+            <img id="easy" src="Images/titleScreen.png">
+        </div>
 
-    <!-- <canvas id="kitchenCanvas" style="border:1px solid #000000 ;"></canvas> -->
+    </canvas>
 </body>
-</html>
+</html> 
+
