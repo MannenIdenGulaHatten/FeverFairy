@@ -32,6 +32,7 @@ let objectsFound = 0;
 let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
 
 
+
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
     return Math.max(Math.min(num, max), min);
