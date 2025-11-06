@@ -18,14 +18,15 @@ canvas.addEventListener('click', (event) => {
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
 
-  if (y >= 165 && y <= 330) {
-    if ((x >= 215 && x <= 290) || (x >= 515 && x <= 580)) {
+
+  if (y >= 150 && y <= 425) {
+    if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {
         if (currentImg == img) {
         currentImg = img4;
         } else if (currentImg == img4) {
         currentImg = img;
         }
-    } else if (x >= 300 && x <= 500) {
+    } else if (x >= 420 && x <= 945) {
         if (currentImg == img) {
         location.replace("http://localhost:8080/FeverFairy/hardGame.html")
         } else if (currentImg == img4) {
@@ -44,11 +45,11 @@ function draw() {
 
   ctx.font = "50px Arial";
   ctx.fillStyle = "white";
-  ctx.fillText("Select difficulty level", 175, 80);
+  ctx.fillText("Select difficulty level", 400, 80);
 
-  ctx.drawImage(currentImg, 300, 166, 200, 166);
-  ctx.drawImage(img2, 220, 220, 55, 55);
-  ctx.drawImage(img3, 525, 220, 55, 55);
+  ctx.drawImage(currentImg, 420, 165, 400, 250);
+  ctx.drawImage(img2, 305, 250, 80, 80);
+  ctx.drawImage(img3, 855, 250, 80, 80);
 
   requestAnimationFrame(draw);
 }
