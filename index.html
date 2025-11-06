@@ -4,13 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="./redirect.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <script src="Scripts/redirect.js"></script>
+    <script src="Scripts/titleScreenCanvas.js" defer></script>
 </head>
-<body>
-    <div class="startButton">
-        <button onclick="myFunction()">Start</button>
-        <button onclick="redirect()">credits</button>
-    </div>
+<body> 
+    <canvas id="titleScreen" width="800" height="500" style="border:1px solid #000;"></canvas>
+
+        <div style="display:none;">
+            <img id="easy" src="Images/titleScreen.png">
+        </div>
+
+    </canvas>
 </body>
-</html>
+</html> 
+

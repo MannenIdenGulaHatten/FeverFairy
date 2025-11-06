@@ -17,19 +17,20 @@ canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-  alert(x + ' ' + y);
 
-  if ((x >= 215 && x <= 290) || (x >= 515 && x <= 580)) {
-    if (currentImg == img) {
-      currentImg = img4;
-    } else if (currentImg == img4) {
-      currentImg = img;
-    }
-  } else if (x >= 300 && x <= 500) {
-    if (currentImg == img) {
-      location.replace("http://localhost:8080/FeverFairy/hardGame.html")
-    } else if (currentImg == img4) {
-      location.replace("http://localhost:8080/FeverFairy/game.html")
+  if (y >= 165 && y <= 330) {
+    if ((x >= 215 && x <= 290) || (x >= 515 && x <= 580)) {
+        if (currentImg == img) {
+        currentImg = img4;
+        } else if (currentImg == img4) {
+        currentImg = img;
+        }
+    } else if (x >= 300 && x <= 500) {
+        if (currentImg == img) {
+        location.replace("http://localhost:8080/FeverFairy/hardGame.html")
+        } else if (currentImg == img4) {
+        location.replace("http://localhost:8080/FeverFairy/game.html")
+        }
     }
   }
 
