@@ -13,16 +13,22 @@ img4.src = 'Images/easyLevel.png'
 
 let currentImg = img4; //default difficulty
 
+const sound = new Audio('click3.ogg');
+
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
+ 
 
-
-  if (y >= 150 && y <= 425) {
+  if (y >= 150 && y <= 425) {        
+    sound.play()
+    .then(() => console.log('Ljudet spelas upp!'))
+    .catch(err => console.error('Kunde inte spela upp ljudet:', err));
     if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {
         if (currentImg == img) {
         currentImg = img4;
+
         } else if (currentImg == img4) {
         currentImg = img;
         }

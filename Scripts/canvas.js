@@ -11,13 +11,6 @@ img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 const sten = new Image();
 sten.src = 'Images/BollTEST3 mindre.png'; // stone
 
-const door1 = new Image();
-door1.src = 'Images/Door1.png'; // door image
-const door2 = new Image();
-door2.src = 'Images/Door1.png'; // door image
-const testBanana = new Image(); // test image
-testBanana.src = 'Images/testbanan-removebg-preview.png';
-
 let mouseX = canvas.width / 2; // gör så att "ljuset" börjar i mitten av skärmen
 let mouseY = canvas.height / 2;
 
@@ -79,13 +72,7 @@ function draw() {
 
     ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);
     ctx.drawImage(sten,277, 327, 50, 50);
-    let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
-    ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
-    let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
-    ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
-    let testBananaSize = getImgScaled(testBanana.naturalWidth, testBanana.naturalHeight);
-    ctx.drawImage(testBanana -backgroundgOffsetX, -backroundgOffsetY, testBananaSize.X, testBananaSize.Y)
-    
+
     ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a red color light with 10 % oppacity
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     

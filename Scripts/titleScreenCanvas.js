@@ -33,13 +33,16 @@ canvas.addEventListener('mousemove', (event) => {
       currentImg = img; 
     }
   });
-
+const sound = new Audio('click3.ogg');
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
-
+    
   if (x >= 530 && x <= 730) {
+    sound.play()
+    .then(() => console.log('Ljudet spelas upp!'))
+    .catch(err => console.error('Kunde inte spela upp ljudet:', err));
     if (y >= 230 && y <= 290)
       location.replace("http://localhost:8080/FeverFairy/levelSelect.html");
     else if (y >= 295 && y <= 350)
