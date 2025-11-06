@@ -16,9 +16,7 @@ door1.src = 'Images/Door1.png'; // door image
 const door2 = new Image();
 door2.src = 'Images/Door1.png'; // door image */
 
-let mouseX = canvas.width / 2; // gör så att "ljuset" börjar i mitten av skärmen
-let mouseY = canvas.height / 2;
-
+let mouseX = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
 const radius = 800;
 // how much the room "moves" when you move the cursor
@@ -62,14 +60,14 @@ function draw() {
     currentX = lerp(currentX, clamp(mouseX, 0, canvas.width), 0.5);
     currentY = lerp(currentY, clamp(mouseY, 0, canvas.height), 0.5);
     //paralax effect
-    const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
+    const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; 
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
 
     const stenX =600;
     const stenY =300;
-    const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; //fungerar inte häller. tror för att den placerar den i mitten av skärmen. uh
-    const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; // 277, 327, 50, 50
+    const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
+    const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; 
 
     // dark background / who turned of the lights?
     ctx.fillStyle = 'black';
@@ -81,7 +79,7 @@ function draw() {
     ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
     ctx.clip();
 
-    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);
+    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);å
 
     ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
