@@ -8,8 +8,6 @@ const img = new Image();
 let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 
-const sten = new Image();
-sten.src = 'Images/BollTEST3 mindre.png'; // stone
 
 /*const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
@@ -30,6 +28,42 @@ let maxFever = 67;
 let difficulty = "None";
 let objectsFound = 0;
 let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
+
+class imageMonsters {           // this class makes it possible to easily make and place images on the canvas with the same paralaxx function as the backround.
+  constructor(src, x, y, width, height, paralaxx = 1) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.paralaxx = paralaxx;
+    this.image = new Image();
+    this.image.src = src;
+    this.loaded = false;
+    this.image.onload = () => (this.loaded = true); // makes it wait for the images to load
+  }
+
+  draw(ctx) {
+    if (this.loaded) {
+      const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
+      const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
+
+      ctx.drawImage(
+        this.image,
+        this.x - offsetX * this.paralaxx,
+        this.y - offsetY * this.paralaxx,
+        this.width,
+        this.height
+      );
+    }
+  }
+}
+
+
+const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
+    new imageMonsters('Images/BollTEST3 mindre.png', 600, 300, 50, 50, 1), //x pos, y pos, width, height, paralax effekt
+    new imageMonsters('Images/BollTEST3 mindre.png', 300, 200, 50, 50, 1),
+    new imageMonsters('Images/BollTEST3 mindre.png', 100, 500, 50, 50, 1),
+];
 
 
 
@@ -65,11 +99,10 @@ function draw() {
     const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; 
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
-
-    const stenX =600;
+    /*const stenX =600;
     const stenY =300;
     const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
-    const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; 
+    const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
     ctx.fillStyle = 'black';
@@ -81,9 +114,12 @@ function draw() {
     ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
     ctx.clip();
 
-    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);
+    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); // neat loop that draws all the images
+    monster.forEach(m => {
+        m.draw(ctx, mouseY, mouseX, canvas.width, canvas.height, maxShiftX, maxShiftY)
+    });
 
-    ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
+    //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
 
     /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
@@ -93,7 +129,6 @@ function draw() {
     */
     ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a red color light with 10 % oppacity
     ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
     ctx.restore();
 
     requestAnimationFrame(draw);
