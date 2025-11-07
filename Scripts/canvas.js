@@ -43,6 +43,17 @@ const gameInfo = {
     }
 }
 
+const imagePopups = {
+    ["Menu"]: {
+        Enabled: 0,
+        ImageSrc: "Images/jeffer.png",
+    },
+    ["Info"]: {
+        Enabled: Date.now() + 1e9,
+        ImageSrc: "Images/Tutorial.png",
+    }
+}
+
 // game variables (set wh
 // en select difficulty)
 let fever = 0;
@@ -135,6 +146,23 @@ function playMusic() {
       sound.loop = true;
 }
 
+function displayPopup(popupName) {
+    const popupInfo = imagePopups[popupName];
+
+    if (popupInfo.Enabled >= Date.now()) {
+        let img = new Image();
+        img.src = popupInfo.ImageSrc;
+
+        const popupWidth = canvas.width * 0.6;
+        const popupHeight = (img.naturalHeight / img.naturalWidth) * popupWidth;
+
+        const popupX = (canvas.width - popupWidth) / 2;
+        const popupY = (canvas.height - popupHeight) / 2;
+
+        ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
+    }
+}
+
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
     return Math.max(Math.min(num, max), min);
@@ -208,6 +236,10 @@ function draw() {
         ctx.fillText("ur dead my friend", 250, 300);
     }
 
+    for (const index in imagePopups) {  
+        displayPopup(index);
+    }
+
     // fever gauge thermometer thank you thank you thank you
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
@@ -239,8 +271,25 @@ window.addEventListener('click', function(event) {
     const y = event.clientY;
         
 
-    
-
+    if (y >= height * 0.4 && y <= height * 0.8) {
+        if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
+            if (room == "Kitchen") {
+                room = "Bedroom"
+                img.src = 'Images/GameOn' + room + '.png';
+            } else if (room == "Bathroom") {
+                room = "Kitchen"
+                img.src = 'Images/GameOn' + room + '.png';
+            }
+        } else if (x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
+            if (room == "Kitchen") {
+                room = "Bathroom"
+                img.src = 'Images/GameOn' + room + '.png';
+            } else if (room == "Bedroom") {
+                room = "Kitchen"
+                img.src = 'Images/GameOn' + room + '.png';
+            }
+        }
+    }
 
     /*
     if (room == "Kitchen" && ctx.isPointInPath(inBath, x, y)) {
@@ -258,7 +307,7 @@ window.addEventListener('click', function(event) {
             break
             }
         }
-        if (!monsterHit) console.log("Wrong"); fever += 1;
+        if (!monsterHit) console.log("Wrong");
     }
 });
 
