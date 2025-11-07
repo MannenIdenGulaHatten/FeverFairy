@@ -138,7 +138,7 @@ function getImgScaled(x, y) {
     return {X: scaleX, Y: scaleY};
 }
 function increaseFever() {
-    fever += 1 / 90; // increase fever by 1 every 90 seconds
+    fever += 1 / 180; // increase fever by 1 every 90 seconds
 }
 
 let currentX = mouseX; //circle at mouse position
@@ -196,9 +196,9 @@ function draw() {
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
 
-    ctx.font = "60px Arial";
+    ctx.font = "50px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
-    ctx.fillText(Math.floor(fever) + "°", 70, 435);
+    ctx.fillText(Math.floor(fever) + "°", 75, 435);
 
     requestAnimationFrame(draw);
 }
@@ -234,10 +234,10 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong"); fever += 1
+    if (!monsterHit) console.log("Wrong")
 });
 
-setInterval(increaseFever, 1000)
+setInterval(increaseFever, 500)
 
 img.onload = draw;
 
