@@ -48,6 +48,12 @@ let difficulty = "None";
 let objectsFound = 0;
 let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 
+// sounds my freind
+const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const sound2 = new Audio('Sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const sound3 = new Audio('Sounds/click3.ogg')
+
+
 //timer that updates every second
 setTimeout(() => {
   console.log("12 seconds");
@@ -122,9 +128,9 @@ function newGame(selectedDiff) {
     colorFreq = 440
 }
 function playMusic() {
-    const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
-      sound.play()
-      sound.loop = true;
+    sound.play()
+    sound.volume = 0.3
+    sound.loop = true;
 }
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
@@ -162,6 +168,9 @@ function draw() {
     const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; 
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
+      
+      
+
     /*const stenX =600;
     const stenY =300;
     const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
@@ -196,6 +205,10 @@ function draw() {
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(255, 0, 0)";
         ctx.fillText("ur dead my friend", 250, 300);
+        sound.volume = 0
+        sound2.play()
+        sound2.volume = 0.1;    
+        
     }
 
     ctx.fillStyle = "rgb(255, 22, 0)";
@@ -222,6 +235,7 @@ window.addEventListener('click', function(event) {
     const height = window.innerHeight;
     const x = event.clientX;
     const y = event.clientY;
+
         
 
     
@@ -244,6 +258,8 @@ window.addEventListener('click', function(event) {
         }
     }
     if (!monsterHit) console.log("Wrong"); fever += 1;
+     const sound4 = new Audio('Sounds/incorrect.mp3')
+        sound4.play()
 });
 
 setInterval(increaseFever, 500)
