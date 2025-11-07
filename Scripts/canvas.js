@@ -12,7 +12,7 @@ let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 
 const temp = new Image();
-temp.src = 'Images/RefinedGray.png'; // temp gauge image
+temp.src = 'Images/Thermo.png'; // temp gauge image
 
 /*const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
@@ -140,7 +140,7 @@ function getImgScaled(x, y) {
     return {X: scaleX, Y: scaleY};
 }
 function increaseFever() {
-    fever += 1 / 90; // increase fever by 1 every 90 seconds
+    fever += 1 / 180; // increase fever by 1 every 90 seconds
 }
 
 let currentX = mouseX; //circle at mouse position
@@ -168,31 +168,46 @@ function draw() {
     const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (fever < maxFever) {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // cuts out a circle that is the flashlight light with ctx.clip()
-    ctx.save(); 
-    ctx.beginPath();
-    ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
-    ctx.clip();
+        // cuts out a circle that is the flashlight light with ctx.clip()
+        ctx.save(); 
+        ctx.beginPath();
+        ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
+        ctx.clip();
 
-    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
-    monster.forEach(m => {m.draw(ctx)});
+        ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
+        monster.forEach(m => {m.draw(ctx)});
 
-    //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
+        //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
-    /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
-    ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
-    let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
-    ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
-    */
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.restore();
+        /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
+        ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
+        let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
+        ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
+        */
+        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+    } else {
+        // bro died 🤣🤣🤣
+        ctx.font = "100px Cursive";
+        ctx.fillStyle = "rgb(255, 0, 0)";
+        ctx.fillText("ur dead my friend", 250, 300);
+    }
 
+    ctx.fillStyle = "rgb(255, 22, 0)";
+    let feverHeight = clamp((fever - info.startFever) / (info.maxFever - info.startFever) * 275, 0, 275);
+    ctx.fillRect(80, 380 - feverHeight, 70, feverHeight)
+    
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
+
+    ctx.font = "50px Cursive";
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.fillText(Math.floor(fever) + "°", 75, 435);
 
     requestAnimationFrame(draw);
 }
@@ -228,10 +243,10 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong"); fever += 1
+    if (!monsterHit) console.log("Wrong"); fever += 1;
 });
 
-setInterval(increaseFever, 1000)
+setInterval(increaseFever, 500)
 
 img.onload = draw;
 
