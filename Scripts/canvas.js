@@ -223,7 +223,7 @@ function draw() {
     const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
-    if (fever < maxFever) {
+    if (fever < maxFever && !dead) {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -255,7 +255,7 @@ function draw() {
         sound.volume = 0
         sound2.play()
         sound2.volume = 0.1;    
-        
+        fever = lerp(fever, 0, 0.01);
     }
 
     for (const index in imagePopups) {  
