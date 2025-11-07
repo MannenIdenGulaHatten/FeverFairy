@@ -9,7 +9,7 @@ let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 
 const temp = new Image();
-temp.src = 'Images/RefinedGray.png'; // temp gauge image
+temp.src = 'Images/Thermo.png'; // temp gauge image
 
 /*const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
@@ -189,8 +189,16 @@ function draw() {
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
 
+    ctx.fillStyle = "rgb(255, 22, 0)";
+    let feverHeight = clamp((fever - info.startFever) / (info.maxFever - info.startFever) * 275, 0, 275);
+    ctx.fillRect(80, 380 - feverHeight, 70, feverHeight)
+    
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
+
+    ctx.font = "60px Arial";
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.fillText(Math.floor(fever) + "°", 70, 435);
 
     requestAnimationFrame(draw);
 }
