@@ -8,6 +8,8 @@ const img = new Image();
 let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 
+const temp = new Image();
+temp.src = 'Images/RefinedGray.png'; // temp gauge image
 
 /*const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
@@ -22,12 +24,26 @@ const radius = 80;
 const maxShiftX = 200;
 const maxShiftY = 200;
 
-// game variables (set when select difficulty)
+const gameInfo = {
+    ["Easy"]: {
+        difficulty: "Easy",
+        startFever: 38,
+        maxFever: 43,
+    },
+    ["Hard"]: {
+        difficulty: "Hard",
+        startFever: 39,
+        maxFever: 42,
+    }
+}
+
+// game variables (set wh
+// en select difficulty)
 let fever = 0;
-let maxFever = 67;
+let maxFever = 0;
 let difficulty = "None";
 let objectsFound = 0;
-let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
+let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
   constructor(src, x, y, width, height, paralaxx = 1) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
@@ -82,7 +98,15 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('Images/BollTEST3 mindre.png', 100, 500, 50, 50, 1),
 ];
 
+function newGame(selectedDiff) {
+    info = gameInfo[selectedDiff];
 
+    difficulty = selectedDiff;
+    fever = info.startFever;
+    maxFever = info.maxFever;
+    objectsFound = 0
+    colorFreq = 440
+}
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
@@ -95,6 +119,9 @@ function getImgScaled(x, y) {
     const scaleX = x * canvas.width / 2880;
     const scaleY = y * canvas.height / 1620;
     return {X: scaleX, Y: scaleY};
+}
+function increaseFever() {
+    fever += 1 / 90; // increase fever by 1 every 90 seconds
 }
 
 let currentX = mouseX; //circle at mouse position
@@ -136,6 +163,8 @@ function draw() {
 
     //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
+    let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
+    ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
 
     /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
     ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
@@ -179,8 +208,10 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong")
+    if (!monsterHit) console.log("Wrong"); fever += 1
 });
+
+setInterval(increaseFever, 1000)
 
 img.onload = draw;
 

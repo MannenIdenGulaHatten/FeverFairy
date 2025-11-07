@@ -27,16 +27,16 @@ canvas.addEventListener('click', (event) => {
     .catch(err => console.error('Kunde inte spela upp ljudet:', err));
     if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {
         if (currentImg == img) {
-        currentImg = img4;
+          currentImg = img4;
 
         } else if (currentImg == img4) {
-        currentImg = img;
+          currentImg = img;
         }
     } else if (x >= 420 && x <= 945) {
         if (currentImg == img) {
-        location.replace("http://localhost:8080/FeverFairy/hardGame.html")
+          location.replace("/FeverFairy/hardGame.html")
         } else if (currentImg == img4) {
-        location.replace("http://localhost:8080/FeverFairy/game.html")
+          location.replace("/FeverFairy/game.html")
         }
     }
   }
