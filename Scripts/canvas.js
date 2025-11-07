@@ -64,6 +64,12 @@ let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 let feverHeight = 0;
 let dead = false;
 
+// sounds my freind
+const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const sound2 = new Audio('Sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const sound3 = new Audio('Sounds/click3.ogg')
+
+
 //timer that updates every second
 setTimeout(() => {
   console.log("12 seconds");
@@ -141,9 +147,9 @@ function newGame(selectedDiff) {
 }
 
 function playMusic() {
-    const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
-      sound.play()
-      sound.loop = true;
+    sound.play()
+    sound.volume = 0.3
+    sound.loop = true;
 }
 
 function displayPopup(popupName) {
@@ -199,6 +205,9 @@ function draw() {
     const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; 
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
+      
+      
+
     /*const stenX =600;
     const stenY =300;
     const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
@@ -234,6 +243,14 @@ function draw() {
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(255, 0, 0)";
         ctx.fillText("ur dead my friend", 250, 300);
+        sound.volume = 0
+        sound2.play()
+        sound2.volume = 0.1;    
+        
+    }
+
+    for (const index in imagePopups) {  
+        displayPopup(index);
     }
 
     for (const index in imagePopups) {  
@@ -269,7 +286,7 @@ window.addEventListener('click', function(event) {
     const height = window.innerHeight;
     const x = event.clientX;
     const y = event.clientY;
-        
+
 
     if (y >= height * 0.4 && y <= height * 0.8) {
         if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
@@ -299,16 +316,18 @@ window.addEventListener('click', function(event) {
     if (!dead) {
         let monsterHit = false;
 
-        for (let i = monster.length - 1; i >= 0; i-=1) { // checks if what you click is an object in the list or
-            const m = monster[i];
-            if (m.visible && m.ifMonsterClicked(x, y)) {
-            m.visible = false; //makes it invisible
-            monsterHit = true;
-            break
-            }
+    for (let i = monster.length - 1; i >= 0; i-=1) { // checks if what you click is an object in the list or
+        const m = monster[i];
+        if (m.visible && m.ifMonsterClicked(x, y)) {
+          m.visible = false; //makes it invisible
+          monsterHit = true;
+          break
         }
-        if (!monsterHit) console.log("Wrong");
     }
+    if (!monsterHit) console.log("Wrong");
+     const sound4 = new Audio('Sounds/incorrect.mp3')
+        sound4.play()
+ }
 });
 
 setInterval(increaseFever, 500)
