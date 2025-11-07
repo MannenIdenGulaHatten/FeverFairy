@@ -47,10 +47,12 @@ const imagePopups = {
     ["Menu"]: {
         Enabled: 0,
         ImageSrc: "Images/jeffer.png",
+        Exit: {x1: 0, y1: 0, x2: 0, y2: 0}, // relative positions for exit button
     },
     ["Info"]: {
         Enabled: Date.now() + 1e9,
         ImageSrc: "Images/Tutorial.png",
+        Exit: {x1: 0, y1: 0, x2: 0, y2: 0}, // relative positions for exit button
     }
 }
 
@@ -165,6 +167,13 @@ function displayPopup(popupName) {
         const popupX = (canvas.width - popupWidth) / 2;
         const popupY = (canvas.height - popupHeight) / 2;
 
+        popupInfo.Exit = {
+            x1: popupX + popupWidth*0.85 - 50,
+            y1: popupY + popupHeight*0.2 + 10,
+            x2: popupX + popupWidth*0.85 - 10,
+            y2: popupY + popupHeight*0.2 + 50
+        }
+
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
     }
 }
@@ -253,10 +262,6 @@ function draw() {
         displayPopup(index);
     }
 
-    for (const index in imagePopups) {  
-        displayPopup(index);
-    }
-
     // fever gauge thermometer thank you thank you thank you
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
@@ -308,11 +313,19 @@ window.addEventListener('click', function(event) {
         }
     }
 
-    /*
-    if (room == "Kitchen" && ctx.isPointInPath(inBath, x, y)) {
-        room = "Bathroom"
-        img.src = 'Images/GameOn' + room + '.png';
-    } */
+    for (const index in imagePopups) {  
+        let popupInfo = imagePopups[index];
+        
+        if (popupInfo.Enabled >= Date.now()) {
+            const exit = popupInfo.Exit;
+            console.log(exit)
+            if (x >= exit.x1 && x <= exit.x2 && y >= exit.y1 && y <= exit.y2) {
+                popupInfo.Enabled = 0;
+                console.log("clicked exit")
+            }
+        }
+    }
+
     if (!dead) {
         let monsterHit = false;
 
@@ -324,7 +337,7 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong");
+    if (!monsterHit) console.log("Wrong"); fever += 1;
      const sound4 = new Audio('Sounds/incorrect.mp3')
         sound4.play()
  }
