@@ -14,6 +14,9 @@ img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 const temp = new Image();
 temp.src = 'Images/Thermo.png'; // temp gauge image
 
+const flash = new Image();
+flash.src = 'Images/Flashlight.png'; // temp gauge image
+
 /*const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
 const door2 = new Image();
@@ -47,6 +50,8 @@ let maxFever = 0;
 let difficulty = "None";
 let objectsFound = 0;
 let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
+let feverHeight = 0;
+let dead = false;
 
 // sounds my freind
 const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
@@ -125,8 +130,11 @@ function newGame(selectedDiff) {
     fever = info.startFever;
     maxFever = info.maxFever;
     objectsFound = 0
+    feverHeight = 0
     colorFreq = 440
+    dead = false
 }
+
 function playMusic() {
     sound.play()
     sound.volume = 0.3
@@ -149,6 +157,7 @@ function increaseFever() {
     fever += 1 / 180; // increase fever by 1 every 90 seconds
 }
 
+console.log(canvas.width, canvas.height)
 let currentX = mouseX; //circle at mouse position
 let currentY = mouseY;
 // takes mouse position when move mouse
@@ -201,6 +210,7 @@ function draw() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
     } else {
+        dead = true;
         // bro died 🤣🤣🤣
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(255, 0, 0)";
@@ -211,12 +221,17 @@ function draw() {
         
     }
 
-    ctx.fillStyle = "rgb(255, 22, 0)";
-    let feverHeight = clamp((fever - info.startFever) / (info.maxFever - info.startFever) * 275, 0, 275);
-    ctx.fillRect(80, 380 - feverHeight, 70, feverHeight)
-    
+    // fever gauge thermometer thank you thank you thank you
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
+    let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
+
+    ctx.fillStyle = "rgb(255, 22, 0)";
+    let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 275, 0.1), 0, 275);
+    ctx.fillRect(80, 380 - nextHeight, 70, nextHeight);
+    feverHeight = nextHeight
+
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
+    ctx.drawImage(flash, mouseX + 40, mouseY/5 + 360, flashSize.X, flashSize.Y);
 
     ctx.font = "50px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
@@ -246,8 +261,8 @@ window.addEventListener('click', function(event) {
         room = "Bathroom"
         img.src = 'Images/GameOn' + room + '.png';
     } */
-
-    let monsterHit = false;
+    if (!dead) {
+        let monsterHit = false;
 
     for (let i = monster.length - 1; i >= 0; i-=1) { // checks if what you click is an object in the list or
         const m = monster[i];
