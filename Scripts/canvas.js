@@ -119,7 +119,7 @@ function newGame(selectedDiff) {
     colorFreq = 440
 }
 function playMusic() {
-    const sound = new Audio('background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+    const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
       sound.play()
         .then(() => console.log('Ljudet spelas upp!'))
         .catch(err => console.error('Kunde inte spela upp ljudet:', err));

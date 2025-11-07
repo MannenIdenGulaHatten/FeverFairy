@@ -13,7 +13,7 @@ img4.src = 'Images/easyLevel.png'
 
 let currentImg = img4; //default difficulty
 
-const sound = new Audio('click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
+const sound = new Audio('Sounds/click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
 
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
