@@ -163,9 +163,6 @@ function draw() {
 
     //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
-    let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
-    ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
-
     /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
     ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
     let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
@@ -174,6 +171,9 @@ function draw() {
     ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
+
+    let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
+    ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
 
     requestAnimationFrame(draw);
 }
