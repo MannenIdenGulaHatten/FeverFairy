@@ -24,10 +24,21 @@ const maxShiftY = 200;
 
 // game variables (set when select difficulty)
 let fever = 0;
-let maxFever = 67;
+let maxFever = 43;
 let difficulty = "None";
 let objectsFound = 0;
 let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
+
+//timer that updates every second
+setTimeout(() => {
+  console.log("12 seconds");
+}, 12000);
+setTimeout(() => {
+  console.log("3 seconds");
+}, 3000);
+setTimeout(() => {
+  console.log("1 second");
+}, 1000);
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
   constructor(src, x, y, width, height, paralaxx = 1) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
@@ -82,7 +93,12 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('Images/BollTEST3 mindre.png', 100, 500, 50, 50, 1),
 ];
 
-
+function playMusic() {
+    const sound = new Audio('background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+      sound.play()
+        .then(() => console.log('Ljudet spelas upp!'))
+        .catch(err => console.error('Kunde inte spela upp ljudet:', err));
+}
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
@@ -159,6 +175,7 @@ window.addEventListener('click', function(event) {
     const height = window.innerHeight;
     const x = event.clientX;
     const y = event.clientY;
+        
 
     
 

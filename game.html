@@ -9,6 +9,12 @@
     <!-- <script type="text/javascript" src="Scripts/playerView.js"></script> -->
     <script src="Scripts/removeImage.js" defer></script>
     <script src="Scripts/canvas.js" defer></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            playMusic();
+        })
+    </script>
 </head>
 
 <body>  
@@ -17,6 +23,7 @@
         <img class="background" src="Images/GameONKitchen.png">
         <div class="jeffer"></div>
     </div> -->
+    <p id="demo"></p>
     <div>
         <button id="removeButton" onclick="removeMonster(this)">
             <img class="monster" src="Images/BollTEST3 mindre.png">

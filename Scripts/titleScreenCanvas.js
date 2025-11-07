@@ -33,7 +33,7 @@ canvas.addEventListener('mousemove', (event) => {
       currentImg = img; 
     }
   });
-const sound = new Audio('click3.ogg');
+const sound = new Audio('click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
