@@ -8,6 +8,8 @@ const img = new Image();
 let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
 
+const temp = new Image();
+temp.src = 'Images/RefinedGray.png'; // temp gauge image
 
 /*const door1 = new Image();
 door1.src = 'Images/Door1.png'; // door image
@@ -22,12 +24,26 @@ const radius = 80;
 const maxShiftX = 200;
 const maxShiftY = 200;
 
-// game variables (set when select difficulty)
+const gameInfo = {
+    ["Easy"]: {
+        difficulty: "Easy",
+        startFever: 38,
+        maxFever: 43,
+    },
+    ["Hard"]: {
+        difficulty: "Hard",
+        startFever: 39,
+        maxFever: 42,
+    }
+}
+
+// game variables (set wh
+// en select difficulty)
 let fever = 0;
-let maxFever = 43;
+let maxFever = 0;
 let difficulty = "None";
 let objectsFound = 0;
-let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
+let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 
 //timer that updates every second
 setTimeout(() => {
@@ -93,6 +109,15 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('Images/BollTEST3 mindre.png', 100, 500, 50, 50, 1),
 ];
 
+function newGame(selectedDiff) {
+    info = gameInfo[selectedDiff];
+
+    difficulty = selectedDiff;
+    fever = info.startFever;
+    maxFever = info.maxFever;
+    objectsFound = 0
+    colorFreq = 440
+}
 function playMusic() {
     const sound = new Audio('background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
       sound.play()
@@ -111,6 +136,9 @@ function getImgScaled(x, y) {
     const scaleX = x * canvas.width / 2880;
     const scaleY = y * canvas.height / 1620;
     return {X: scaleX, Y: scaleY};
+}
+function increaseFever() {
+    fever += 1 / 90; // increase fever by 1 every 90 seconds
 }
 
 let currentX = mouseX; //circle at mouse position
@@ -152,7 +180,6 @@ function draw() {
 
     //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
-
     /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
     ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
     let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
@@ -161,6 +188,9 @@ function draw() {
     ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
     ctx.fillRect(0, 0, canvas.width, canvas.height);
     ctx.restore();
+
+    let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
+    ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
 
     requestAnimationFrame(draw);
 }
@@ -196,8 +226,10 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong")
+    if (!monsterHit) console.log("Wrong"); fever += 1
 });
+
+setInterval(increaseFever, 1000)
 
 img.onload = draw;
 

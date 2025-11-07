@@ -44,9 +44,9 @@ canvas.addEventListener('click', (event) => {
     .then(() => console.log('Ljudet spelas upp!'))
     .catch(err => console.error('Kunde inte spela upp ljudet:', err));
     if (y >= 230 && y <= 290)
-      location.replace("http://localhost:8080/FeverFairy/levelSelect.html");
+      location.replace("/FeverFairy/levelSelect.html");
     else if (y >= 295 && y <= 350)
-      location.replace("http://localhost:8080/FeverFairy/credits.html");
+      location.replace("/FeverFairy/credits.html");
   }
 });
 
