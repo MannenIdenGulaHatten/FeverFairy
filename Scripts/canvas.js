@@ -251,7 +251,6 @@ window.addEventListener('click', function(event) {
     const x = event.clientX;
     const y = event.clientY;
 
-        
 
     
 
@@ -275,6 +274,7 @@ window.addEventListener('click', function(event) {
     if (!monsterHit) console.log("Wrong"); fever += 1;
      const sound4 = new Audio('Sounds/incorrect.mp3')
         sound4.play()
+ }
 });
 
 setInterval(increaseFever, 500)
