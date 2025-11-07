@@ -4,6 +4,9 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const menu = new Image();
+menu.src = 'Images/Menu.png'
+
 const img = new Image();
 let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
@@ -129,8 +132,7 @@ function newGame(selectedDiff) {
 function playMusic() {
     const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
       sound.play()
-        .then(() => console.log('Ljudet spelas upp!'))
-        .catch(err => console.error('Kunde inte spela upp ljudet:', err));
+      sound.loop = true;
 }
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
