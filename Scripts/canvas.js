@@ -17,15 +17,11 @@ temp.src = 'Images/Thermo.png'; // temp gauge image
 const flash = new Image();
 flash.src = 'Images/Flashlight.png'; // temp gauge image
 
-/*const door1 = new Image();
-door1.src = 'Images/Door1.png'; // door image
-const door2 = new Image();
-door2.src = 'Images/Door1.png'; // door image */
 
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 8000;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -149,12 +145,13 @@ const monster = [ // this is where you decide the cordinates you place the image
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
     new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 4),
+    new imageMonsters ('Images/kitchenBlack/Counter b.png', 410, 375, 220, 120, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Oven b.png', 240, 405, 381, 170, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 270, 195, 254, 153, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 3),
+    new imageMonsters ('Images/kitchenBlack/Counter2 b.png', 660, 375, 100, 80, 1, 1),
 ];
 
 function newGame(selectedDiff) {
@@ -264,16 +261,7 @@ function draw() {
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
         monster.forEach(m => {m.draw(ctx)});
 
-        //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
 
-        /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
-        ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
-        let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
-        ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
-        */
-        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.restore();
     } else {
         dead = true;
         // bro died 🤣🤣🤣
@@ -294,13 +282,18 @@ function draw() {
     ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
     monster
     .slice() // dosent change the array permanently
-    .sort((a, b) => a.z - b.z) // smaller z = further back
+    .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
     .forEach(m => m.draw(ctx));
 
-    furniture
-    .slice() //draws out furniture seperatley
+    furniture //draws out furniture seperatley
+    .slice() 
     .sort((a, b) => a.z - b.z) 
     .forEach(m => m.draw(ctx));
+
+    ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
+
     // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
@@ -316,6 +309,8 @@ function draw() {
     ctx.font = "50px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.fillText(Math.floor(fever) + "°", scalePos(75,"X"), (530));
+
+
 
     requestAnimationFrame(draw);
 }
