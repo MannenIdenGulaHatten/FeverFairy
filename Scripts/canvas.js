@@ -77,12 +77,13 @@ const sound5 = new Audio('Sounds/doorOpen.wav')
 
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
-  constructor(src, x, y, width, height, paralaxx = 1) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
+  constructor(src, x, y, width, height, paralaxx = 1, z = 1) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.paralaxx = paralaxx;
+    this.z = z;
     this.image = new Image();
     this.image.src = src;
     this.loaded = false;
@@ -123,10 +124,37 @@ class imageMonsters {           // this class makes it possible to easily make a
 }
 
 
+
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
-    new imageMonsters('Images/BollTEST3 mindre.png', 600, 300, 50, 50, 1), //x pos, y pos, width, height, paralax effekt
-    new imageMonsters('Images/BollTEST3 mindre.png', 300, 200, 50, 50, 1),
-    new imageMonsters('Images/BollTEST3 mindre.png', 100, 500, 50, 50, 1),
+    //new imageMonsters('Images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
+    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2),
+];
+
+const furniture = [ // place furnitures here or else they dissapear when clicked on :P
+    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 350, 530, 270, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Table b.png', 530, 310, 254, 149, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 800, 310, 50, 50, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 265, 84, 100, 1, 1),
 ];
 
 function newGame(selectedDiff) {
@@ -169,6 +197,7 @@ function displayPopup(popupName) {
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
     }
 }
+
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
@@ -262,6 +291,16 @@ function draw() {
         displayPopup(index);
     }
 
+    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
+    monster
+    .slice() // dosent change the array permanently
+    .sort((a, b) => a.z - b.z) // smaller z = further back
+    .forEach(m => m.draw(ctx));
+
+    furniture
+    .slice() //draws out furniture seperatley
+    .sort((a, b) => a.z - b.z) 
+    .forEach(m => m.draw(ctx));
     // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
@@ -330,6 +369,11 @@ window.addEventListener('click', function(event) {
         }
     }
 
+    for (let i = furniture.length - 1; i >= 0; i-=1) { // checks if what you click is an object in the list or / furniture 
+        const f = furniture[i];
+    }
+
+    let monsterHit = false;
     if (!dead) {
         let monsterHit = false;
 
