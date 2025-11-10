@@ -7,6 +7,7 @@ canvas.height = window.innerHeight;
 const menu = new Image();
 menu.src = 'Images/Menu.png'
 
+
 const img = new Image();
 let room = "Kitchen"
 img.src = 'Images/GameOn' + room + '.png'; // backround image
@@ -42,7 +43,7 @@ const gameInfo = {
 const imagePopups = {
     ["Menu"]: {
         Enabled: 0,
-        ImageSrc: "Images/Menu.png",
+        ImageSrc: "Images/PopUp.png",
         Exit: {x1: 0, y1: 0, x2: 0, y2: 0}, // relative positions for exit button
     },
     ["Info"]: {
