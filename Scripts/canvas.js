@@ -264,7 +264,11 @@ function draw() {
         monster
         .slice() // dosent change the array permanently
         .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-        .forEach(m => m.draw(ctx));
+        .forEach(m => {
+            if (colorFreq == m.colorFreq) {
+                m.draw(ctx)
+            }
+        });
     
         furniture //draws out furniture seperatley
         .slice() 
@@ -321,6 +325,16 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
+document.addEventListener('keydown', (event) => {
+    if (event.key == "1") {
+        colorFreq = 440; // red
+    } else if (event.key == "2") {
+        colorFreq = 565; // green
+    } else if (event.key == "3") {
+        colorFreq = 645; // blue
+    }
+});
+
 window.addEventListener('click', function(event) {
     const width = window.innerWidth;
     const height = window.innerHeight;
@@ -357,7 +371,7 @@ window.addEventListener('click', function(event) {
         
         if (popupInfo.Enabled >= Date.now()) {
             const exit = popupInfo.Exit;
-            console.log(exit)
+
             if (x >= exit.x1 && x <= exit.x2 && y >= exit.y1 && y <= exit.y2) {
                 popupInfo.Enabled = 0;
                 console.log("clicked exit")
