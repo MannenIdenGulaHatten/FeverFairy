@@ -1,10 +1,10 @@
 function myFunction() {
-  location.replace("http://localhost:8080/FeverFairy/levelSelect.html")
+  location.replace("/FeverFairy/levelSelect.html")
 }
 function redirectLevelSelect() {
-  location.replace("http://localhost:8080/FeverFairy/game.html")
+  location.replace("/FeverFairy/game.html")
 }
 
 function redirect() {
-  location.replace("http://localhost:8080/FeverFairy/credits.html")
+  location.replace("/FeverFairy/credits.html")
 }
