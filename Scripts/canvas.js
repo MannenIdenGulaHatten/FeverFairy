@@ -266,7 +266,7 @@ function draw() {
         .slice() // dosent change the array permanently
         .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
         .forEach(m => {
-            if (colorFreq == m.colorFreq) { 
+            if (colorFreq == m.colorFreq && room == m.room) {
                 m.draw(ctx)
             }
         });
