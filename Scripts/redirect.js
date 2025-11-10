@@ -1,10 +1,10 @@
 function myFunction() {
-  location.replace("/FeverFairy/levelSelect.html")
+  location.replace("/feverfairy/levelselect.html")
 }
 function redirectLevelSelect() {
-  location.replace("/FeverFairy/game.html")
+  location.replace("/feverfairy/game.html")
 }
 
 function redirect() {
-  location.replace("/FeverFairy/credits.html")
+  location.replace("/feverfairy/credits.html")
 }

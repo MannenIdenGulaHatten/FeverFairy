@@ -2,16 +2,16 @@ const canvas = document.getElementById("titleScreen");
 const ctx = canvas.getContext("2d");
 
 const img = new Image();
-img.src = 'Images/titleScreen.png';
+img.src = 'images/titlescreen.png';
 
 const img2 = new Image();
-img2.src = 'Images/titleScreenStartHover.png';
+img2.src = 'images/titlescreenstarthover.png';
 
 const img3 = new Image();
-img3.src = 'Images/titleScreenCreditsHover.png';
+img3.src = 'images/titlescreencreditshover.png';
 
 const img4 = new Image();
-img4.src = 'Images/titleScreenExitHover.png';
+img4.src = 'images/titlescreenexithover.png';
 
 
 
@@ -44,9 +44,9 @@ canvas.addEventListener('click', (event) => {
     .then(() => console.log('Ljudet spelas upp!'))
     .catch(err => console.error('Kunde inte spela upp ljudet:', err));
     if (y >= 230 && y <= 290)
-      location.replace("/FeverFairy/levelSelect.html");
+      location.replace("/feverfairy/levelselect.html");
     else if (y >= 295 && y <= 350)
-      location.replace("/FeverFairy/credits.html");
+      location.replace("/feverfairy/credits.html");
   }
 });
 
