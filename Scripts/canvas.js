@@ -219,7 +219,9 @@ function scalePos(pos, type) {
     }
 }
 function increaseFever() {
-    fever += 1 / 180; // increase fever by 1 every 90 seconds
+    if (imagePopups["Menu"].Enabled < Date.now() && !dead) {
+        fever += 1 / 120; // increase fever by 1 every 90 seconds
+    }
 }
 
 console.log(canvas.width, canvas.height)
@@ -388,6 +390,13 @@ window.addEventListener('click', function(event) {
                 room = "Kitchen"
                 img.src = 'Images/GameOn' + room + '.png';
             }
+        }
+    }
+
+    if (y >= height * 0 && y <= height * 0.1) {
+        if (x >= 0 && x <= width * 0.1) { // if you click the menu button
+            sound3.play()
+            imagePopups["Menu"].Enabled = Date.now() + 1e9; // shows menu for a long time
         }
     }
 
