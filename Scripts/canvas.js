@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 800;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -150,13 +150,14 @@ const monster = [ // this is where you decide the cordinates you place the image
 ];
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
-    new imageMonsters ('images/kitchenblack/carpet_b.png', 400, 450, 530, 270, 1, 1,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1,'kitchen',440),
     new imageMonsters ('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2,'kitchen',645),
-    new imageMonsters ('images/kitchenblack/counter_b.png', 800, 310, 50, 50, 1, 1,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/fridge_b.png', 750, 290, 130, 200, 1, 1,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/oven_b.png', 800, 310, 50, 50, 1, 1,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/ovenfan_b.png', 800, 310, 50, 50, 1, 1,'kitchen',645),
-    new imageMonsters ('images/kitchenblack/sink_b.png', 600, 355, 84, 100, 1, 1,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 1,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/counter2_b.png', 670, 380, 50, 50, 1, 1,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/fridge_b.png', 750, 310, 130, 200, 1, 1,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 1,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/sink_b.png', 605, 360, 84, 100, 1, 1,'kitchen',645),
 ];
 
 function newGame(selectedDiff) {
