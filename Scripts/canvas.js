@@ -46,7 +46,7 @@ const gameInfo = {
 const imagePopups = {
     ["Menu"]: {
         Enabled: 0,
-        ImageSrc: "Images/jeffer.png",
+        ImageSrc: "Images/Menu.png",
         Exit: {x1: 0, y1: 0, x2: 0, y2: 0}, // relative positions for exit button
     },
     ["Info"]: {
@@ -166,9 +166,6 @@ function displayPopup(popupName) {
             x2: popupX + popupWidth*0.85,
             y2: popupY + popupHeight*0.35,
         }
-
-        console.log(popupInfo.Exit)
-
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
     }
 }
@@ -184,6 +181,13 @@ function getImgScaled(x, y) {
     const scaleX = x * canvas.width / 2880;
     const scaleY = y * canvas.height / 1620;
     return {X: scaleX, Y: scaleY};
+}
+function scalePos(pos, type) {
+    if (type == "X") {
+        return pos * canvas.width / 1280;
+    } else if (type == "Y") {
+        return pos * canvas.height / 551;
+    }
 }
 function increaseFever() {
     fever += 1 / 180; // increase fever by 1 every 90 seconds
@@ -250,8 +254,8 @@ function draw() {
         sound.volume = 0
         sound2.play()
         sound2.volume = 0.1;    
-        startFever = 0;
-        fever = lerp(fever, 0, 0.01);
+        //startFever = 0;
+        //fever = lerp(fever, 0, 0.01);
     }
 
     for (const index in imagePopups) {  
@@ -264,15 +268,15 @@ function draw() {
 
     ctx.fillStyle = "rgb(255, 22, 0)";
     let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 275, 0.1), 0, 275);
-    ctx.fillRect(80, 380 - nextHeight, 70, nextHeight);
+    ctx.fillRect(scalePos(80,"X"), scalePos(380,"Y") - nextHeight, 70, nextHeight);
     feverHeight = nextHeight
 
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
-    ctx.drawImage(flash, mouseX + 40, mouseY/5 + 360, flashSize.X, flashSize.Y);
+    ctx.drawImage(flash, mouseX + 40, mouseY/5 + scalePos(360,"Y"), flashSize.X, flashSize.Y);
 
     ctx.font = "50px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
-    ctx.fillText(Math.floor(fever) + "°", 75, 435);
+    ctx.fillText(Math.floor(fever) + "°", scalePos(75,"X"), (530));
 
     requestAnimationFrame(draw);
 }
@@ -347,7 +351,7 @@ window.addEventListener('click', function(event) {
             sound4.volume = 0
             
     
- }
+        }
       }
     }
 });
