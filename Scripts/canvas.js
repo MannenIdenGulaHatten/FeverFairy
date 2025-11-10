@@ -267,8 +267,8 @@ function draw() {
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
 
     ctx.fillStyle = "rgb(255, 22, 0)";
-    let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 275, 0.1), 0, 275);
-    ctx.fillRect(scalePos(80,"X"), scalePos(380,"Y") - nextHeight, 70, nextHeight);
+    let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 360, 0.1), 0, 360);
+    ctx.fillRect(scalePos(80,"X"), 465 - nextHeight, 70, nextHeight);
     feverHeight = nextHeight
 
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
