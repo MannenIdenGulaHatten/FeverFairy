@@ -101,13 +101,13 @@ const monster = [ // this is where you decide the cordinates you place the image
 ];
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
-    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 350, 530, 270, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Table b.png', 530, 310, 254, 149, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 2),
     new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 800, 310, 50, 50, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 1),
     new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1),
     new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 265, 84, 100, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 1),
 ];
 
 
