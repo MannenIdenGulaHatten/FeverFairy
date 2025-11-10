@@ -9,7 +9,7 @@ menu.src = 'Images/Menu.png'
 
 const img = new Image();
 let room = "Kitchen"
-img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
+img.src = 'Images/GameOn' + room + '.png'; // backround image
 
 const temp = new Image();
 temp.src = 'Images/Thermo.png'; // temp gauge image
