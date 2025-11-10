@@ -432,7 +432,7 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong"); fever += 1;
+    if (!monsterHit) console.log("Wrong"); 
      const sound4 = new Audio('sounds/incorrect.mp3')
         sound4.play()
       if (y >= height * 0.4 && y <= height * 0.8) {
