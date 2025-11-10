@@ -73,13 +73,15 @@ const sound5 = new Audio('Sounds/doorOpen.wav')
 
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
-  constructor(src, x, y, width, height, paralaxx = 1, z = 1) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
+  constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.paralaxx = paralaxx;
     this.z = z;
+    this.room = room
+    this.colorFreq = colorFreq
     this.image = new Image();
     this.image.src = src;
     this.loaded = false;
@@ -123,35 +125,34 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('Images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2,'kitchen',565 ),
+    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
+    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
+    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
 ];
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
-    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 4),
-    new imageMonsters ('Images/kitchenBlack/Counter b.png', 410, 375, 220, 120, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Oven b.png', 240, 405, 381, 170, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 270, 195, 254, 153, 1, 1),
-    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 3),
-    new imageMonsters ('Images/kitchenBlack/Counter2 b.png', 660, 375, 100, 80, 1, 1),
+    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 2,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1,'kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 1,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1,'kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 1,'kitchen',645),
 ];
 
 function newGame(selectedDiff) {
