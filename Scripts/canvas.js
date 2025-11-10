@@ -268,8 +268,12 @@ function draw() {
         furniture //draws out furniture seperatley
         .slice() 
         .sort((a, b) => a.z - b.z) 
-        .forEach(m => m.draw(ctx));
-        
+        .forEach(m => {
+            if (colorFreq == m.colorFreq) {
+                m.draw(ctx)
+            }
+        });
+
         ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
