@@ -68,6 +68,7 @@ const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/
 const sound2 = new Audio('Sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
 const sound3 = new Audio('Sounds/click3.ogg')
 const sound5 = new Audio('Sounds/doorOpen.wav')
+const sound6 = new Audio('Sounds/ficklampaSwitch.wav')
 
 
 
@@ -311,11 +312,14 @@ function draw() {
     // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
+    let menuSize = getImgScaled(menu.naturalWidth, menu.naturalHeight);
 
     ctx.fillStyle = "rgb(255, 22, 0)";
     let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 360, 0.1), 0, 360);
     ctx.fillRect(scalePos(80,"X"), 465 - nextHeight, 70, nextHeight);
     feverHeight = nextHeight
+
+    ctx.drawImage(menu, 15, 15, menuSize.X, menuSize.Y);
 
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
     ctx.drawImage(flash, mouseX + 40, mouseY/5 + scalePos(360,"Y"), flashSize.X, flashSize.Y);
@@ -347,7 +351,7 @@ document.addEventListener('keydown', (event) => {
 
     if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq) { 
         flashCooldown = Date.now() + 2000; // 200 ms cooldown
-
+        sound6.play()
         colorFreq = 1;
 
         setTimeout(() => {
