@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 800;
+const radius = 80;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
