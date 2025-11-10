@@ -255,6 +255,7 @@ function draw() {
         sound.volume = 0
         sound2.play()
         sound2.volume = 0.1;    
+        startFever = 0;
         fever = lerp(fever, 0, 0.01);
     }
 
