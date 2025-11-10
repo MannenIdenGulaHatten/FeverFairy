@@ -7,6 +7,7 @@ canvas.height = window.innerHeight;
 const menu = new Image();
 menu.src = 'images/menu.png'
 
+
 const img = new Image();
 let room = "kitchen"
 img.src = 'images/gameon' + room + '.png'; // backround image
