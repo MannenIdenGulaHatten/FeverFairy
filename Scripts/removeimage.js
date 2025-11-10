@@ -1,5 +1,5 @@
 const smallStoneImage = new Image();
-smallStoneImage.src = "Images/BollTEST3 mindre.png";
+smallStoneImage.src = "images/bolltest3 mindre.png";
 
 //använd senare när samir har placerat stenen
 
