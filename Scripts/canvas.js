@@ -70,18 +70,11 @@ let dead = false;
 const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
 const sound2 = new Audio('Sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
 const sound3 = new Audio('Sounds/click3.ogg')
+const sound5 = new Audio('Sounds/doorOpen.wav')
 
 
-//timer that updates every second
-setTimeout(() => {
-  console.log("12 seconds");
-}, 12000);
-setTimeout(() => {
-  console.log("3 seconds");
-}, 3000);
-setTimeout(() => {
-  console.log("1 second");
-}, 1000);
+
+
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
   constructor(src, x, y, width, height, paralaxx = 1) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
@@ -263,7 +256,7 @@ function draw() {
         displayPopup(index);
     }
 
-    // fever gauge thermometer thank you thank you thank you
+    // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
 
@@ -296,6 +289,8 @@ window.addEventListener('click', function(event) {
 
     if (y >= height * 0.4 && y <= height * 0.8) {
         if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
+            sound5.play()
+            
             if (room == "Kitchen") {
                 room = "Bedroom"
                 img.src = 'Images/GameOn' + room + '.png';
@@ -304,6 +299,8 @@ window.addEventListener('click', function(event) {
                 img.src = 'Images/GameOn' + room + '.png';
             }
         } else if (x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
+            sound5.play()
+            
             if (room == "Kitchen") {
                 room = "Bathroom"
                 img.src = 'Images/GameOn' + room + '.png';
@@ -341,7 +338,16 @@ window.addEventListener('click', function(event) {
     if (!monsterHit) console.log("Wrong"); fever += 1;
      const sound4 = new Audio('Sounds/incorrect.mp3')
         sound4.play()
+      if (y >= height * 0.4 && y <= height * 0.8) {
+        if (x >= width * 0.75 && x <= width * 0.9) { // mutes incorrect sound when clicking on a door
+            sound4.volume = 0
+        } else if (x >= width * 0.1 && x <= width * 0.25) { // mutes incorrect sound if clicking on the bathroom door
+            sound4.volume = 0
+            
+    
  }
+      }
+    }
 });
 
 setInterval(increaseFever, 500)
