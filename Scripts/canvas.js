@@ -21,7 +21,7 @@ flash.src = 'Images/Flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 8000;
+const radius = 80;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -123,24 +123,24 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('Images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2),
-    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2),
+    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 5),
+    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 5),
 ];
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
@@ -257,9 +257,15 @@ function draw() {
         ctx.beginPath();
         ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
         ctx.clip();
+        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+    
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
         monster.forEach(m => {m.draw(ctx)});
+
+        
 
 
     } else {
@@ -279,6 +285,8 @@ function draw() {
         displayPopup(index);
     }
 
+    
+
     ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
     monster
     .slice() // dosent change the array permanently
@@ -289,10 +297,6 @@ function draw() {
     .slice() 
     .sort((a, b) => a.z - b.z) 
     .forEach(m => m.draw(ctx));
-
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.restore();
 
     // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
