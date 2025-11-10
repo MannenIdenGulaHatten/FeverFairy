@@ -5,18 +5,18 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const menu = new Image();
-menu.src = 'Images/Menu.png'
+menu.src = 'images/menu.png'
 
 
 const img = new Image();
-let room = "Kitchen"
-img.src = 'Images/GameOn' + room + '.png'; // backround image
+let room = "kitchen"
+img.src = 'images/gameon' + room + '.png'; // backround image
 
 const temp = new Image();
-temp.src = 'Images/Thermo.png'; // temp gauge image
+temp.src = 'images/thermo.png'; // temp gauge image
 
 const flash = new Image();
-flash.src = 'Images/Flashlight.png'; // temp gauge image
+flash.src = 'images/flashlight.png'; // temp gauge image
 
 
 let mouseX = canvas.width / 2;
@@ -43,12 +43,12 @@ const gameInfo = {
 const imagePopups = {
     ["Menu"]: {
         Enabled: 0,
-        ImageSrc: "Images/PopUp.png",
+        imagesrc: "images/popup.png",
         Exit: {x1: 0, y1: 0, x2: 0, y2: 0}, // relative positions for exit button
     },
     ["Info"]: {
         Enabled: Date.now() + 1e9,
-        ImageSrc: "Images/Tutorial.png",
+        imagesrc: "images/tutorial.png",
         Exit: {x1: 0, y1: 0, x2: 0, y2: 0}, // relative positions for exit button
     }
 }
@@ -65,11 +65,11 @@ let dead = false;
 let flashCooldown = Date.now();
 
 // sounds my freind
-const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
-const sound2 = new Audio('Sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
-const sound3 = new Audio('Sounds/click3.ogg')
-const sound5 = new Audio('Sounds/doorOpen.wav')
-const sound6 = new Audio('Sounds/ficklampaSwitch.wav')
+const sound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const sound2 = new Audio('sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const sound3 = new Audio('sounds/click3.ogg')
+const sound5 = new Audio('sounds/dooropen.wav')
+const sound6 = new Audio('sounds/ficklampaswitch.wav')
 
 
 
@@ -96,13 +96,14 @@ class imageMonsters {           // this class makes it possible to easily make a
     if (this.loaded && this.visible) {
       const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
       const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
+      let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
 
       ctx.drawImage( // gör paralaxx för bilderna
         this.image,
         this.x - offsetX * this.paralaxx, 
         this.y - offsetY * this.paralaxx,
-        this.width,
-        this.height
+        Size.X,
+        Size.Y
       ); 
     }
   }
@@ -127,35 +128,35 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
-    //new imageMonsters('Images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565 ),
-    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2,'Kitchen',1),
-    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2,'Kitchen',1),
-    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
+    //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
+    new imageMonsters ('images/kitchenblack/banana_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565 ),
+    new imageMonsters ('images/kitchenblack/basket_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/bird_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/chainsaw_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/chili_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
+    new imageMonsters ('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
+    new imageMonsters ('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/monkey_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/slide_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/snake_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/tenticle_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
 ];
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
-    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 2,'Kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1,'Kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 1,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1,'Kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1,'Kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 1,'Kitchen',645),
+    new imageMonsters ('images/kitchenblack/carpet_b.png', 400, 450, 530, 270, 1, 1,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/counter_b.png', 800, 310, 50, 50, 1, 1,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/fridge_b.png', 750, 290, 130, 200, 1, 1,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/oven_b.png', 800, 310, 50, 50, 1, 1,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/ovenfan_b.png', 800, 310, 50, 50, 1, 1,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/sink_b.png', 600, 355, 84, 100, 1, 1,'kitchen',645),
 ];
 
 function newGame(selectedDiff) {
@@ -181,7 +182,7 @@ function displayPopup(popupName) {
 
     if (popupInfo.Enabled >= Date.now()) {
         let img = new Image();
-        img.src = popupInfo.ImageSrc;
+        img.src = popupInfo.imagesrc;
 
         const popupWidth = canvas.width * 0.6;
         const popupHeight = (img.naturalHeight / img.naturalWidth) * popupWidth;
@@ -374,22 +375,22 @@ window.addEventListener('click', function(event) {
         if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
             sound5.play()
             
-            if (room == "Kitchen") {
-                room = "Bedroom"
-                img.src = 'Images/GameOn' + room + '.png';
-            } else if (room == "Bathroom") {
-                room = "Kitchen"
-                img.src = 'Images/GameOn' + room + '.png';
+            if (room == "kitchen") {
+                room = "bedroom"
+                img.src = 'images/gameon' + room + '.png';
+            } else if (room == "bathroom") {
+                room = "kitchen"
+                img.src = 'images/gameon' + room + '.png';
             }
         } else if (x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
             sound5.play()
             
-            if (room == "Kitchen") {
-                room = "Bathroom"
-                img.src = 'Images/GameOn' + room + '.png';
-            } else if (room == "Bedroom") {
-                room = "Kitchen"
-                img.src = 'Images/GameOn' + room + '.png';
+            if (room == "kitchen") {
+                room = "bathroom"
+                img.src = 'images/gameon' + room + '.png';
+            } else if (room == "bedroom") {
+                room = "kitchen"
+                img.src = 'images/gameon' + room + '.png';
             }
         }
     }
@@ -431,7 +432,7 @@ window.addEventListener('click', function(event) {
         }
     }
     if (!monsterHit) console.log("Wrong"); fever += 1;
-     const sound4 = new Audio('Sounds/incorrect.mp3')
+     const sound4 = new Audio('sounds/incorrect.mp3')
         sound4.play()
       if (y >= height * 0.4 && y <= height * 0.8) {
         if (x >= width * 0.75 && x <= width * 0.9) { // mutes incorrect sound when clicking on a door

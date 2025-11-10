@@ -2,18 +2,18 @@ const canvas = document.getElementById("levelSelect");
 const ctx = canvas.getContext("2d");
 
 const img = new Image();
-img.src = 'Images/hardLevel.png';
+img.src = 'images/hardlevel.png';
 
 const img2 = new Image();
-img2.src = 'Images/vansterSelectPil.png'
+img2.src = 'images/vansterselectpil.png'
 const img3 = new Image();
-img3.src = 'Images/hogerSelectPil.png'
+img3.src = 'images/hogerselectpil.png'
 const img4 = new Image();
-img4.src = 'Images/easyLevel.png'
+img4.src = 'images/easylevel.png'
 
 let currentImg = img4; //default difficulty
 
-const sound = new Audio('Sounds/click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
+const sound = new Audio('sounds/click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
 
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
@@ -34,9 +34,9 @@ canvas.addEventListener('click', (event) => {
         }
     } else if (x >= 420 && x <= 945) {
         if (currentImg == img) {
-          location.replace("/FeverFairy/hardGame.html")
+          location.replace("/feverfairy/hardgame.html")
         } else if (currentImg == img4) {
-          location.replace("/FeverFairy/game.html")
+          location.replace("/feverfairy/game.html")
         }
     }
   }
