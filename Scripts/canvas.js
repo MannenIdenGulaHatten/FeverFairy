@@ -17,10 +17,6 @@ temp.src = 'Images/Thermo.png'; // temp gauge image
 const flash = new Image();
 flash.src = 'Images/Flashlight.png'; // temp gauge image
 
-/*const door1 = new Image();
-door1.src = 'Images/Door1.png'; // door image
-const door2 = new Image();
-door2.src = 'Images/Door1.png'; // door image */
 
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
@@ -264,15 +260,17 @@ function draw() {
         ctx.clip();
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
-        monster.forEach(m => {m.draw(ctx)});
 
-        //ctx.drawImage(sten, stenX - stenOffsetX, stenY - stenOffsetY, 50, 50);
-
-        /*let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
-        ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
-        let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
-        ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
-        */
+        monster
+        .slice() // dosent change the array permanently
+        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+        .forEach(m => m.draw(ctx));
+    
+        furniture //draws out furniture seperatley
+        .slice() 
+        .sort((a, b) => a.z - b.z) 
+        .forEach(m => m.draw(ctx));
+        
         ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
@@ -293,16 +291,6 @@ function draw() {
         displayPopup(index);
     }
 
-    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
-    monster
-    .slice() // dosent change the array permanently
-    .sort((a, b) => a.z - b.z) // smaller z = further back
-    .forEach(m => m.draw(ctx));
-
-    furniture
-    .slice() //draws out furniture seperatley
-    .sort((a, b) => a.z - b.z) 
-    .forEach(m => m.draw(ctx));
     // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
     let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
@@ -318,6 +306,8 @@ function draw() {
     ctx.font = "50px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.fillText(Math.floor(fever) + "°", scalePos(75,"X"), (530));
+
+
 
     requestAnimationFrame(draw);
 }
