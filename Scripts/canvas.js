@@ -95,13 +95,14 @@ class imageMonsters {           // this class makes it possible to easily make a
     if (this.loaded && this.visible) {
       const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
       const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
+      let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
 
       ctx.drawImage( // gör paralaxx för bilderna
         this.image,
         this.x - offsetX * this.paralaxx, 
         this.y - offsetY * this.paralaxx,
-        this.width,
-        this.height
+        Size.X,
+        Size.Y
       ); 
     }
   }
