@@ -259,9 +259,21 @@ function draw() {
         ctx.clip();
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
-        monster.forEach(m => {m.draw(ctx)});
+        //monster.forEach(m => {m.draw(ctx)});
 
-
+        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.restore();
+                
+        monster
+        .slice() // dosent change the array permanently
+        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+        .forEach(m => m.draw(ctx));
+    
+        furniture //draws out furniture seperatley
+        .slice() 
+        .sort((a, b) => a.z - b.z) 
+        .forEach(m => m.draw(ctx));
     } else {
         dead = true;
         // bro died 🤣🤣🤣
@@ -278,21 +290,6 @@ function draw() {
     for (const index in imagePopups) {  
         displayPopup(index);
     }
-
-    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
-    monster
-    .slice() // dosent change the array permanently
-    .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-    .forEach(m => m.draw(ctx));
-
-    furniture //draws out furniture seperatley
-    .slice() 
-    .sort((a, b) => a.z - b.z) 
-    .forEach(m => m.draw(ctx));
-
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.restore();
 
     // fever gauge thermometer
     let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
