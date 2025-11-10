@@ -61,6 +61,7 @@ let objectsFound = 0;
 let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 let feverHeight = 0;
 let dead = false;
+let flashCooldown = Date.now();
 
 // sounds my freind
 const sound = new Audio('Sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
@@ -125,34 +126,34 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('Images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2,'kitchen',565 ),
-    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
-    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
-    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Banana b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565 ),
+    new imageMonsters ('Images/kitchenBlack/Basket b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Bird b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Chainsaw b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Chili b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Coathanger b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/cuttingBoard b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Dishes b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/door 1 b.png', 800, 310, 50, 50, 1, 2,'Kitchen',1),
+    new imageMonsters ('Images/kitchenBlack/door 2 b.png', 800, 310, 50, 50, 1, 2,'Kitchen',1),
+    new imageMonsters ('Images/kitchenBlack/Flaska b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/FryingPan b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/KnifeHolder b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Monkey b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Slide b.png', 800, 310, 50, 50, 1, 2,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Snake b.png', 800, 310, 50, 50, 1, 2,'Kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Tenticle b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Tophat b.png', 800, 310, 50, 50, 1, 2,'Kitchen',645),
 ];
 
 const furniture = [ // place furnitures here or else they dissapear when clicked on :P
-    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 2,'kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1,'kitchen',565),
-    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 1,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1,'kitchen',440),
-    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1,'kitchen',645),
-    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 1,'kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Carpet b.png', 400, 450, 530, 270, 1, 1,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Table b.png', 528, 405, 254, 149, 1, 2,'Kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Counter b.png', 800, 310, 50, 50, 1, 1,'Kitchen',565),
+    new imageMonsters ('Images/kitchenBlack/Fridge b.png', 750, 290, 130, 200, 1, 1,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Oven b.png', 800, 310, 50, 50, 1, 1,'Kitchen',440),
+    new imageMonsters ('Images/kitchenBlack/Ovenfan b.png', 800, 310, 50, 50, 1, 1,'Kitchen',645),
+    new imageMonsters ('Images/kitchenBlack/Sink b.png', 600, 355, 84, 100, 1, 1,'Kitchen',645),
 ];
 
 function newGame(selectedDiff) {
@@ -265,7 +266,7 @@ function draw() {
         .slice() // dosent change the array permanently
         .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
         .forEach(m => {
-            if (colorFreq == m.colorFreq) {
+            if (colorFreq == m.colorFreq) { 
                 m.draw(ctx)
             }
         });
@@ -274,12 +275,20 @@ function draw() {
         .slice() 
         .sort((a, b) => a.z - b.z) 
         .forEach(m => {
-            if (colorFreq == m.colorFreq) {
+            if ((colorFreq == m.colorFreq || m.colorFreq == 1) && room == m.room) {
                 m.draw(ctx)
             }
         });
 
-        ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+        if (colorFreq == 440) {
+            ctx.fillStyle = 'rgba(255, 0, 0, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+        } else if (colorFreq == 565) {
+            ctx.fillStyle = 'rgba(0, 255, 0, 0.1)';
+        } else if (colorFreq == 645) {
+            ctx.fillStyle = 'rgba(0, 0, 255, 0.1)';
+        } else {
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+        }
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
     } else {
@@ -326,12 +335,24 @@ window.addEventListener('resize', () => {
 });
 
 document.addEventListener('keydown', (event) => {
+    nextFreq = 1; 
+
     if (event.key == "1") {
-        colorFreq = 440; // red
+        nextFreq = 440; // red
     } else if (event.key == "2") {
-        colorFreq = 565; // green
+        nextFreq = 565; // green
     } else if (event.key == "3") {
-        colorFreq = 645; // blue
+        nextFreq = 645; // blue
+    }
+
+    if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq) { 
+        flashCooldown = Date.now() + 2000; // 200 ms cooldown
+
+        colorFreq = 1;
+
+        setTimeout(() => {
+            colorFreq = nextFreq;
+        }, 1500)
     }
 });
 
