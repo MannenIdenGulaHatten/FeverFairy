@@ -161,11 +161,13 @@ function displayPopup(popupName) {
         const popupY = (canvas.height - popupHeight) / 2;
 
         popupInfo.Exit = {
-            x1: popupX + popupWidth*0.85 - 50,
-            y1: popupY + popupHeight*0.2 + 10,
-            x2: popupX + popupWidth*0.85 - 10,
-            y2: popupY + popupHeight*0.2 + 50
+            x1: popupX + popupWidth*0.75,
+            y1: popupY + popupHeight*0.25,
+            x2: popupX + popupWidth*0.85,
+            y2: popupY + popupHeight*0.35,
         }
+
+        console.log(popupInfo.Exit)
 
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
     }
