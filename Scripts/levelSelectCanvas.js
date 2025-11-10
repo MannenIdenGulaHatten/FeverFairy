@@ -13,24 +13,30 @@ img4.src = 'Images/easyLevel.png'
 
 let currentImg = img4; //default difficulty
 
+const sound = new Audio('Sounds/click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
+
 canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
+ 
 
-
-  if (y >= 150 && y <= 425) {
+  if (y >= 150 && y <= 425) {        
+    sound.play()
+    .then(() => console.log('Ljudet spelas upp!'))
+    .catch(err => console.error('Kunde inte spela upp ljudet:', err));
     if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {
         if (currentImg == img) {
-        currentImg = img4;
+          currentImg = img4;
+
         } else if (currentImg == img4) {
-        currentImg = img;
+          currentImg = img;
         }
     } else if (x >= 420 && x <= 945) {
         if (currentImg == img) {
-        location.replace("http://localhost:8080/FeverFairy/hardGame.html")
+          location.replace("/FeverFairy/hardGame.html")
         } else if (currentImg == img4) {
-        location.replace("http://localhost:8080/FeverFairy/game.html")
+          location.replace("/FeverFairy/game.html")
         }
     }
   }
