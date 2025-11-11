@@ -216,7 +216,7 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png', 1400, 300, 50, 50, 1, 4, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/vampire_b.png', 600, 315, 50, 50, 1, 4, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
 
 ]
@@ -318,7 +318,7 @@ function scalePos(pos, type) {
     }
 }
 function increaseFever() {
-    if (imagePopups["Menu"].Enabled < Date.now() && !dead) {
+    if (imagePopups["Menu"].Enabled < Date.now() && !dead && !win) {
         fever += 1 / 120; // increase fever by 1 every 90 seconds
     }
 }
@@ -349,7 +349,7 @@ function draw() {
     const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
-    if (fever < maxFever && !dead && !win) {
+    if (fever < maxFever && objectsFound < maxObjects && !dead && !win) {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -403,6 +403,7 @@ function draw() {
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(0, 255, 0)";
         ctx.fillText("u won my friend", 250, 300);
+        ctx.fillText("Score: " + Math.floor(fever * 100) / 100 + "°", 250, 400);
     }
 
     for (const index in imagePopups) {
@@ -428,6 +429,17 @@ function draw() {
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.fillText(Math.floor(Math.min(fever, maxFever)) + "°", scalePos(95, "X"), (530));
 
+    if (colorFreq == 440) {
+        ctx.fillStyle = 'rgb(255, 0, 0)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+    } else if (colorFreq == 565) {
+        ctx.fillStyle = 'rgb(0, 255, 0)';
+    } else if (colorFreq == 645) {
+        ctx.fillStyle = 'rgb(0, 0, 255)';
+    } else {
+        ctx.fillStyle = 'rgb(0,0,0)';
+    }
+    ctx.fillText(colorFreq + " THz", scalePos(60, "X"), (600));
+
     if (doorTween >= Date.now()) {
         ctx.fillStyle = "rgba(0, 0, 0, "+ (doorTween-Date.now())/1000 +")"
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -452,8 +464,8 @@ function draw() {
 
         ctx.font = "50px Cursive";
         ctx.fillStyle = "rgba(255, 255, 255, "+ (colorTween-Date.now())/1000 +")";
-        ctx.fillText(colorText1, 200, 300);
-        ctx.fillText(colorText2, 300, 350);
+        ctx.fillText(colorText1, scalePos(250,"X"), scalePos(300,"Y"));
+        ctx.fillText(colorText2, scalePos(350,"X"), scalePos(350,"Y"));
     }   
 
     requestAnimationFrame(draw);
@@ -491,6 +503,8 @@ window.addEventListener('click', function (event) {
     const height = window.innerHeight;
     const x = event.clientX;
     const y = event.clientY;
+
+    console.log(objectsFound, maxObjects)
 
     if (y >= height * 0.025 && y <= height * 0.125) {
         if (x >= width * 0.025 && x <= width * 0.125) { // if you click the menu button
