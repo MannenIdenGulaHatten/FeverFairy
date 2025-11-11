@@ -71,10 +71,6 @@ const sound3 = new Audio('sounds/click3.ogg')
 const sound5 = new Audio('sounds/dooropen.wav')
 const sound6 = new Audio('sounds/ficklampaswitch.wav')
 
-
-
-
-
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
     constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
         this.x = x;
@@ -124,8 +120,6 @@ class imageMonsters {           // this class makes it possible to easily make a
         );
     }
 }
-
-
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
@@ -202,7 +196,6 @@ function displayPopup(popupName) {
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
     }
 }
-
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
@@ -411,7 +404,7 @@ window.addEventListener('click', function (event) {
 
         for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
             const m = monster[i];
-            if (m.visible && m.ifMonsterClicked(x, y) && m.room == room) {
+            if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                 m.visible = false; //makes it invisible
                 monsterHit = true;
                 fever += 1/3;
