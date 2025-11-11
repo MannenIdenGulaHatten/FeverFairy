@@ -249,9 +249,6 @@ function draw() {
     const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
-
-
-
     /*const stenX =600;
     const stenY =300;
     const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
@@ -269,17 +266,6 @@ function draw() {
         ctx.clip();
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
-
-
-
-        furniture //draws out furniture seperatley
-            .slice()
-            .sort((a, b) => a.z - b.z)
-            .forEach(m => {
-                if ((colorFreq == m.colorFreq || m.colorFreq == 1) && room == m.room) {
-                    m.draw(ctx)
-                }
-            });
 
         monster
             .slice() // dosent change the array permanently
@@ -420,7 +406,6 @@ window.addEventListener('click', function (event) {
         }
     }
 
-    let monsterHit = false;
     if (!dead) {
         let monsterHit = false;
 
@@ -429,6 +414,7 @@ window.addEventListener('click', function (event) {
             if (m.visible && m.ifMonsterClicked(x, y) && m.room == room) {
                 m.visible = false; //makes it invisible
                 monsterHit = true;
+                fever += 1/3;
                 break
             }
         }
