@@ -260,6 +260,15 @@ function draw() {
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
 
+        abnormalties
+            .slice() // dosent change the array permanently
+            .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+            .forEach(m => {
+                if (colorFreq == m.colorFreq && room == m.room) {
+                    m.draw(ctx)
+                }
+            });
+
         monster
             .slice() // dosent change the array permanently
             .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
@@ -401,14 +410,27 @@ window.addEventListener('click', function (event) {
 
     if (!dead) {
         let monsterHit = false;
+        let abnormaltyHit = false;
 
-        for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
-            const m = monster[i];
-            if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+        for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+            const m = abnormalties[i];
+            if (!abnormaltyHit && m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                 m.visible = false; //makes it invisible
-                monsterHit = true;
-                fever += 1/3;
+                abnormaltyHit = true;
+                objectsFound += 1;
                 break
+            }
+        }
+
+        if (!abnormaltyHit) {
+            for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                const m = monster[i];
+                if (!monsterHit && m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                    m.visible = false; //makes it invisible
+                    monsterHit = true;
+                    fever += 1 / 3;
+                    break
+                }
             }
         }
 
@@ -423,8 +445,6 @@ window.addEventListener('click', function (event) {
                 sound4.volume = 0
             } else if (x >= width * 0.1 && x <= width * 0.25) { // mutes incorrect sound if clicking on the bathroom door
                 sound4.volume = 0
-
-
             }
         }
     }
