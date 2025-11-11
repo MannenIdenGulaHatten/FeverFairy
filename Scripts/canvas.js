@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 8000;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -193,7 +193,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters ('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2,'bedroom',565),
     new imageMonsters ('images/bedroomblack/dogpillow_b.png', 480, 680, 50, 50, 1, 2,'bedroom',440),
     new imageMonsters ('images/bedroomblack/pyramid_b.png', 600, 300, 50, 50, 1, 2,'bedroom',645),
-    new imageMonsters ('images/bedroomblack/ac_b.png', 500, 450, 50, 50, 1, 4,'bedroom',645),
+    new imageMonsters ('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4,'bedroom',645),
     new imageMonsters ('images/bedroomblack/pillow1_b.png', 530, 450, 50, 50, 1, 3,'bedroom',440),
     new imageMonsters ('images/bedroomblack/pillow2_b.png', 470, 450, 50, 50, 1, 3,'bedroom',565),
     new imageMonsters ('images/bedroomblack/lamp_b.png', 850, 300, 50, 50, 1, 3,'bedroom',565),
@@ -214,6 +214,8 @@ const doors = [
     new imageMonsters('images/kitchenblack/door_1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/door_2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/bathroomblack/door_b.png', 1050, 255, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bedroomblack/door_b.png', 65, 225, 50, 50, 1, 2, 'bedroom', 565),
+    
 ]
 
 function newGame(selectedDiff) {
