@@ -129,23 +129,23 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters ('images/kitchenblack/banana_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565 ),
-    new imageMonsters ('images/kitchenblack/basket_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/bird_b.png', 700, 375, 254, 149, 1, 1,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/banana_b.png', 780, 300, 130, 200, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/basket_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/bird_b.png', 670, 400, 254, 149, 1, 1,'kitchen',645),
     new imageMonsters ('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/chili_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/chili_b.png', 495, 380, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
     new imageMonsters ('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
     new imageMonsters ('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
     new imageMonsters ('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
     new imageMonsters ('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/monkey_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/snake_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/tenticle_b.png', 605, 365, 84, 100, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/snake_b.png', 760, 370, 130, 200, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/tenticle_b.png', 590, 370, 84, 100, 1, 2,'kitchen',645),
     new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
 ];
 
@@ -279,7 +279,7 @@ function draw() {
             }
         });
 
-                monster
+        monster
         .slice() // dosent change the array permanently
         .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
         .forEach(m => {
@@ -435,7 +435,7 @@ window.addEventListener('click', function(event) {
         }
     }
     if (!monsterHit) console.log("Wrong"); 
-     const sound4 = new Audio('sounds/incorrect.mp3')
+        const sound4 = new Audio('sounds/incorrect.mp3')
         sound4.play()
       if (y >= height * 0.4 && y <= height * 0.8) {
         if (x >= width * 0.75 && x <= width * 0.9) { // mutes incorrect sound when clicking on a door
