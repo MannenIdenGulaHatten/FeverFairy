@@ -212,7 +212,7 @@ const monster = [ // this is where you decide the cordinates you place the image
 ];
 
 const abnormalties = [
-    sound7.play()
+
 ]
 
 const buckets = [
