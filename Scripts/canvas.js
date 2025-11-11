@@ -63,9 +63,11 @@ let fever = 0;
 let maxFever = 0;
 let difficulty = "None";
 let objectsFound = 0;
+let maxObjects = 0;
 let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 let feverHeight = 0;
 let dead = false;
+let win = false;
 let flashCooldown = Date.now();
 
 // sounds my freind
@@ -159,7 +161,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/sink_b.png', 605, 360, 84, 100, 1, 1, 'kitchen', 645),
-            //bedroom
+    //bedroom
     new imageMonsters ('images/bedroomblack/bed_b.png', 265, 325, 50, 50, 1, 1,'bedroom',645),
     new imageMonsters ('images/bedroomblack/painting_b.png', 420, 215, 50, 50, 1, 1,'bedroom',440),
     new imageMonsters ('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2,'bedroom',565),
@@ -189,10 +191,12 @@ function newGame(selectedDiff) {
     difficulty = selectedDiff;
     fever = info.startFever;
     maxFever = info.maxFever;
+    maxObjects = info.abnormalties;
     objectsFound = 0
     feverHeight = 0
     colorFreq = 440
     dead = false
+    win = false
 }
 
 function playMusic() {
@@ -284,7 +288,7 @@ function draw() {
     const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
-    if (fever < maxFever && !dead) {
+    if (fever < maxFever && !dead && !win) {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -314,10 +318,10 @@ function draw() {
             ctx.fillStyle = 'rgba(0, 0, 255, 0.1)';
         } else {
             ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-        }
+        } 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
-    } else {
+    } else if (fever >= maxFever || dead) {
         dead = true;
         // bro died 🤣🤣🤣
         ctx.font = "100px Cursive";
@@ -328,6 +332,12 @@ function draw() {
         sound2.volume = 0.1;
         //startFever = 0;
         //fever = lerp(fever, 0, 0.01);
+    } else if (objectsFound >= maxObjects || win) {
+        win = true;
+        // bro won 🤣🤣🤣
+        ctx.font = "100px Cursive";
+        ctx.fillStyle = "rgb(0, 255, 0)";
+        ctx.fillText("u won my friend", 250, 300);
     }
 
     for (const index in imagePopups) {
