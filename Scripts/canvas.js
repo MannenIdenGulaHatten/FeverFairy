@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 8000;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -210,10 +210,14 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/cheese_b.png', 685, 490, 50, 50, 1, 3, 'bedroom', 645),
     new imageMonsters('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2, 'bedroom', 565),
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
+    new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 2, 'bathroom', 440),
 ]
 
 const buckets = [
     new imageMonsters('images/bathroomblack/green_color_bucket_b.png', 390, 480, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bedroomblack/blue_color_bucket_b.png', 390, 480, 50, 50, 1, 2, 'bedroom', 440),
 ]
 
 const doors = [
@@ -222,9 +226,6 @@ const doors = [
     new imageMonsters('images/kitchenblack/door_2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/bathroomblack/door_b.png', 1050, 255, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/door_b.png', 65, 225, 50, 50, 1, 2, 'bedroom', 565),
-    new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 2, 'bathroom', 440),
 
 ]
 
