@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 100;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -78,6 +78,8 @@ let feverHeight = 0;
 let dead = false;
 let win = false;
 let flashCooldown = Date.now();
+let doorTween = Date.now();
+let colorTween = Date.now();
 
 // sounds my freind
 const sound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
@@ -415,11 +417,39 @@ function draw() {
     ctx.drawImage(menu, 15, 15, menuSize.X, menuSize.Y);
 
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
-    ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);
+    ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);     
 
     ctx.font = "50px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.fillText(Math.floor(fever) + "°", scalePos(75, "X"), (530));
+
+    if (doorTween >= Date.now()) {
+        ctx.fillStyle = "rgba(0, 0, 0, "+ (doorTween-Date.now())/1000 +")"
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "100px Cursive";
+        ctx.fillStyle = "rgba(255, 255, 255, "+ (doorTween-Date.now())/1000 +")";
+        ctx.fillText(room, scalePos(425,"X"), scalePos(325,"Y"));
+    } else if (colorTween >= Date.now()) { 
+        let colorText1 = "";
+        let colorText2 = "";
+
+        if (colorUnlocked == 565) {
+            colorText1 = "You have unlocked the color green!";
+            colorText2 = "Use '2' to switch to it."
+            ctx.fillStyle = "rgba(0, 100, 0, "+ (colorTween-Date.now())/1000 +")";
+        } else if (colorUnlocked == 645) {
+            colorText1 = "You have unlocked the color blue!";
+            colorText2 = "Use '3' to switch to it."
+            ctx.fillStyle = "rgba(0, 0, 100, "+ (colorTween-Date.now())/1000 +")";
+        }
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "50px Cursive";
+        ctx.fillStyle = "rgba(255, 255, 255, "+ (colorTween-Date.now())/1000 +")";
+        ctx.fillText(colorText1, 200, 300);
+        ctx.fillText(colorText2, 300, 350);
+    }   
 
     requestAnimationFrame(draw);
 }
@@ -430,7 +460,7 @@ window.addEventListener('resize', () => {
 });
 
 document.addEventListener('keydown', (event) => {
-    nextFreq = 1;
+    let nextFreq = 1;
 
     if (event.key == "1") {
         nextFreq = 440; // red
@@ -515,6 +545,7 @@ window.addEventListener('click', function (event) {
 
                 }
                 doorHit = true;
+                doorTween = Date.now() + 1250;
                 sound5.play();
                 break
             }
@@ -532,6 +563,16 @@ window.addEventListener('click', function (event) {
                     } else if (colorUnlocked == 565) {
                         colorUnlocked = 645;
                     }
+
+                    flashCooldown = Date.now() + 2000; // 200 ms cooldown
+                    colorTween = Date.now() + 3250;
+                    sound6.play()
+                    colorFreq = 1;
+            
+                    setTimeout(() => {
+                        colorFreq = colorUnlocked;
+                    }, 1500)
+
                     break
                 }
             }
