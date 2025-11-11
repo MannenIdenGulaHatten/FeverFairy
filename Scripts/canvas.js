@@ -123,24 +123,24 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters('images/kitchenblack/banana_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/basket_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/bird_b.png', 700, 375, 254, 149, 1, 1, 'kitchen', 645),
-    new imageMonsters('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/chili_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/coathanger_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
-    new imageMonsters('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
-    new imageMonsters('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
-    new imageMonsters('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/fryingpan_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/monkey_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/snake_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/tenticle_b.png', 605, 365, 84, 100, 1, 2, 'kitchen', 645),
-    new imageMonsters('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
+    new imageMonsters ('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2,'kitchen',565 ),
+    new imageMonsters ('images/kitchenblack/basket_b.png', 800, 500, 500, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/chili_b.png', 495, 380, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
+    new imageMonsters ('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
+    new imageMonsters ('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2,'kitchen',565),
+    new imageMonsters ('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
     // furniture
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
@@ -365,7 +365,7 @@ window.addEventListener('click', function (event) {
 
 
     if (y >= height * 0.4 && y <= height * 0.8) {
-        if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
+        if (room != "bedroom" && x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
             sound5.play()
 
             if (room == "kitchen") {
@@ -375,7 +375,7 @@ window.addEventListener('click', function (event) {
                 room = "kitchen"
                 img.src = 'images/gameon' + room + '.png';
             }
-        } else if (x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
+        } else if (room != "bathroom" && x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
             sound5.play()
 
             if (room == "kitchen") {
