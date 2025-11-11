@@ -365,7 +365,7 @@ window.addEventListener('click', function (event) {
 
 
     if (y >= height * 0.4 && y <= height * 0.8) {
-        if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
+        if (room != "bedroom" && x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
             sound5.play()
 
             if (room == "kitchen") {
@@ -375,7 +375,7 @@ window.addEventListener('click', function (event) {
                 room = "kitchen"
                 img.src = 'images/gameon' + room + '.png';
             }
-        } else if (x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
+        } else if (room != "bathroom" && x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
             sound5.play()
 
             if (room == "kitchen") {
