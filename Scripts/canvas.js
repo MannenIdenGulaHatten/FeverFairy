@@ -442,11 +442,11 @@ function draw() {
         if (colorUnlocked == 565) {
             colorText1 = "You have unlocked the color green!";
             colorText2 = "Use '2' to switch to it."
-            ctx.fillStyle = "rgba(155, 255, 155, "+ (colorTween-Date.now())/1000 +")";
+            ctx.fillStyle = "rgba(0, 100, 0, "+ (colorTween-Date.now())/1000 +")";
         } else if (colorUnlocked == 645) {
             colorText1 = "You have unlocked the color blue!";
             colorText2 = "Use '3' to switch to it."
-            ctx.fillStyle = "rgba(155, 155, 255, "+ (colorTween-Date.now())/1000 +")";
+            ctx.fillStyle = "rgba(0, 0, 100, "+ (colorTween-Date.now())/1000 +")";
         }
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
