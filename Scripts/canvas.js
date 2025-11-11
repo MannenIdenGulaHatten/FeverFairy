@@ -71,10 +71,6 @@ const sound3 = new Audio('sounds/click3.ogg')
 const sound5 = new Audio('sounds/dooropen.wav')
 const sound6 = new Audio('sounds/ficklampaswitch.wav')
 
-
-
-
-
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
     constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
         this.x = x;
@@ -124,8 +120,6 @@ class imageMonsters {           // this class makes it possible to easily make a
         );
     }
 }
-
-
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
@@ -203,7 +197,6 @@ function displayPopup(popupName) {
     }
 }
 
-
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
     return Math.max(Math.min(num, max), min);
@@ -266,6 +259,15 @@ function draw() {
         ctx.clip();
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
+
+        abnormalties
+            .slice() // dosent change the array permanently
+            .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+            .forEach(m => {
+                if (colorFreq == m.colorFreq && room == m.room) {
+                    m.draw(ctx)
+                }
+            });
 
         monster
             .slice() // dosent change the array permanently
@@ -363,7 +365,7 @@ window.addEventListener('click', function (event) {
 
 
     if (y >= height * 0.4 && y <= height * 0.8) {
-        if (x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
+        if (room != "bedroom" && x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
             sound5.play()
 
             if (room == "kitchen") {
@@ -373,7 +375,7 @@ window.addEventListener('click', function (event) {
                 room = "kitchen"
                 img.src = 'images/gameon' + room + '.png';
             }
-        } else if (x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
+        } else if (room != "bathroom" && x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
             sound5.play()
 
             if (room == "kitchen") {
@@ -408,14 +410,27 @@ window.addEventListener('click', function (event) {
 
     if (!dead) {
         let monsterHit = false;
+        let abnormaltyHit = false;
 
-        for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
-            const m = monster[i];
-            if (m.visible && m.ifMonsterClicked(x, y) && m.room == room) {
+        for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+            const m = abnormalties[i];
+            if (!abnormaltyHit && m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                 m.visible = false; //makes it invisible
-                monsterHit = true;
-                fever += 1/3;
+                abnormaltyHit = true;
+                objectsFound += 1;
                 break
+            }
+        }
+
+        if (!abnormaltyHit) {
+            for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                const m = monster[i];
+                if (!monsterHit && m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                    m.visible = false; //makes it invisible
+                    monsterHit = true;
+                    fever += 1 / 3;
+                    break
+                }
             }
         }
 
@@ -430,8 +445,6 @@ window.addEventListener('click', function (event) {
                 sound4.volume = 0
             } else if (x >= width * 0.1 && x <= width * 0.25) { // mutes incorrect sound if clicking on the bathroom door
                 sound4.volume = 0
-
-
             }
         }
     }
