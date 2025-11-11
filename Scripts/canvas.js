@@ -44,12 +44,14 @@ const imagePopups = {
     ["Menu"]: {
         Enabled: 0,
         imagesrc: "images/popup.png",
-        Exit: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
+        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
+        Exit: {}
     },
     ["Info"]: {
         Enabled: Date.now() + 1e9,
         imagesrc: "images/tutorial.png",
-        Exit: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
+        ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
+        Exit: {}
     }
 }
 
@@ -111,36 +113,36 @@ class imageMonsters {           // this class makes it possible to easily make a
         const paralaxY = this.y - offsetY;
         const paralaxX = this.x - offsetX;
 
+        let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
+
         return (
             x >= paralaxX &&
-            x <= paralaxX + this.width &&
+            x <= paralaxX + Size.X &&
 
             y >= paralaxY &&
-            y <= paralaxY + this.height
+            y <= paralaxY + Size.Y
         );
     }
 }
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-    new imageMonsters ('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2,'kitchen',565 ),
-    new imageMonsters ('images/kitchenblack/basket_b.png', 800, 500, 500, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3,'kitchen',645),
-    new imageMonsters ('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/chili_b.png', 495, 380, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-    new imageMonsters ('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
-    new imageMonsters ('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
-    new imageMonsters ('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2,'kitchen',645),
-    new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/basket_b.png', 800, 500, 500, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/chili_b.png', 495, 380, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/fryingpan_b.png', 800, 500, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/banana_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/basket_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/bird_b.png', 700, 375, 254, 149, 1, 1, 'kitchen', 645),
@@ -203,19 +205,28 @@ function displayPopup(popupName) {
         let img = new Image();
         img.src = popupInfo.imagesrc;
 
-        const popupWidth = canvas.width * 0.6;
+        const popupWidth = canvas.width * 0.4;
         const popupHeight = (img.naturalHeight / img.naturalWidth) * popupWidth;
 
         const popupX = (canvas.width - popupWidth) / 2;
         const popupY = (canvas.height - popupHeight) / 2;
 
         popupInfo.Exit = {
-            x1: popupX + popupWidth * 0.75,
-            y1: popupY + popupHeight * 0.25,
-            x2: popupX + popupWidth * 0.85,
-            y2: popupY + popupHeight * 0.35,
+            x1: popupX + popupWidth * popupInfo.ExitHitbox.x1,
+            y1: popupY + popupHeight * popupInfo.ExitHitbox.y1,
+            x2: popupX + popupWidth * popupInfo.ExitHitbox.x2,
+            y2: popupY + popupHeight * popupInfo.ExitHitbox.y2,
         }
+
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
+    }
+}
+
+function hideOtherPopups(selected) {
+    for (const index in imagePopups) {
+        if (index != selected) {
+            imagePopups[index].Enabled = 0;
+        }
     }
 }
 
@@ -379,6 +390,7 @@ window.addEventListener('click', function (event) {
         if (x >= 0 && x <= width * 0.1) { // if you click the menu button
             sound3.play()
             imagePopups["Menu"].Enabled = Date.now() + 1e9; // shows menu for a long time
+            hideOtherPopups("Menu");
         }
     }
 
@@ -460,7 +472,7 @@ window.addEventListener('click', function (event) {
                         }
                     });
             }
-            
+
             if (!monsterHit && !abnormalityHit) {
                 console.log("Wrong");
                 const sound4 = new Audio('sounds/incorrect.mp3')
