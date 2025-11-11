@@ -131,8 +131,6 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/coathanger_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
-    new imageMonsters('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
     new imageMonsters('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/fryingpan_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
@@ -154,6 +152,12 @@ const monster = [ // this is where you decide the cordinates you place the image
 
 const abnormalties = [
 
+]
+
+const doors = [
+    // doors
+    new imageMonsters('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
+    new imageMonsters('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
 ]
 
 function newGame(selectedDiff) {
@@ -260,16 +264,8 @@ function draw() {
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
 
-        abnormalties
-            .slice() // dosent change the array permanently
-            .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-            .forEach(m => {
-                if (colorFreq == m.colorFreq && room == m.room) {
-                    m.draw(ctx)
-                }
-            });
-
-        monster
+        let allObjects = [...doors, ...abnormalties, ...monster]
+        allObjects
             .slice() // dosent change the array permanently
             .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
             .forEach(m => {
@@ -325,8 +321,6 @@ function draw() {
     ctx.fillStyle = "rgb(255, 255, 255)";
     ctx.fillText(Math.floor(fever) + "°", scalePos(75, "X"), (530));
 
-
-
     requestAnimationFrame(draw);
 }
 
@@ -363,31 +357,6 @@ window.addEventListener('click', function (event) {
     const x = event.clientX;
     const y = event.clientY;
 
-
-    if (y >= height * 0.4 && y <= height * 0.8) {
-        if (room != "bedroom" && x >= width * 0.75 && x <= width * 0.9) { // if you click the menu button
-            sound5.play()
-
-            if (room == "kitchen") {
-                room = "bedroom"
-                img.src = 'images/gameon' + room + '.png';
-            } else if (room == "bathroom") {
-                room = "kitchen"
-                img.src = 'images/gameon' + room + '.png';
-            }
-        } else if (room != "bathroom" && x >= width * 0.1 && x <= width * 0.25) { // if you click the menu button
-            sound5.play()
-
-            if (room == "kitchen") {
-                room = "bathroom"
-                img.src = 'images/gameon' + room + '.png';
-            } else if (room == "bedroom") {
-                room = "kitchen"
-                img.src = 'images/gameon' + room + '.png';
-            }
-        }
-    }
-
     if (y >= height * 0 && y <= height * 0.1) {
         if (x >= 0 && x <= width * 0.1) { // if you click the menu button
             sound3.play()
@@ -409,42 +378,75 @@ window.addEventListener('click', function (event) {
     }
 
     if (!dead) {
+        let doorHit = false;
         let monsterHit = false;
-        let abnormaltyHit = false;
+        let abnormalityHit = false;
 
-        for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
-            const m = abnormalties[i];
-            if (!abnormaltyHit && m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
-                m.visible = false; //makes it invisible
-                abnormaltyHit = true;
-                objectsFound += 1;
+        for (let i = doors.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+            const m = doors[i];
+            if (m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                if (x >= width * 0.5) {
+                    if (room == "kitchen") {
+                        room = "bedroom"
+                        img.src = 'images/gameon' + room + '.png';
+                    } else if (room == "bathroom") {
+                        room = "kitchen"
+                        img.src = 'images/gameon' + room + '.png';
+                    }
+                } else if (x <= width * 0.5) {
+                    if (room == "kitchen") {
+                        room = "bathroom"
+                        img.src = 'images/gameon' + room + '.png';
+                    } else if (room == "bedroom") {
+                        room = "kitchen"
+                        img.src = 'images/gameon' + room + '.png';
+                    }
+                }
+                doorHit = true;
+                sound5.play();
                 break
             }
         }
 
-        if (!abnormaltyHit) {
-            for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
-                const m = monster[i];
-                if (!monsterHit && m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+        if (!doorHit) {
+            for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                const m = abnormalties[i];
+                if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                     m.visible = false; //makes it invisible
-                    monsterHit = true;
-                    fever += 1 / 3;
+                    abnormalityHit = true;
+                    objectsFound += 1;
                     break
                 }
             }
-        }
 
-        if (!monsterHit) {
-            console.log("Wrong");
-            const sound4 = new Audio('sounds/incorrect.mp3')
-            sound4.play()
-        }
+            if (!abnormalityHit) {
+                let objectsTouched = [];
 
-        if (y >= height * 0.4 && y <= height * 0.8) {
-            if (x >= width * 0.75 && x <= width * 0.9) { // mutes incorrect sound when clicking on a door
-                sound4.volume = 0
-            } else if (x >= width * 0.1 && x <= width * 0.25) { // mutes incorrect sound if clicking on the bathroom door
-                sound4.volume = 0
+                for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                    const m = monster[i];
+                    if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                        objectsTouched.push(m)
+                    }
+                }
+
+                objectsTouched
+                    .slice() // dosent change the array permanently
+                    .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                    .forEach((m, i) => {
+                        console.log(i);
+
+                        if (i == 0) {
+                            m.visible = false; //makes it invisible
+                            monsterHit = true;
+                            fever += 1 / 3;
+                        }
+                    });
+            }
+            
+            if (!monsterHit && !abnormalityHit) {
+                console.log("Wrong");
+                const sound4 = new Audio('sounds/incorrect.mp3')
+                sound4.play()
             }
         }
     }
