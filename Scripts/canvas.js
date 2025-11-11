@@ -197,8 +197,8 @@ const abnormalties = [
 
 const doors = [
     // doors
-    new imageMonsters('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
-    new imageMonsters('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 1),
+    new imageMonsters('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
 ]
 
 function newGame(selectedDiff) {
