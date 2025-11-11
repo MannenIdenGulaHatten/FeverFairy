@@ -158,6 +158,7 @@ const furniture = [ // place furnitures here or else they dissapear when clicked
     new imageMonsters ('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 1,'kitchen',440),
     new imageMonsters ('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1,'kitchen',645),
     new imageMonsters ('images/kitchenblack/sink_b.png', 605, 360, 84, 100, 1, 1,'kitchen',645),
+    new imageMonsters ('images/bathroomblack/mini_mirror_b.png', 605, 360, 84, 100, 1, 1,'bathroom',645),
 ];
 
 function newGame(selectedDiff) {
@@ -435,7 +436,7 @@ window.addEventListener('click', function(event) {
         }
     }
     if (!monsterHit) console.log("Wrong"); 
-     const sound4 = new Audio('sounds/incorrect.mp3')
+        const sound4 = new Audio('sounds/incorrect.mp3')
         sound4.play()
       if (y >= height * 0.4 && y <= height * 0.8) {
         if (x >= width * 0.75 && x <= width * 0.9) { // mutes incorrect sound when clicking on a door
