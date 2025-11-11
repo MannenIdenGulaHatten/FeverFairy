@@ -438,7 +438,7 @@ function draw() {
     } else {
         ctx.fillStyle = 'rgb(0,0,0)';
     }
-    ctx.fillText(colorFreq + " THz", scalePos(60, "X"), (600));
+    ctx.fillText(colorFreq + " THz", scalePos(60, "X"), 600);
 
     if (doorTween >= Date.now()) {
         ctx.fillStyle = "rgba(0, 0, 0, "+ (doorTween-Date.now())/1000 +")"
