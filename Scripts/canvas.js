@@ -49,7 +49,7 @@ const imagePopups = {
         ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
         Exit: {},
         Buttons: [
-            { 
+            {
                 Name: "ExitGame",
                 Hitbox: { x1: 0.3, y1: 0.65, x2: 0.7, y2: 0.9 },
                 Pos: {}
@@ -270,14 +270,14 @@ function displayPopup(popupName) {
         }
 
         popupInfo.Buttons
-        .forEach(m => {
-            m.Pos = {
-                x1: popupX + popupWidth * m.Hitbox.x1,
-                y1: popupY + popupHeight * m.Hitbox.y1,
-                x2: popupX + popupWidth * m.Hitbox.x2,
-                y2: popupY + popupHeight * m.Hitbox.y2,
-            }
-        })
+            .forEach(m => {
+                m.Pos = {
+                    x1: popupX + popupWidth * m.Hitbox.x1,
+                    y1: popupY + popupHeight * m.Hitbox.y1,
+                    x2: popupX + popupWidth * m.Hitbox.x2,
+                    y2: popupY + popupHeight * m.Hitbox.y2,
+                }
+            })
 
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
     }
@@ -354,7 +354,7 @@ function draw() {
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
 
-        let allObjects = [...doors, ...abnormalties, ...monster]
+        let allObjects = [...doors, ...buckets, ...abnormalties, ...monster]
         allObjects
             .slice() // dosent change the array permanently
             .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
@@ -488,6 +488,7 @@ window.addEventListener('click', function (event) {
 
     if (!dead) {
         let doorHit = false;
+        let bucketHit = false;
         let monsterHit = false;
         let abnormalityHit = false;
 
@@ -520,44 +521,58 @@ window.addEventListener('click', function (event) {
         }
 
         if (!doorHit) {
-            
-            for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
-                const m = abnormalties[i];
+            for (let i = buckets.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                const m = buckets[i];
                 if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
-                    
                     m.visible = false; //makes it invisible
-                    abnormalityHit = true;
-                    objectsFound += 1;
+                    bucketHit = true;
 
+                    if (colorUnlocked == 440) {
+                        colorUnlocked = 565;
+                    } else if (colorUnlocked == 565) {
+                        colorUnlocked = 645;
+                    }
                     break
                 }
             }
 
-            if (!abnormalityHit) {
-                let objectsTouched = [];
-
-                for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
-                    const m = monster[i];
+            if (!bucketHit) {
+                for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                    const m = abnormalties[i];
                     if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
-                        objectsTouched.push(m)
+                        m.visible = false; //makes it invisible
+                        abnormalityHit = true;
+                        objectsFound += 1;
+                        break
                     }
                 }
 
-                objectsTouched
-                    .slice() // dosent change the array permanently
-                    .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-                    .forEach((m, i) => {
-                        console.log(i);
+                if (!abnormalityHit) {
+                    let objectsTouched = [];
 
-                        if (i == 0) {
-                            m.visible = false; //makes it invisible
-                            monsterHit = true;
-                            fever += 1 / 3;
+                    for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                        const m = monster[i];
+                        if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                            objectsTouched.push(m)
                         }
-                    });
+                    }
+
+                    objectsTouched
+                        .slice() // dosent change the array permanently
+                        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                        .forEach((m, i) => {
+                            console.log(i);
+
+                            if (i == 0) {
+                                m.visible = false; //makes it invisible
+                                monsterHit = true;
+                                fever += 1 / 3;
+                            }
+                        });
+                }
             }
 
-            if (!monsterHit && !abnormalityHit) {
+            if (!monsterHit && !abnormalityHit && !bucketHit) {
                 console.log("Wrong");
                 const sound4 = new Audio('sounds/incorrect.mp3')
                 sound4.play()
