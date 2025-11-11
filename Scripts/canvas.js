@@ -85,6 +85,7 @@ const sound2 = new Audio('sounds/ambulance.mp3');//https://freesound.org/people/
 const sound3 = new Audio('sounds/click3.ogg')
 const sound5 = new Audio('sounds/dooropen.wav')
 const sound6 = new Audio('sounds/ficklampaswitch.wav')
+const sound7 = new Audio('sounds/correct.wav')
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
     constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
@@ -211,7 +212,7 @@ const monster = [ // this is where you decide the cordinates you place the image
 ];
 
 const abnormalties = [
-
+    sound7.play()
 ]
 
 const buckets = [
