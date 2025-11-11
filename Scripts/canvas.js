@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 8000;
+const radius = 80;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -63,9 +63,11 @@ let fever = 0;
 let maxFever = 0;
 let difficulty = "None";
 let objectsFound = 0;
+let maxObjects = 0;
 let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
 let feverHeight = 0;
 let dead = false;
+let win = false;
 let flashCooldown = Date.now();
 
 // sounds my freind
@@ -138,8 +140,6 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
     new imageMonsters ('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
-    new imageMonsters ('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
-    new imageMonsters ('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 2,'kitchen',1),
     new imageMonsters ('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
     new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 500, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
@@ -148,9 +148,25 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters ('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2,'kitchen',645),
     new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-
-        //furniture
-
+    //bathroom
+    new imageMonsters ('images/bathroomblack/shelf_b.png', 140, 285, 50, 50, 1, 2,'bathroom',565), 
+    new imageMonsters ('images/bathroomblack/carpet_b.png', 210, 592, 50, 50, 1, 2,'bathroom',645),
+    new imageMonsters ('images/bathroomblack/deo_b.png', 280, 445, 50, 50, 1, 2,'bathroom',645),
+    new imageMonsters ('images/bathroomblack/soap_b.png', 300, 405, 50, 50, 1, 2,'bathroom',565),
+    new imageMonsters ('images/bathroomblack/mini_mirror_b.png', 260, 300, 50, 50, 1, 2,'bathroom',440),
+    new imageMonsters ('images/bathroomblack/green_color_bucket_b.png', 390, 480, 50, 50, 1, 2,'bathroom',440),
+    new imageMonsters ('images/bathroomblack/mirror_b.png', 615, 315, 50, 50, 1, 2,'bathroom',440),
+    new imageMonsters ('images/bathroomblack/shower_drain_b.png', 805, 505, 50, 50, 1, 2,'bathroom',565),
+    new imageMonsters ('images/bathroomblack/shower_head_b.png', 822, 190, 50, 50, 1, 2,'bathroom',440), 
+    new imageMonsters ('images/bathroomblack/retrotv_b.png', 790, 210, 50, 50, 1, 2,'bathroom',645),
+    new imageMonsters ('images/bathroomblack/shower_knob_b.png', 900, 285, 50, 50, 1, 2,'bathroom',645),
+    new imageMonsters ('images/bathroomblack/sink_b.png', 615, 320, 50, 50, 1, 2,'bathroom',565),
+    new imageMonsters ('images/bathroomblack/toilet_b.png', 490, 430, 50, 50, 1, 2,'bathroom',645),
+    new imageMonsters ('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2,'bathroom',565),
+    new imageMonsters ('images/bathroomblack/toothbrush_b.png', 622, 425, 50, 50, 1, 2,'bathroom',440),
+    new imageMonsters ('images/bathroomblack/glass_b.png', 670, 417, 50, 50, 1, 2,'bathroom',645),
+    new imageMonsters ('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 2,'bathroom',440),
+    // furniture
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 1, 'kitchen', 565),
@@ -159,7 +175,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/sink_b.png', 605, 360, 84, 100, 1, 1, 'kitchen', 645),
-            //bedroom
+    //bedroom
     new imageMonsters ('images/bedroomblack/bed_b.png', 265, 325, 50, 50, 1, 1,'bedroom',645),
     new imageMonsters ('images/bedroomblack/painting_b.png', 420, 215, 50, 50, 1, 1,'bedroom',440),
     new imageMonsters ('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2,'bedroom',565),
@@ -177,10 +193,15 @@ const abnormalties = [
 
 ]
 
+const buckets = [
+
+]
+
 const doors = [
     // doors
-    new imageMonsters('images/kitchenblack/door_1_b.png', 800, 310, 50, 50, 1, 20, 'kitchen', 1),
-    new imageMonsters('images/kitchenblack/door_2_b.png', 800, 310, 50, 50, 1, 20, 'kitchen', 1),
+    new imageMonsters('images/kitchenblack/door_1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/door_2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/bathroomblack/door_b.png', 1050, 255, 50, 50, 1, 2, 'bathroom', 440),
 ]
 
 function newGame(selectedDiff) {
@@ -189,15 +210,17 @@ function newGame(selectedDiff) {
     difficulty = selectedDiff;
     fever = info.startFever;
     maxFever = info.maxFever;
+    maxObjects = info.abnormalties;
     objectsFound = 0
     feverHeight = 0
     colorFreq = 440
     dead = false
+    win = false
 }
 
 function playMusic() {
     sound.play()
-    sound.volume = 0.3
+    sound.volume = 0.7
     sound.loop = true;
 }
 
@@ -284,7 +307,7 @@ function draw() {
     const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
-    if (fever < maxFever && !dead) {
+    if (fever < maxFever && !dead && !win) {
         ctx.fillStyle = 'black';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
@@ -314,10 +337,10 @@ function draw() {
             ctx.fillStyle = 'rgba(0, 0, 255, 0.1)';
         } else {
             ctx.fillStyle = 'rgba(0, 0, 0, 1)';
-        }
+        } 
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
-    } else {
+    } else if (fever >= maxFever || dead) {
         dead = true;
         // bro died 🤣🤣🤣
         ctx.font = "100px Cursive";
@@ -328,6 +351,12 @@ function draw() {
         sound2.volume = 0.1;
         //startFever = 0;
         //fever = lerp(fever, 0, 0.01);
+    } else if (objectsFound >= maxObjects || win) {
+        win = true;
+        // bro won 🤣🤣🤣
+        ctx.font = "100px Cursive";
+        ctx.fillStyle = "rgb(0, 255, 0)";
+        ctx.fillText("u won my friend", 250, 300);
     }
 
     for (const index in imagePopups) {
