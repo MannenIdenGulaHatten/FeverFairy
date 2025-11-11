@@ -76,6 +76,7 @@ const sound2 = new Audio('sounds/ambulance.mp3');//https://freesound.org/people/
 const sound3 = new Audio('sounds/click3.ogg')
 const sound5 = new Audio('sounds/dooropen.wav')
 const sound6 = new Audio('sounds/ficklampaswitch.wav')
+const sound7 = new Audio('sounds/correct.wav')
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
     constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
@@ -190,7 +191,7 @@ const monster = [ // this is where you decide the cordinates you place the image
 ];
 
 const abnormalties = [
-
+    sound7.play()
 ]
 
 const buckets = [
@@ -475,12 +476,15 @@ window.addEventListener('click', function (event) {
         }
 
         if (!doorHit) {
+            
             for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
                 const m = abnormalties[i];
                 if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                    
                     m.visible = false; //makes it invisible
                     abnormalityHit = true;
                     objectsFound += 1;
+
                     break
                 }
             }
