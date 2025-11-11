@@ -158,12 +158,12 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/basket_b.png', 800, 500, 500, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/chili_b.png', 495, 380, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/chili_b.png', 430, 410, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/fryingpan_b.png', 800, 500, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/fryingpan_b.png', 445, 420, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2, 'kitchen', 440),
@@ -176,7 +176,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/bathroomblack/deo_b.png', 280, 445, 50, 50, 1, 2, 'bathroom', 645),
     new imageMonsters('images/bathroomblack/soap_b.png', 300, 405, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/mini_mirror_b.png', 260, 300, 50, 50, 1, 2, 'bathroom', 440),
-    new imageMonsters('images/bathroomblack/green_color_bucket_b.png', 390, 480, 50, 50, 1, 2, 'bathroom', 440),
+
     new imageMonsters('images/bathroomblack/mirror_b.png', 615, 315, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bathroomblack/shower_drain_b.png', 805, 505, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/shower_head_b.png', 822, 190, 50, 50, 1, 2, 'bathroom', 440),
@@ -216,7 +216,7 @@ const abnormalties = [
 ]
 
 const buckets = [
-
+    new imageMonsters('images/bathroomblack/green_color_bucket_b.png', 390, 480, 50, 50, 1, 2, 'bathroom', 440),
 ]
 
 const doors = [
