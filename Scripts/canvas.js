@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 8000;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -131,8 +131,8 @@ const monster = [ // this is where you decide the cordinates you place the image
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
     new imageMonsters ('images/kitchenblack/banana_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565 ),
     new imageMonsters ('images/kitchenblack/basket_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/bird_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-    new imageMonsters ('images/kitchenblack/chainsaw_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/bird_b.png', 700, 375, 254, 149, 1, 1,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2,'kitchen',440),
     new imageMonsters ('images/kitchenblack/chili_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
     new imageMonsters ('images/kitchenblack/coathanger_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
@@ -143,9 +143,9 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters ('images/kitchenblack/fryingpan_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
     new imageMonsters ('images/kitchenblack/monkey_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/slide_b.png', 800, 310, 50, 50, 1, 2,'kitchen',440),
+    new imageMonsters ('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2,'kitchen',440),
     new imageMonsters ('images/kitchenblack/snake_b.png', 800, 310, 50, 50, 1, 2,'kitchen',565),
-    new imageMonsters ('images/kitchenblack/tenticle_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
+    new imageMonsters ('images/kitchenblack/tenticle_b.png', 605, 365, 84, 100, 1, 2,'kitchen',645),
     new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
 ];
 
@@ -268,14 +268,7 @@ function draw() {
 
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
 
-        monster
-        .slice() // dosent change the array permanently
-        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-        .forEach(m => {
-            if (colorFreq == m.colorFreq && room == m.room) {
-                m.draw(ctx)
-            }
-        });
+
     
         furniture //draws out furniture seperatley
         .slice() 
@@ -285,6 +278,15 @@ function draw() {
                 m.draw(ctx)
             }
         });
+
+                monster
+        .slice() // dosent change the array permanently
+        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+        .forEach(m => {
+            if (colorFreq == m.colorFreq && room == m.room) {
+                m.draw(ctx)
+            }
+        });     
 
         if (colorFreq == 440) {
             ctx.fillStyle = 'rgba(255, 0, 0, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
@@ -432,7 +434,7 @@ window.addEventListener('click', function(event) {
           break
         }
     }
-    if (!monsterHit) console.log("Wrong"); fever += 1;
+    if (!monsterHit) console.log("Wrong"); 
      const sound4 = new Audio('sounds/incorrect.mp3')
         sound4.play()
       if (y >= height * 0.4 && y <= height * 0.8) {
