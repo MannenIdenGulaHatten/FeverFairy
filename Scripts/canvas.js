@@ -73,6 +73,7 @@ let difficulty = "None";
 let objectsFound = 0;
 let maxObjects = 0;
 let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
+let colorUnlocked = 0;
 let feverHeight = 0;
 let dead = false;
 let win = false;
@@ -236,6 +237,7 @@ function newGame(selectedDiff) {
     objectsFound = 0
     feverHeight = 0
     colorFreq = 440
+    colorUnlocked = 440
     dead = false
     win = false
 }
@@ -437,7 +439,7 @@ document.addEventListener('keydown', (event) => {
         nextFreq = 645; // blue
     }
 
-    if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq) {
+    if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq && colorUnlocked >= nextFreq) {
         flashCooldown = Date.now() + 2000; // 200 ms cooldown
         sound6.play()
         colorFreq = 1;
