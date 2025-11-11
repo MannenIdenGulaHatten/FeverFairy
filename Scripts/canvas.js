@@ -121,6 +121,7 @@ class imageMonsters {           // this class makes it possible to easily make a
     }
 }
 
+
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
     new imageMonsters ('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2,'kitchen',565 ),
@@ -141,7 +142,9 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters ('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2,'kitchen',565),
     new imageMonsters ('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2,'kitchen',645),
     new imageMonsters ('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2,'kitchen',645),
-    // furniture
+
+        //furniture
+
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 1, 'kitchen', 565),
@@ -150,6 +153,18 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/sink_b.png', 605, 360, 84, 100, 1, 1, 'kitchen', 645),
+            //bedroom
+    new imageMonsters ('images/bedroomblack/bed_b.png', 265, 325, 50, 50, 1, 1,'bedroom',645),
+    new imageMonsters ('images/bedroomblack/painting_b.png', 420, 215, 50, 50, 1, 1,'bedroom',440),
+    new imageMonsters ('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2,'bedroom',565),
+    new imageMonsters ('images/bedroomblack/dogpillow_b.png', 480, 680, 50, 50, 1, 2,'bedroom',440),
+    new imageMonsters ('images/bedroomblack/pyramid_b.png', 600, 300, 50, 50, 1, 2,'bedroom',645),
+    new imageMonsters ('images/bedroomblack/ac_b.png', 500, 450, 50, 50, 1, 4,'bedroom',645),
+    new imageMonsters ('images/bedroomblack/pillow1_b.png', 530, 450, 50, 50, 1, 3,'bedroom',440),
+    new imageMonsters ('images/bedroomblack/pillow2_b.png', 470, 450, 50, 50, 1, 3,'bedroom',565),
+    new imageMonsters ('images/bedroomblack/lamp_b.png', 850, 300, 50, 50, 1, 3,'bedroom',565),
+    new imageMonsters ('images/bedroomblack/night_stand_b.png', 650, 500, 50, 50, 1, 3,'bedroom',565),
+    new imageMonsters ('images/bedroomblack/cheese_b.png', 685, 490, 50, 50, 1, 3,'bedroom',645),
 ];
 
 const abnormalties = [
