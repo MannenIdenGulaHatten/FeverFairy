@@ -155,14 +155,14 @@ class imageMonsters {           // this class makes it possible to easily make a
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
    
-    new imageMonsters('images/kitchenblack/basket_b.png', 800, 500, 500, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/coathanger_b.png', 800, 500, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/fryingpan_b.png', 445, 420, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/knifeholder_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/tophat_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/knifeholder_b.png', 540, 350, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/tophat_b.png', 820, 365, 50, 50, 1, 2, 'kitchen', 440),
     //bathroom
     new imageMonsters('images/bathroomblack/shelf_b.png', 140, 285, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/carpet_b.png', 210, 592, 50, 50, 1, 2, 'bathroom', 645),
