@@ -415,8 +415,8 @@ function draw() {
     let menuSize = getImgScaled(menu.naturalWidth, menu.naturalHeight);
 
     ctx.fillStyle = "rgb(255, 22, 0)";
-    let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 360, 0.1), 0, 360);
-    ctx.fillRect(scalePos(80, "X"), 465 - nextHeight, 70, nextHeight);
+    let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 330, 0.1), 0, 330);
+    ctx.fillRect(scalePos(85, "X"), 480 - nextHeight, 70, nextHeight);
     feverHeight = nextHeight
 
     ctx.drawImage(menu, 15, 15, menuSize.X, menuSize.Y);
@@ -424,9 +424,9 @@ function draw() {
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
     ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);     
 
-    ctx.font = "50px Cursive";
+    ctx.font = "30px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
-    ctx.fillText(Math.floor(fever) + "°", scalePos(75, "X"), (530));
+    ctx.fillText(Math.floor(Math.min(fever, maxFever)) + "°", scalePos(95, "X"), (530));
 
     if (doorTween >= Date.now()) {
         ctx.fillStyle = "rgba(0, 0, 0, "+ (doorTween-Date.now())/1000 +")"
@@ -442,11 +442,11 @@ function draw() {
         if (colorUnlocked == 565) {
             colorText1 = "You have unlocked the color green!";
             colorText2 = "Use '2' to switch to it."
-            ctx.fillStyle = "rgba(0, 100, 0, "+ (colorTween-Date.now())/1000 +")";
+            ctx.fillStyle = "rgba(155, 255, 155, "+ (colorTween-Date.now())/1000 +")";
         } else if (colorUnlocked == 645) {
             colorText1 = "You have unlocked the color blue!";
             colorText2 = "Use '3' to switch to it."
-            ctx.fillStyle = "rgba(0, 0, 100, "+ (colorTween-Date.now())/1000 +")";
+            ctx.fillStyle = "rgba(155, 155, 255, "+ (colorTween-Date.now())/1000 +")";
         }
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
