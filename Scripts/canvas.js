@@ -32,11 +32,13 @@ const gameInfo = {
         difficulty: "Easy",
         startFever: 38,
         maxFever: 43,
+        abnormalties: 15,
     },
     ["Hard"]: {
         difficulty: "Hard",
         startFever: 39,
         maxFever: 42,
+        abnormalties: 30,
     }
 }
 
