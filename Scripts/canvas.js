@@ -543,6 +543,7 @@ window.addEventListener('click', function (event) {
                         m.visible = false; //makes it invisible
                         abnormalityHit = true;
                         objectsFound += 1;
+                        sound7.play();
                         break
                     }
                 }
