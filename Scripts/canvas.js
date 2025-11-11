@@ -181,7 +181,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters ('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2,'bedroom',565),
     new imageMonsters ('images/bedroomblack/dogpillow_b.png', 480, 680, 50, 50, 1, 2,'bedroom',440),
     new imageMonsters ('images/bedroomblack/pyramid_b.png', 600, 300, 50, 50, 1, 2,'bedroom',645),
-    new imageMonsters ('images/bedroomblack/ac_b.png', 500, 450, 50, 50, 1, 4,'bedroom',645),
+    new imageMonsters ('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4,'bedroom',645),
     new imageMonsters ('images/bedroomblack/pillow1_b.png', 530, 450, 50, 50, 1, 3,'bedroom',440),
     new imageMonsters ('images/bedroomblack/pillow2_b.png', 470, 450, 50, 50, 1, 3,'bedroom',565),
     new imageMonsters ('images/bedroomblack/lamp_b.png', 850, 300, 50, 50, 1, 3,'bedroom',565),
