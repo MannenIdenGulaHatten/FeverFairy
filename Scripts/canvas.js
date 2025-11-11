@@ -386,8 +386,8 @@ window.addEventListener('click', function (event) {
     const x = event.clientX;
     const y = event.clientY;
 
-    if (y >= height * 0 && y <= height * 0.1) {
-        if (x >= 0 && x <= width * 0.1) { // if you click the menu button
+    if (y >= height * 0.025 && y <= height * 0.125) {
+        if (x >= width * 0.025 && x <= width * 0.125) { // if you click the menu button
             sound3.play()
             imagePopups["Menu"].Enabled = Date.now() + 1e9; // shows menu for a long time
             hideOtherPopups("Menu");
@@ -415,7 +415,7 @@ window.addEventListener('click', function (event) {
         for (let i = doors.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
             const m = doors[i];
             if (m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
-                if (x >= width * 0.5) {
+                if (x >= width * 0.35) { // Doors to the right
                     if (room == "kitchen") {
                         room = "bedroom"
                         img.src = 'images/gameon' + room + '.png';
@@ -423,7 +423,7 @@ window.addEventListener('click', function (event) {
                         room = "kitchen"
                         img.src = 'images/gameon' + room + '.png';
                     }
-                } else if (x <= width * 0.5) {
+                } else if (x <= width * 0.35) { // Doors to the left
                     if (room == "kitchen") {
                         room = "bathroom"
                         img.src = 'images/gameon' + room + '.png';
@@ -431,6 +431,8 @@ window.addEventListener('click', function (event) {
                         room = "kitchen"
                         img.src = 'images/gameon' + room + '.png';
                     }
+                } else { // Doors in the middle
+
                 }
                 doorHit = true;
                 sound5.play();
