@@ -89,19 +89,31 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.colorFreq = colorFreq
         this.image = new Image();
         this.image.src = src;
+
+        let src_w = src 
+        src_w.replace("_b", "_w")
+        src_w.replace("black", "white")
+
+        this.image_w = new Image();
+        this.image_w.src = src_w;
         this.loaded = false;
         this.visible = true;
         this.image.onload = () => (this.loaded = true); // makes it wait for the images to load
     }
 
-    draw(ctx) {
+    draw(ctx, white) {
         if (this.loaded && this.visible) {
             const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
             const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
+            let image = this.image
             let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
 
+            if (white) {
+                image = this.image_w
+            }
+
             ctx.drawImage( // gör paralaxx för bilderna
-                this.image,
+                image,
                 this.x - offsetX * this.paralaxx,
                 this.y - offsetY * this.paralaxx,
                 Size.X,
@@ -325,7 +337,11 @@ function draw() {
             .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
             .forEach(m => {
                 if (colorFreq == m.colorFreq && room == m.room) {
-                    m.draw(ctx)
+                    if (m.ifMonsterClicked(currentX, currentY)) {
+                        m.draw(ctx, true)
+                    } else {
+                        m.draw(ctx)
+                    }
                 }
             });
 
