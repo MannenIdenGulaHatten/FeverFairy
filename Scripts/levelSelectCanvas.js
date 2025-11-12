@@ -15,24 +15,34 @@ let currentImg = img4; //default difficulty
 
 const sound = new Audio('sounds/click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
 
+function changeLevel() {
+  sound.play()
+  .then(() => console.log('Ljudet spelas upp!'))
+  .catch(err => console.error('Kunde inte spela upp ljudet:', err));
+  if (currentImg == img) {
+    currentImg = img4;
 
-canvas.addEventListener('click', (event) => {
+  } else if (currentImg == img4) {
+    currentImg = img;
+  }
+}
+
+function startGame(event, start,) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
- 
-  if (y >= 150 && y <= 425) {        
-    
-    if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {          
-      sound.play()
-        .then(() => console.log('Ljudet spelas upp!'))
-        .catch(err => console.error('Kunde inte spela upp ljudet:', err));
-        if (currentImg == img) {
-          currentImg = img4;
 
-        } else if (currentImg == img4) {
-          currentImg = img;
-        }
+  if (start) {
+    if (currentImg == img) {
+      location.replace("/feverfairy/hardgame.html")
+    } else if (currentImg == img4) {
+      location.replace("/feverfairy/game.html")
+    }
+  }
+
+  if (y >= 150 && y <= 425) {        
+    if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {          
+      changeLevel();
     } else if (x >= 420 && x <= 945) {
         if (currentImg == img) {
           location.replace("/feverfairy/hardgame.html")
@@ -41,9 +51,20 @@ canvas.addEventListener('click', (event) => {
         }
     }
   }
+}
+
+canvas.addEventListener('click', (event) => {
+   startGame(event, false);
 });
 
-
+document.addEventListener('keydown', (event) => {
+  if (event.key == 'Enter') {
+    startGame(event, true);
+  } 
+  if (event.key == 'ArrowLeft' || event.key == 'ArrowRight') {
+    changeLevel();
+  }
+});
 
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);

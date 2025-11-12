@@ -43,7 +43,7 @@ const gameInfo = { // difficulty settings
 
 const imagePopups = { // popup settings
     ["Menu"]: {
-        Enabled: 0, 
+        Enabled: 0,
         imagesrc: "images/popup.png",
         Size: { x: 1, y: 1 }, // scale size of image (0-1)
         Offset: { x: 0, y: 0 }, // scale offset of image
@@ -104,9 +104,9 @@ let dialogues = { // dialogue lines based on fever and abnormalties found
         ["6"]: [false,
             "Before too long,",
             "the fever will stabilize!"],
-        ["3"]: [false, 
+        ["3"]: [false,
             "Almost there."],
-        ["1"]: [false, 
+        ["1"]: [false,
             "I'm so close!"],
     },
 }
@@ -181,7 +181,7 @@ class imageMonsters {           // this class makes it possible to easily make a
             let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
             let image = this.image
             let Pos = { X: this.x - offsetX * this.paralaxx, Y: this.y - offsetY * this.paralaxx }
-            
+
             if (type) { // if type is given use that image version
                 if (type == "white") { // hover system disablad so lämge
                     image = this.image_w
@@ -192,10 +192,10 @@ class imageMonsters {           // this class makes it possible to easily make a
                         Size.Y = (this.image.naturalHeight / this.image.naturalWidth) * Size.X
                     } else {
                         Size.Y = canvas.width / 10
-                        Size.X = (this.image.naturalWidth / this.image.naturalHeight) * Size.Y     
+                        Size.X = (this.image.naturalWidth / this.image.naturalHeight) * Size.Y
                     }
                     Pos.X = canvas.width * 0.95 - Size.X
-                    Pos.Y = canvas.height * 0.95 - Size.Y 
+                    Pos.Y = canvas.height * 0.95 - Size.Y
                 }
             }
 
@@ -292,7 +292,7 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 4, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 4, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
 ]
 
@@ -403,7 +403,7 @@ function scalePos(pos, type) {
 }
 function increaseFever() {
     if (imagePopups["Menu"].Enabled < Date.now() && imagePopups["Info"].Enabled < Date.now() && !dead && !win) {
-        fever += 1 / 120; // increase fever by 1 every 90 seconds
+        fever += 1 / 180; // increase fever by 1 every 90 seconds
     }
 }
 
@@ -438,79 +438,83 @@ function draw() {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // cuts out a circle that is the flashlight light with ctx.clip()
-        ctx.save();
-        ctx.beginPath();
-        ctx.arc(currentX, currentY, radius, 0, Math.PI * 2);
-        ctx.clip();
+        if (Date.now() >= imagePopups["Info"].Enabled) {
+            ctx.save();
 
-        ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
+            ctx.beginPath();
+            ctx.arc(currentX, currentY, radius, 0, Math.PI * 2);
+            ctx.clip();
 
-        let allObjects = [...doors, ...buckets, ...abnormalties, ...monster]
-        let hoverObj = null;
-        allObjects
-            .slice() // dosent change the array permanently
-            .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
-            .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
-                if (colorFreq == m.colorFreq && room == m.room) {
-                    if (m.ifMonsterClicked(currentX, currentY) && !hoverObj) {
-                        hoverObj = m;
-                    } 
-                }
-            });
-        allObjects
-            .slice() // dosent change the array permanently
-            .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-            .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
-                if (colorFreq == m.colorFreq && room == m.room) {
-                    if (m.clicked >= Date.now()) {
-                        //m.draw(ctx, "normal")
-                    } else if (hoverObj && hoverObj === m) {
-                        m.draw(ctx, "white")
-                    } else if (m.visible) {
-                        m.draw(ctx)
+            ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
+
+            let allObjects = [...doors, ...buckets, ...abnormalties, ...monster]
+            let hoverObj = null;
+            allObjects
+                .slice() // dosent change the array permanently
+                .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
+                .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                    if (colorFreq == m.colorFreq && room == m.room) {
+                        if (m.ifMonsterClicked(currentX, currentY) && !hoverObj) {
+                            hoverObj = m;
+                        }
                     }
-                }
-            });
+                });
+            allObjects
+                .slice() // dosent change the array permanently
+                .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                    if (colorFreq == m.colorFreq && room == m.room) {
+                        if (m.clicked >= Date.now()) {
+                            //m.draw(ctx, "normal")
+                        } else if (hoverObj && hoverObj === m) {
+                            m.draw(ctx, "white")
+                        } else if (m.visible) {
+                            m.draw(ctx)
+                        }
+                    }
+                });
 
-        let bgStyle = 'rgba(0, 0, 0, ';
-        let A = 0.1
+            let bgStyle = 'rgba(0, 0, 0, ';
+            let A = 0.1
 
-        if (colorFreq == 440) {
-            bgStyle = 'rgba(255, 0, 0, '; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
-        } else if (colorFreq == 565) {
-            bgStyle = 'rgba(0, 255, 0, ';
-        } else if (colorFreq == 645) {
-            bgStyle = 'rgba(0, 0, 255, ';
-        } else {
-            A = 1
-        }
-
-        // creates radial gradient for flashlight light effect
-        const gradient = ctx.createRadialGradient(currentX, currentY, radius * 0.2, currentX, currentY, radius);
-        gradient.addColorStop(0, bgStyle + A + ")");      // center fully visible
-        gradient.addColorStop(0.7, bgStyle + (A + 0.2) + ")");  // mid fade
-        gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');      // edge fully black
-
-        ctx.fillStyle = gradient;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        ctx.restore();
-
-        allObjects
-        .slice() // dosent change the array permanently
-        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
-        .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
-            if (colorFreq == m.colorFreq && room == m.room) {
-                if (m.clicked >= Date.now()) {
-                    m.draw(ctx, "normal")
-                }
+            if (colorFreq == 440) {
+                bgStyle = 'rgba(255, 0, 0, '; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+            } else if (colorFreq == 565) {
+                bgStyle = 'rgba(0, 255, 0, ';
+            } else if (colorFreq == 645) {
+                bgStyle = 'rgba(0, 0, 255, ';
+            } else {
+                A = 1
             }
-        });
+
+            // creates radial gradient for flashlight light effect
+            const gradient = ctx.createRadialGradient(currentX, currentY, radius * 0.2, currentX, currentY, radius);
+            gradient.addColorStop(0, bgStyle + A + ")");      // center fully visible
+            gradient.addColorStop(0.7, bgStyle + (A + 0.2) + ")");  // mid fade
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');      // edge fully black
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.restore();
+
+            allObjects
+                .slice() // dosent change the array permanently
+                .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                    if (colorFreq == m.colorFreq && room == m.room) {
+                        if (m.clicked >= Date.now()) {
+                            m.draw(ctx, "normal")
+                        }
+                    }
+                });
+        }
     } else if (fever >= maxFever || dead) {
         dead = true;
         // bro died 🤣🤣🤣
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(255, 0, 0)";
-        ctx.fillText("ur dead my friend", 250, 300);
+        ctx.fillText("GAME OVER", 250, 300);
         backgroundSound.volume = 0
         ambulanceSound.play()
         ambulanceSound.volume = 0.1;
@@ -519,10 +523,10 @@ function draw() {
     } else if (objectsFound >= maxObjects || win) {
         win = true;
         // bro won 🤣🤣🤣
-        ctx.font = "100px Cursive";
+        ctx.font = "80px Cursive";
         ctx.fillStyle = "rgb(0, 255, 0)";
-        ctx.fillText("u won my friend", 250, 300);
-        ctx.fillText("Score: " + Math.floor(fever * 100) / 100 + "°", 250, 400);
+        ctx.fillText("YOU WIN!", 250, 300);
+        ctx.fillText("Score: " + Math.floor(fever * 100) / 100 + "°", 250, 420);
     }
 
     for (const index in imagePopups) {
@@ -532,9 +536,9 @@ function draw() {
         if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
             ctx.font = "25px Cursive";
             ctx.fillStyle = "rgba(0, 0, 0, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
-            
-            imagePopups.Dialogue.Size.y = 0.3 + (currentDialogue.length-1) * 0.15; // dynamically resizes dialogue popup based on number of lines
-            imagePopups.Dialogue.Offset.y = -0.435 + (currentDialogue.length-1) * 0.03;
+
+            imagePopups.Dialogue.Size.y = 0.3 + (currentDialogue.length - 1) * 0.15; // dynamically resizes dialogue popup based on number of lines
+            imagePopups.Dialogue.Offset.y = -0.435 + (currentDialogue.length - 1) * 0.03;
 
             for (let i = 1; i < currentDialogue.length; i++) {
                 ctx.fillText(currentDialogue[i], scalePos(880, "X"), 40 + i * 40);
@@ -614,11 +618,11 @@ function draw() {
             currentDialogue = m;
         }
     }
-    
+
     for (const i in dialogues.Absurdity) {
         let m = dialogues.Absurdity[i];
 
-        if (maxObjects-objectsFound <= parseInt(i) && !m[0]) {
+        if (maxObjects - objectsFound <= parseInt(i) && !m[0]) {
             m[0] = true;
             imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
 
@@ -626,15 +630,15 @@ function draw() {
         }
     }
 
-    if (Date.now() >= imagePopups["Info"].Enabled && Date.now() <= imagePopups["Info"].Enabled + 4500) {
+    if (Date.now() >= imagePopups["Info"].Enabled && Date.now() <= imagePopups["Info"].Enabled + 4200) {
         let m = dialogues.Start["1"];
-        
-        if (Date.now() >= imagePopups["Info"].Enabled + 4000) {
-            m = dialogues.Start["2"];    
 
-            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 7000; // shows dialogue for 5 seconds
+        if (Date.now() >= imagePopups["Info"].Enabled + 4000) {
+            m = dialogues.Start["2"];
+
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 9000; // shows dialogue for 5 seconds
             currentDialogue = m;
-        } else {
+        } else if (Date.now() <= imagePopups["Info"].Enabled + 200) {
             imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 3000; // shows dialogue for 5 seconds
             currentDialogue = m;
         }
@@ -678,7 +682,7 @@ window.addEventListener('click', function (event) {
     const y = event.clientY;
 
     console.log(objectsFound, maxObjects)
- 
+
     // menu button
     if (y >= height * 0.025 && y <= height * 0.125) {
         if (x >= width * 0.025 && x <= width * 0.125) { // if you click the menu button
@@ -710,7 +714,7 @@ window.addEventListener('click', function (event) {
         }
     }
 
-    if (!dead) {
+    if (!dead && Date.now() >= imagePopups["Info"].Enabled) {
         let doorHit = false;
         let bucketHit = false;
         let monsterHit = false;
@@ -781,7 +785,7 @@ window.addEventListener('click', function (event) {
                         objectsFound += 1;
                         correctSound.play();
                         imagePopups["Dialogue"].Enabled = Date.now() + 1500;
-                        currentDialogue = [false, "Found an abnormality!","("+objectsFound+" / ??)"];
+                        currentDialogue = [false, "Found an abnormality!", "(" + objectsFound + " / ??)"];
                         break
                     }
                 }
@@ -811,7 +815,7 @@ window.addEventListener('click', function (event) {
                         });
                 }
             }
- 
+
             // if you clicked nothing correct / incorrect sound
             if (!monsterHit && !abnormalityHit && !bucketHit) {
                 console.log("Wrong");
