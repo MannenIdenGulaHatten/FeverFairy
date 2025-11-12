@@ -282,7 +282,7 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 1, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 4, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
 ]
 
