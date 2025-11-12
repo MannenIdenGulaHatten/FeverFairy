@@ -229,7 +229,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     // furniture
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
-    new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 1, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 3, 'kitchen', 565),
     new imageMonsters('Images/kitchenBlack/counter2_b.png', 670, 380, 50, 50, 1, 1, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/fridge_b.png', 750, 310, 130, 200, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 2, 'kitchen', 440),
@@ -252,7 +252,7 @@ const abnormalties = [
     new imageMonsters('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/chili_b.png', 430, 410, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/chili_b.png', 430, 410, 50, 50, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2, 'kitchen', 645),
@@ -262,7 +262,7 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 1, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
 
 ]
