@@ -71,7 +71,7 @@ const imagePopups = {
         Enabled: 0,
         imagesrc: "images/tutorial.png",
         Size: { x: 1, y: 1 },
-        Offset: { x: 0, y: 0 },
+        Offset: { x: 0.3, y: -0.3 },
         ExitHitbox: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
         Exit: {},
         Buttons: []
@@ -79,7 +79,17 @@ const imagePopups = {
 }
 
 let dialogues = {
-    
+    Fever: {
+        ["39"]: ["I'm burning up...", false],
+        ["41"]: ["I'm getting too hot, I have to hurry up.'", false],
+    },
+    Absurdity: {
+        ["12"]: ["My dream is already feeling more normal!", false],
+        ["9"]: ["Take that fever! More than halfway done!", false],
+        ["6"]: ["Before too long, the fever will stabilize!", false],
+        ["3"]: ["Almost there.", false],
+        ["1"]: ["I'm so close, ambatukam", false],
+    },
 }
 
 // game variables (set wh
@@ -97,6 +107,7 @@ let win = false;
 let flashCooldown = Date.now();
 let doorTween = Date.now();
 let colorTween = Date.now();
+let currentDialogue = "";
 
 // sounds my freind
 const sound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
@@ -184,7 +195,7 @@ class imageMonsters {           // this class makes it possible to easily make a
 
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
-   
+
     new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
@@ -274,6 +285,7 @@ function newGame(selectedDiff) {
     feverHeight = 0
     colorFreq = 440
     colorUnlocked = 440
+    currentDialogue = ""
     dead = false
     win = false
 }
@@ -291,11 +303,11 @@ function displayPopup(popupName) {
         let img = new Image();
         img.src = popupInfo.imagesrc;
 
-        const popupWidth = canvas.width * 0.4;
-        const popupHeight = (img.naturalHeight / img.naturalWidth) * popupWidth;
+        const popupWidth = canvas.width * 0.4 * popupInfo.Size.x;
+        const popupHeight = (img.naturalHeight / img.naturalWidth) * popupWidth * popupInfo.Size.y / popupInfo.Size.x;
 
-        const popupX = (canvas.width - popupWidth) / 2;
-        const popupY = (canvas.height - popupHeight) / 2;
+        const popupX = (canvas.width - popupWidth) / 2 + popupInfo.Offset.x * canvas.width;
+        const popupY = (canvas.height - popupHeight) / 2 + popupInfo.Offset.y * canvas.height;
 
         popupInfo.Exit = {
             x1: popupX + popupWidth * popupInfo.ExitHitbox.x1,
@@ -436,6 +448,12 @@ function draw() {
 
     for (const index in imagePopups) {
         displayPopup(index);
+
+        if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
+            ctx.font = "30px Cursive";
+            ctx.fillStyle = "rgb(255, 255, 255)";
+            ctx.fillText(currentDialogue, scalePos(300, "X"), scalePos(500, "Y"));
+        }
     }
 
     // fever gauge thermometer
@@ -451,7 +469,7 @@ function draw() {
     ctx.drawImage(menu, 15, 15, menuSize.X, menuSize.Y);
 
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
-    ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);     
+    ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);
 
     ctx.font = "30px Cursive";
     ctx.fillStyle = "rgb(255, 255, 255)";
@@ -469,32 +487,43 @@ function draw() {
     ctx.fillText(colorFreq + " THz", scalePos(60, "X"), 600);
 
     if (doorTween >= Date.now()) {
-        ctx.fillStyle = "rgba(0, 0, 0, "+ (doorTween-Date.now())/1000 +")"
+        ctx.fillStyle = "rgba(0, 0, 0, " + (doorTween - Date.now()) / 1000 + ")"
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.font = "100px Cursive";
-        ctx.fillStyle = "rgba(255, 255, 255, "+ (doorTween-Date.now())/1000 +")";
-        ctx.fillText(room, scalePos(425,"X"), scalePos(325,"Y"));
-    } else if (colorTween >= Date.now()) { 
+        ctx.fillStyle = "rgba(255, 255, 255, " + (doorTween - Date.now()) / 1000 + ")";
+        ctx.fillText(room, scalePos(425, "X"), scalePos(325, "Y"));
+    } else if (colorTween >= Date.now()) {
         let colorText1 = "";
         let colorText2 = "";
 
         if (colorUnlocked == 565) {
             colorText1 = "You have unlocked the color green!";
             colorText2 = "Use '2' to switch to it."
-            ctx.fillStyle = "rgba(0, 100, 0, "+ (colorTween-Date.now())/1000 +")";
+            ctx.fillStyle = "rgba(0, 100, 0, " + (colorTween - Date.now()) / 1000 + ")";
         } else if (colorUnlocked == 645) {
             colorText1 = "You have unlocked the color blue!";
             colorText2 = "Use '3' to switch to it."
-            ctx.fillStyle = "rgba(0, 0, 100, "+ (colorTween-Date.now())/1000 +")";
+            ctx.fillStyle = "rgba(0, 0, 100, " + (colorTween - Date.now()) / 1000 + ")";
         }
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.font = "50px Cursive";
-        ctx.fillStyle = "rgba(255, 255, 255, "+ (colorTween-Date.now())/1000 +")";
-        ctx.fillText(colorText1, scalePos(250,"X"), scalePos(300,"Y"));
-        ctx.fillText(colorText2, scalePos(350,"X"), scalePos(350,"Y"));
-    }   
+        ctx.fillStyle = "rgba(255, 255, 255, " + (colorTween - Date.now()) / 1000 + ")";
+        ctx.fillText(colorText1, scalePos(250, "X"), scalePos(300, "Y"));
+        ctx.fillText(colorText2, scalePos(350, "X"), scalePos(350, "Y"));
+    }
+
+    for (const i in dialogues.Fever) {
+        let m = dialogues.Fever[i];
+
+        if (fever >= parseInt(i) && !m[1]) {
+            m[1] = true;
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+
+            currentDialogue = m[0];
+        }
+    }
 
     requestAnimationFrame(draw);
 }
@@ -615,7 +644,7 @@ window.addEventListener('click', function (event) {
                     colorTween = Date.now() + 3250;
                     sound6.play()
                     colorFreq = 1;
-            
+
                     setTimeout(() => {
                         colorFreq = colorUnlocked;
                     }, 1500)
