@@ -134,35 +134,40 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.image.src = src;
 
         let src_w = src
-        src_w.replace("_b", "_w")
-        src_w.replace("black", "white")
+        src_w = src_w.replace("_b", "_w")
+        src_w = src_w.replace("black", "white")
 
         this.image_w = new Image();
         this.image_w.src = src_w;
 
         let src_n = src
-        src_n.replace("_b", "")
-        src_n.replace("black", "")
+        src_n = src_n.replace("_b", "")
+        src_n = src_n.replace("black", "normal")
 
         this.image_n = new Image();
         this.image_n.src = src_n;
 
         this.loaded = false;
         this.visible = true;
+        this.clicked = 0;
         this.image.onload = () => (this.loaded = true); // makes it wait for the images to load
+        this.image_w.onerror = () => (this.image_w = this.image); // if no white image exists use normal image
+        this.image_n.onerror = () => (this.image_n = this.image); // if no normal image exists use normal image
     }
 
-    draw(ctx, white) {
-        if (this.loaded && this.visible) {
+    draw(ctx, type) {
+        if (this.loaded && (this.visible || this.clicked >= Date.now())) {
             const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
             const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
-            let image = this.image
             let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
-
-            if (white) {
-                image = this.image_w
-            } else if (false) {
-                image = this.image_n
+            let image = this.image
+            
+            if (type) {
+                if (type == "white") {
+                    image = this.image_w
+                } else if (type == "normal") {
+                    image = this.image_n
+                }
             }
 
             ctx.drawImage( // gör paralaxx för bilderna
@@ -413,23 +418,35 @@ function draw() {
             .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
             .forEach(m => {
                 if (colorFreq == m.colorFreq && room == m.room) {
-                    if (m.ifMonsterClicked(currentX, currentY)) {
-                        m.draw(ctx, true)
-                    } else {
+                    if (m.clicked >= Date.now()) {
+                        m.draw(ctx, "normal")
+                    } else if (m.ifMonsterClicked(currentX, currentY)) {
+                        m.draw(ctx, "white")
+                    } else if (m.visible) {
                         m.draw(ctx)
                     }
                 }
             });
 
+        let bgStyle = 'rgba(0, 0, 0, ';
+        let A = 0.1
+
         if (colorFreq == 440) {
-            ctx.fillStyle = 'rgba(255, 0, 0, 0.1)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+            bgStyle = 'rgba(255, 0, 0, '; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
         } else if (colorFreq == 565) {
-            ctx.fillStyle = 'rgba(0, 255, 0, 0.1)';
+            bgStyle = 'rgba(0, 255, 0, ';
         } else if (colorFreq == 645) {
-            ctx.fillStyle = 'rgba(0, 0, 255, 0.1)';
+            bgStyle = 'rgba(0, 0, 255, ';
         } else {
-            ctx.fillStyle = 'rgba(0, 0, 0, 1)';
+            A = 1
         }
+
+        const gradient = ctx.createRadialGradient(currentX, currentY, radius * 0.2, currentX, currentY, radius);
+        gradient.addColorStop(0, bgStyle + A + ")");      // center fully visible
+        gradient.addColorStop(0.7, bgStyle + (A + 0.2) + ")");  // mid fade
+        gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');      // edge fully black
+
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
     } else if (fever >= maxFever || dead) {
@@ -457,7 +474,7 @@ function draw() {
 
         if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
             ctx.font = "30px Cursive";
-            ctx.fillStyle = "rgba(255, 255, 255, "+ (imagePopups[index].Enabled - Date.now()) / 1000 +")";
+            ctx.fillStyle = "rgba(255, 255, 255, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
             ctx.fillText(currentDialogue, scalePos(900, "X"), 100);
         }
     }
@@ -505,18 +522,21 @@ function draw() {
         if (colorUnlocked == 565) {
             colorText1 = "You have unlocked the color green!";
             colorText2 = "Use '2' to switch to it."
+            colorText3 = "('1' to switch back to red)"
             ctx.fillStyle = "rgba(0, 100, 0, " + (colorTween - Date.now()) / 1000 + ")";
         } else if (colorUnlocked == 645) {
             colorText1 = "You have unlocked the color blue!";
             colorText2 = "Use '3' to switch to it."
+            colorText3 = "('2' and '1' for other colors)"
             ctx.fillStyle = "rgba(0, 0, 100, " + (colorTween - Date.now()) / 1000 + ")";
         }
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.font = "50px Cursive";
         ctx.fillStyle = "rgba(255, 255, 255, " + (colorTween - Date.now()) / 1000 + ")";
-        ctx.fillText(colorText1, scalePos(250, "X"), scalePos(300, "Y"));
-        ctx.fillText(colorText2, scalePos(350, "X"), scalePos(350, "Y"));
+        ctx.fillText(colorText1, scalePos(250, "X"), scalePos(250, "Y"));
+        ctx.fillText(colorText2, scalePos(350, "X"), scalePos(300, "Y"));
+        ctx.fillText(colorText3, scalePos(325, "X"), scalePos(500, "Y"));
     }
 
     for (const i in dialogues.Fever) {
@@ -637,6 +657,8 @@ window.addEventListener('click', function (event) {
                 const m = buckets[i];
                 if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                     m.visible = false; //makes it invisible
+                    m.clicked = Date.now() + 2000
+
                     bucketHit = true;
 
                     if (colorUnlocked == 440) {
@@ -663,6 +685,7 @@ window.addEventListener('click', function (event) {
                     const m = abnormalties[i];
                     if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                         m.visible = false; //makes it invisible
+                        m.clicked = Date.now() + 2000
                         abnormalityHit = true;
                         objectsFound += 1;
                         correctSound.play();
@@ -689,6 +712,7 @@ window.addEventListener('click', function (event) {
 
                             if (i == 0) {
                                 m.visible = false; //makes it invisible
+                                m.clicked = Date.now() + 2000
                                 monsterHit = true;
                                 fever += 1 / 3;
                             }
