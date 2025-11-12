@@ -5,8 +5,7 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const menu = new Image();
-menu.src = 'images/menu.png'
-
+menu.src = 'images/menu.png' // menu image
 
 const img = new Image();
 let room = "kitchen"
@@ -27,7 +26,7 @@ const radius = 150;
 const maxShiftX = 200;
 const maxShiftY = 200;
 
-const gameInfo = {
+const gameInfo = { // difficulty settings
     ["Easy"]: {
         difficulty: "Easy",
         startFever: 38,
@@ -42,15 +41,15 @@ const gameInfo = {
     }
 }
 
-const imagePopups = {
+const imagePopups = { // popup settings
     ["Menu"]: {
-        Enabled: 0,
+        Enabled: 0, 
         imagesrc: "images/popup.png",
-        Size: { x: 1, y: 1 },
-        Offset: { x: 0, y: 0 },
+        Size: { x: 1, y: 1 }, // scale size of image (0-1)
+        Offset: { x: 0, y: 0 }, // scale offset of image
         ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
         Exit: {},
-        Buttons: [
+        Buttons: [ // buttons on the popup
             {
                 Name: "ExitGame",
                 Hitbox: { x1: 0.3, y1: 0.65, x2: 0.7, y2: 0.9 },
@@ -61,7 +60,7 @@ const imagePopups = {
     ["Info"]: {
         Enabled: Date.now() + 1e9,
         imagesrc: "images/tutorial.png",
-        Size: { x: 1, y: 1 },
+        Size: { x: 1.2, y: 1.2 },
         Offset: { x: 0, y: 0 },
         ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
         Exit: {},
@@ -70,15 +69,15 @@ const imagePopups = {
     ["Dialogue"]: {
         Enabled: 0,
         imagesrc: "images/tutorial.png",
-        Size: { x: 1, y: 1 },
-        Offset: { x: 0.3, y: -0.3 },
+        Size: { x: 0.8, y: 0.6 },
+        Offset: { x: 0.35, y: -0.35 },
         ExitHitbox: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
         Exit: {},
         Buttons: []
     },
 }
 
-let dialogues = {
+let dialogues = { // dialogue lines based on fever and abnormalties found
     Fever: {
         ["39"]: ["They're burning up...", false],
         ["41"]: ["They're getting too hot, I have to hurry up.'", false],
@@ -133,7 +132,7 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.image = new Image();
         this.image.src = src;
 
-        let src_w = src
+        let src_w = src // makes it so that it automatically finds the white and normal version of the image if it exists
         src_w = src_w.replace("_b", "_w")
         src_w = src_w.replace("black", "white")
 
@@ -162,7 +161,7 @@ class imageMonsters {           // this class makes it possible to easily make a
             let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
             let image = this.image
             
-            if (type) {
+            if (type) { // if type is given use that image version
                 if (type == "white") { // hover system disablad so lämge
                     //image = this.image_w
                 } else if (type == "normal") {
@@ -181,6 +180,7 @@ class imageMonsters {           // this class makes it possible to easily make a
     }
 
     ifMonsterClicked(x, y) {
+        // checks if the mouse is over the image with paralaxx taken into account
         const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX * this.paralaxx;
         const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY * this.paralaxx;
 
@@ -282,6 +282,7 @@ const doors = [
 ]
 
 function newGame(selectedDiff) {
+    // sets game variables based on selected difficulty
     info = gameInfo[selectedDiff];
 
     difficulty = selectedDiff;
@@ -307,6 +308,7 @@ function displayPopup(popupName) {
     const popupInfo = imagePopups[popupName];
 
     if (popupInfo.Enabled >= Date.now()) {
+        // draw the popup
         let img = new Image();
         img.src = popupInfo.imagesrc;
 
@@ -316,13 +318,14 @@ function displayPopup(popupName) {
         const popupX = (canvas.width - popupWidth) / 2 + popupInfo.Offset.x * canvas.width;
         const popupY = (canvas.height - popupHeight) / 2 + popupInfo.Offset.y * canvas.height;
 
-        popupInfo.Exit = {
+        popupInfo.Exit = { // set exit button hitbox positions
             x1: popupX + popupWidth * popupInfo.ExitHitbox.x1,
             y1: popupY + popupHeight * popupInfo.ExitHitbox.y1,
             x2: popupX + popupWidth * popupInfo.ExitHitbox.x2,
             y2: popupY + popupHeight * popupInfo.ExitHitbox.y2,
         }
 
+        // set button hitbox positions
         popupInfo.Buttons
             .forEach(m => {
                 m.Pos = {
@@ -344,6 +347,7 @@ function displayPopup(popupName) {
 function hideOtherPopups(selected) {
     for (const index in imagePopups) {
         if (index != selected) {
+            // hide popup
             imagePopups[index].Enabled = 0;
         }
     }
@@ -417,7 +421,7 @@ function draw() {
         allObjects
             .slice() // dosent change the array permanently
             .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
-            .forEach(m => {
+            .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
                 if (colorFreq == m.colorFreq && room == m.room) {
                     if (m.clicked >= Date.now()) {
                         m.draw(ctx, "normal")
@@ -443,6 +447,7 @@ function draw() {
             A = 1
         }
 
+        // creates radial gradient for flashlight light effect
         const gradient = ctx.createRadialGradient(currentX, currentY, radius * 0.2, currentX, currentY, radius);
         gradient.addColorStop(0, bgStyle + A + ")");      // center fully visible
         gradient.addColorStop(0.7, bgStyle + (A + 0.2) + ")");  // mid fade
@@ -474,6 +479,7 @@ function draw() {
     for (const index in imagePopups) {
         let popUp = displayPopup(index);
 
+        // dialogue popup
         if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
             ctx.font = "30px Cursive";
             ctx.fillStyle = "rgba(255, 255, 255, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
@@ -510,6 +516,7 @@ function draw() {
     }
     ctx.fillText(colorFreq + " THz", scalePos(60, "X"), 600);
 
+    // door and color unlock tweens
     if (doorTween >= Date.now()) {
         ctx.fillStyle = "rgba(0, 0, 0, " + (doorTween - Date.now()) / 1000 + ")"
         ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -520,6 +527,7 @@ function draw() {
     } else if (colorTween >= Date.now()) {
         let colorText1 = "";
         let colorText2 = "";
+        let colorText3 = "";
 
         if (colorUnlocked == 565) {
             colorText1 = "You have unlocked the color green!";
@@ -582,6 +590,7 @@ document.addEventListener('keydown', (event) => {
         nextFreq = 645; // blue
     }
 
+    // changes color frequency with number keys with cooldown
     if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq && colorUnlocked >= nextFreq) {
         flashCooldown = Date.now() + 2000; // 200 ms cooldown
         ficklampaswitchSound.play()
@@ -600,7 +609,8 @@ window.addEventListener('click', function (event) {
     const y = event.clientY;
 
     console.log(objectsFound, maxObjects)
-
+ 
+    // menu button
     if (y >= height * 0.025 && y <= height * 0.125) {
         if (x >= width * 0.025 && x <= width * 0.125) { // if you click the menu button
             clickSound.play()
@@ -609,6 +619,7 @@ window.addEventListener('click', function (event) {
         }
     }
 
+    // checks if any popups are open and if you clicked on them
     for (const index in imagePopups) {
         let popupInfo = imagePopups[index];
 
@@ -729,7 +740,8 @@ window.addEventListener('click', function (event) {
                         });
                 }
             }
-
+ 
+            // if you clicked nothing correct / incorrect sound
             if (!monsterHit && !abnormalityHit && !bucketHit) {
                 console.log("Wrong");
                 const incorrect = new Audio('sounds/incorrect.mp3')
