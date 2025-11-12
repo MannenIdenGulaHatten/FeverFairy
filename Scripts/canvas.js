@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 120;
+const radius = 150;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -257,7 +257,7 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png', 600, 315, 50, 50, 1, 5, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 5, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
 
 ]
