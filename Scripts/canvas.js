@@ -440,7 +440,7 @@ function draw() {
         let hoverObj = false
         allObjects
             .slice() // dosent change the array permanently
-            .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
+            .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
             .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
                 if (colorFreq == m.colorFreq && room == m.room) {
                     if (m.clicked >= Date.now()) {
@@ -501,11 +501,14 @@ function draw() {
 
         // dialogue popup
         if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
-            ctx.font = "30px Cursive";
-            ctx.fillStyle = "rgba(255, 255, 255, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
+            ctx.font = "25px Cursive";
+            ctx.fillStyle = "rgba(0, 0, 0, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
             
+            imagePopups.Dialogue.Size.y = 0.3 + (currentDialogue.length-1) * 0.15; // dynamically resizes dialogue popup based on number of lines
+            imagePopups.Dialogue.Offset.y = -0.435 + (currentDialogue.length-1) * 0.03;
+
             for (let i = 1; i < currentDialogue.length; i++) {
-                ctx.fillText(currentDialogue[i], scalePos(900, "X"), 50 + i * 40);
+                ctx.fillText(currentDialogue[i], scalePos(880, "X"), 40 + i * 40);
             }
         }
     }
