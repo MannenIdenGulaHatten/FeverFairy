@@ -329,7 +329,11 @@ function displayPopup(popupName) {
             })
 
         ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
+
+        return img;
     }
+
+    return false;
 }
 
 function hideOtherPopups(selected) {
@@ -449,12 +453,12 @@ function draw() {
     }
 
     for (const index in imagePopups) {
-        displayPopup(index);
+        let popUp = displayPopup(index);
 
         if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
             ctx.font = "30px Cursive";
-            ctx.fillStyle = "rgb(255, 255, 255)";
-            ctx.fillText(currentDialogue, scalePos(300, "X"), scalePos(500, "Y"));
+            ctx.fillStyle = "rgba(255, 255, 255, "+ (imagePopups[index].Enabled - Date.now()) / 1000 +")";
+            ctx.fillText(currentDialogue, scalePos(900, "X"), 100);
         }
     }
 
@@ -469,7 +473,6 @@ function draw() {
     feverHeight = nextHeight
 
     ctx.drawImage(menu, 15, 15, menuSize.X, menuSize.Y);
-
     ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
     ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);
 
@@ -680,7 +683,7 @@ window.addEventListener('click', function (event) {
 
                     objectsTouched
                         .slice() // dosent change the array permanently
-                        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                        .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
                         .forEach((m, i) => {
                             console.log(i);
 
