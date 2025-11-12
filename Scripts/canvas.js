@@ -163,8 +163,8 @@ class imageMonsters {           // this class makes it possible to easily make a
             let image = this.image
             
             if (type) {
-                if (type == "white") {
-                    image = this.image_w
+                if (type == "white") { // hover system disablad so lämge
+                    //image = this.image_w
                 } else if (type == "normal") {
                     image = this.image_n
                 }
