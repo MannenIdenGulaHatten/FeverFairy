@@ -605,7 +605,7 @@ function draw() {
         }
     }
 
-    if (Date.now() >= imagePopups["Info"].Enabled) {
+    if (Date.now() >= imagePopups["Info"].Enabled && Date.now() <= imagePopups["Info"].Enabled + 4500) {
         let m = dialogues.Start["1"];
         
         if (Date.now() >= imagePopups["Info"].Enabled + 4000) {
@@ -759,6 +759,8 @@ window.addEventListener('click', function (event) {
                         abnormalityHit = true;
                         objectsFound += 1;
                         correctSound.play();
+                        imagePopups["Dialogue"].Enabled = Date.now() + 1000;
+                        currentDialogue = [false, "Found an abnormality!"];
                         break
                     }
                 }
