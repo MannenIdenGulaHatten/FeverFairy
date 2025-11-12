@@ -586,10 +586,24 @@ function draw() {
     for (const i in dialogues.Absurdity) {
         let m = dialogues.Absurdity[i];
 
-        if (maxObjects-objectsFound >= parseInt(i) && !m[0]) {
+        if (maxObjects-objectsFound <= parseInt(i) && !m[0]) {
             m[0] = true;
             imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
 
+            currentDialogue = m;
+        }
+    }
+
+    if (Date.now() >= imagePopups["Info"].Enabled) {
+        let m = dialogues.Start["1"];
+        
+        if (Date.now() >= imagePopups["Info"].Enabled + 4000) {
+            m = dialogues.Start["2"];    
+
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 7000; // shows dialogue for 5 seconds
+            currentDialogue = m;
+        } else {
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 3000; // shows dialogue for 5 seconds
             currentDialogue = m;
         }
     }
@@ -650,7 +664,7 @@ window.addEventListener('click', function (event) {
             const exit = popupInfo.Exit;
 
             if (x >= exit.x1 && x <= exit.x2 && y >= exit.y1 && y <= exit.y2) {
-                popupInfo.Enabled = 0;
+                popupInfo.Enabled = Date.now(); // closes popup
                 console.log("clicked exit")
             } else {
                 popupInfo.Buttons.forEach(m => {
