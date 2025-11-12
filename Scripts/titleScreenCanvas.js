@@ -2,16 +2,16 @@ const canvas = document.getElementById("titleScreen");
 const ctx = canvas.getContext("2d");
 
 const img = new Image();
-img.src = 'images/titlescreen.png';
+img.src = 'images/title_screen.png';
 
 const img2 = new Image();
-img2.src = 'images/titlescreenstarthover.png';
+img2.src = 'images/title_screen_start.png';
 
 const img3 = new Image();
-img3.src = 'images/titlescreencreditshover.png';
+img3.src = 'images/title_screen_credits.png';
 
 const img4 = new Image();
-img4.src = 'images/titlescreenexithover.png';
+img4.src = 'images/title_screen_exit.png';
 
 
 

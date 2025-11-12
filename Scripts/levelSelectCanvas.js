@@ -52,7 +52,7 @@ function draw() {
 
   ctx.font = "50px Arial";
   ctx.fillStyle = "white";
-  ctx.fillText("Select difficulty level", 400, 80);
+  ctx.fillText("Choose who to help", 400, 80);
 
   ctx.drawImage(currentImg, 420, 165, 400, 250);
   ctx.drawImage(img2, 305, 250, 80, 80);
