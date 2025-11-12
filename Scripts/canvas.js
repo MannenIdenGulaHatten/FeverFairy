@@ -759,7 +759,7 @@ window.addEventListener('click', function (event) {
                         abnormalityHit = true;
                         objectsFound += 1;
                         correctSound.play();
-                        imagePopups["Dialogue"].Enabled = Date.now() + 1000;
+                        imagePopups["Dialogue"].Enabled = Date.now() + 1500;
                         currentDialogue = [false, "Found an abnormality!"];
                         break
                     }
