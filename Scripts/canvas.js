@@ -436,7 +436,17 @@ function draw() {
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
 
         let allObjects = [...doors, ...buckets, ...abnormalties, ...monster]
-        let hovered = []
+        let hoverObj = null;
+        allObjects
+            .slice() // dosent change the array permanently
+            .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
+            .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                if (colorFreq == m.colorFreq && room == m.room) {
+                    if (m.ifMonsterClicked(currentX, currentY) && !hoverObj) {
+                        hoverObj = m;
+                    } 
+                }
+            });
         allObjects
             .slice() // dosent change the array permanently
             .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
@@ -444,21 +454,11 @@ function draw() {
                 if (colorFreq == m.colorFreq && room == m.room) {
                     if (m.clicked >= Date.now()) {
                         m.draw(ctx, "normal")
-                    } else if (m.ifMonsterClicked(currentX, currentY)) {
-                        // m.draw(ctx, "white")
-                        hovered.push(m)
-                        m.draw(ctx)
+                    } else if (hoverObj && hoverObj === m) {
+                        m.draw(ctx, "white")
                     } else if (m.visible) {
                         m.draw(ctx)
                     }
-                }
-            });
-        hovered
-            .slice()
-            .sort((a, b) => a.z - b.z)
-            .forEach((m, i) => {
-                if (i == hovered.length - 1) {
-                    m.draw(ctx, "white")
                 }
             });
 
