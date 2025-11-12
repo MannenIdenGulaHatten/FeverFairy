@@ -80,11 +80,11 @@ const imagePopups = {
 
 let dialogues = {
     Fever: {
-        ["39"]: ["I'm burning up...", false],
-        ["41"]: ["I'm getting too hot, I have to hurry up.'", false],
+        ["39"]: ["They're burning up...", false],
+        ["41"]: ["They're getting too hot, I have to hurry up.'", false],
     },
     Absurdity: {
-        ["12"]: ["My dream is already feeling more normal!", false],
+        ["12"]: ["Their dream is already feeling more normal!", false],
         ["9"]: ["Take that fever! More than halfway done!", false],
         ["6"]: ["Before too long, the fever will stabilize!", false],
         ["3"]: ["Almost there.", false],
@@ -163,8 +163,8 @@ class imageMonsters {           // this class makes it possible to easily make a
             let image = this.image
             
             if (type) {
-                if (type == "white") {
-                    image = this.image_w
+                if (type == "white") { // hover system disablad so lämge
+                    //image = this.image_w
                 } else if (type == "normal") {
                     image = this.image_n
                 }
@@ -413,15 +413,17 @@ function draw() {
         ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
 
         let allObjects = [...doors, ...buckets, ...abnormalties, ...monster]
+        let hoverObj = false
         allObjects
             .slice() // dosent change the array permanently
-            .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+            .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
             .forEach(m => {
                 if (colorFreq == m.colorFreq && room == m.room) {
                     if (m.clicked >= Date.now()) {
                         m.draw(ctx, "normal")
-                    } else if (m.ifMonsterClicked(currentX, currentY)) {
+                    } else if (m.ifMonsterClicked(currentX, currentY) && !hoverObj) {
                         m.draw(ctx, "white")
+                        hoverObj = true
                     } else if (m.visible) {
                         m.draw(ctx)
                     }
@@ -549,6 +551,17 @@ function draw() {
             currentDialogue = m[0];
         }
     }
+    
+    for (const i in dialogues.Absurdity) {
+        let m = dialogues.Absurdity[i];
+
+        if (maxObjects-objectsFound >= parseInt(i) && !m[1]) {
+            m[1] = true;
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+
+            currentDialogue = m[0];
+        }
+    }
 
     requestAnimationFrame(draw);
 }
@@ -657,8 +670,6 @@ window.addEventListener('click', function (event) {
                 const m = buckets[i];
                 if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                     m.visible = false; //makes it invisible
-                    m.clicked = Date.now() + 2000
-
                     bucketHit = true;
 
                     if (colorUnlocked == 440) {
@@ -712,7 +723,6 @@ window.addEventListener('click', function (event) {
 
                             if (i == 0) {
                                 m.visible = false; //makes it invisible
-                                m.clicked = Date.now() + 2000
                                 monsterHit = true;
                                 fever += 1 / 3;
                             }
@@ -732,5 +742,3 @@ window.addEventListener('click', function (event) {
 setInterval(increaseFever, 500)
 
 img.onload = draw;
-
-
