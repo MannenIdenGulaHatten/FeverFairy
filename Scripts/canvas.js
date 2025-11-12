@@ -272,7 +272,7 @@ const abnormalties = [
     new imageMonsters('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/chili_b.png', 430, 410, 50, 50, 1, 1, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/chili_b.png', 430, 410, 50, 50, 1, 3, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 1, 'kitchen', 645),
