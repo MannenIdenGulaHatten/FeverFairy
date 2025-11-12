@@ -207,7 +207,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 490, 343, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/flaska_b.png', 560, 415, 50, 50, 1, 1, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/flaska_b.png', 560, 415, 50, 50, 1, 3, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/knifeholder_b.png', 540, 350, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/tophat_b.png', 820, 365, 50, 50, 1, 2, 'kitchen', 645),
