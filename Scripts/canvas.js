@@ -80,11 +80,11 @@ const imagePopups = {
 
 let dialogues = {
     Fever: {
-        ["39"]: ["I'm burning up...", false],
-        ["41"]: ["I'm getting too hot, I have to hurry up.'", false],
+        ["39"]: ["They're burning up...", false],
+        ["41"]: ["They're getting too hot, I have to hurry up.'", false],
     },
     Absurdity: {
-        ["12"]: ["My dream is already feeling more normal!", false],
+        ["12"]: ["Their dream is already feeling more normal!", false],
         ["9"]: ["Take that fever! More than halfway done!", false],
         ["6"]: ["Before too long, the fever will stabilize!", false],
         ["3"]: ["Almost there.", false],
