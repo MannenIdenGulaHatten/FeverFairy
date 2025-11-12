@@ -176,23 +176,33 @@ class imageMonsters {           // this class makes it possible to easily make a
 
     draw(ctx, type) {
         if (this.loaded && (this.visible || this.clicked >= Date.now())) {
-            const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
-            const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
+            let offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
+            let offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
             let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
             let image = this.image
+            let Pos = { X: this.x - offsetX * this.paralaxx, Y: this.y - offsetY * this.paralaxx }
             
             if (type) { // if type is given use that image version
                 if (type == "white") { // hover system disablad so lämge
                     image = this.image_w
                 } else if (type == "normal") {
                     image = this.image_n
+                    if (Size.X > Size.Y) {
+                        Size.X = canvas.width / 10
+                        Size.Y = (this.image.naturalHeight / this.image.naturalWidth) * Size.X
+                    } else {
+                        Size.Y = canvas.width / 10
+                        Size.X = (this.image.naturalWidth / this.image.naturalHeight) * Size.Y     
+                    }
+                    Pos.X = canvas.width * 0.95 - Size.X
+                    Pos.Y = canvas.height * 0.95 - Size.Y 
                 }
             }
 
             ctx.drawImage( // gör paralaxx för bilderna
                 image,
-                this.x - offsetX * this.paralaxx,
-                this.y - offsetY * this.paralaxx,
+                Pos.X,
+                Pos.Y,
                 Size.X,
                 Size.Y
             );
@@ -453,7 +463,7 @@ function draw() {
             .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
                 if (colorFreq == m.colorFreq && room == m.room) {
                     if (m.clicked >= Date.now()) {
-                        m.draw(ctx, "normal")
+                        //m.draw(ctx, "normal")
                     } else if (hoverObj && hoverObj === m) {
                         m.draw(ctx, "white")
                     } else if (m.visible) {
@@ -484,6 +494,17 @@ function draw() {
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.restore();
+
+        allObjects
+        .slice() // dosent change the array permanently
+        .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+        .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+            if (colorFreq == m.colorFreq && room == m.room) {
+                if (m.clicked >= Date.now()) {
+                    m.draw(ctx, "normal")
+                }
+            }
+        });
     } else if (fever >= maxFever || dead) {
         dead = true;
         // bro died 🤣🤣🤣
@@ -605,7 +626,7 @@ function draw() {
         }
     }
 
-    if (Date.now() >= imagePopups["Info"].Enabled) {
+    if (Date.now() >= imagePopups["Info"].Enabled && Date.now() <= imagePopups["Info"].Enabled + 4500) {
         let m = dialogues.Start["1"];
         
         if (Date.now() >= imagePopups["Info"].Enabled + 4000) {
@@ -759,6 +780,8 @@ window.addEventListener('click', function (event) {
                         abnormalityHit = true;
                         objectsFound += 1;
                         correctSound.play();
+                        imagePopups["Dialogue"].Enabled = Date.now() + 1500;
+                        currentDialogue = [false, "Found an abnormality!","("+objectsFound+" / ??)"];
                         break
                     }
                 }
