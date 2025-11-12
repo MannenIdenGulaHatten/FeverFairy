@@ -10,7 +10,7 @@ menu.src = 'images/menu.png'
 
 const img = new Image();
 let room = "kitchen"
-img.src = 'images/gameon' + room + '.png'; // backround image
+img.src = 'images/black.png'; // backround image
 
 const temp = new Image();
 temp.src = 'images/thermo.png'; // temp gauge image
@@ -22,7 +22,7 @@ flash.src = 'images/flashlight.png'; // temp gauge image
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 1000;
+const radius = 120;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
@@ -110,12 +110,14 @@ let colorTween = Date.now();
 let currentDialogue = "";
 
 // sounds my freind
-const sound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
-const sound2 = new Audio('sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
-const sound3 = new Audio('sounds/click3.ogg')
-const sound5 = new Audio('sounds/dooropen.wav')
-const sound6 = new Audio('sounds/ficklampaswitch.wav')
-const sound7 = new Audio('sounds/correct.wav')
+const backgroundSound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const ambulanceSound = new Audio('sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const clickSound = new Audio('sounds/click3.ogg')
+const doorSound = new Audio('sounds/dooropen.wav')
+const ficklampaswitchSound = new Audio('sounds/ficklampaswitch.wav')
+const correctSound = new Audio('sounds/correct.wav')
+const damageSound = new Audio('sounds/damage.mp3')
+
 
 class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
     constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
@@ -197,13 +199,13 @@ const monster = [ // this is where you decide the cordinates you place the image
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
 
     new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/cuttingboard_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 645),
-    new imageMonsters('images/kitchenblack/dishes_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/flaska_b.png', 800, 310, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/cuttingboard_b.png', 490, 343, 50, 50, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/flaska_b.png', 560, 415, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/knifeholder_b.png', 540, 350, 50, 50, 1, 2, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/tophat_b.png', 820, 365, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/tophat_b.png', 820, 365, 50, 50, 1, 2, 'kitchen', 645),
     //bathroom
     new imageMonsters('images/bathroomblack/shelf_b.png', 140, 285, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/carpet_b.png', 210, 592, 50, 50, 1, 2, 'bathroom', 645),
@@ -291,9 +293,9 @@ function newGame(selectedDiff) {
 }
 
 function playMusic() {
-    sound.play()
-    sound.volume = 0.7
-    sound.loop = true;
+    backgroundSound.play()
+    backgroundSound.volume = 0.7
+    backgroundSound.loop = true;
 }
 
 function displayPopup(popupName) {
@@ -432,9 +434,9 @@ function draw() {
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(255, 0, 0)";
         ctx.fillText("ur dead my friend", 250, 300);
-        sound.volume = 0
-        sound2.play()
-        sound2.volume = 0.1;
+        backgroundSound.volume = 0
+        ambulanceSound.play()
+        ambulanceSound.volume = 0.1;
         //startFever = 0;
         //fever = lerp(fever, 0, 0.01);
     } else if (objectsFound >= maxObjects || win) {
@@ -546,7 +548,7 @@ document.addEventListener('keydown', (event) => {
 
     if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq && colorUnlocked >= nextFreq) {
         flashCooldown = Date.now() + 2000; // 200 ms cooldown
-        sound6.play()
+        ficklampaswitchSound.play()
         colorFreq = 1;
 
         setTimeout(() => {
@@ -565,7 +567,7 @@ window.addEventListener('click', function (event) {
 
     if (y >= height * 0.025 && y <= height * 0.125) {
         if (x >= width * 0.025 && x <= width * 0.125) { // if you click the menu button
-            sound3.play()
+            clickSound.play()
             imagePopups["Menu"].Enabled = Date.now() + 1e9; // shows menu for a long time
             hideOtherPopups("Menu");
         }
@@ -604,25 +606,25 @@ window.addEventListener('click', function (event) {
                 if (x >= width * 0.35) { // Doors to the right
                     if (room == "kitchen") {
                         room = "bedroom"
-                        img.src = 'images/gameon' + room + '.png';
+                        img.src = 'images/black.png';
                     } else if (room == "bathroom") {
                         room = "kitchen"
-                        img.src = 'images/gameon' + room + '.png';
+                        img.src = 'images/black.png';
                     }
                 } else if (x <= width * 0.35) { // Doors to the left
                     if (room == "kitchen") {
                         room = "bathroom"
-                        img.src = 'images/gameon' + room + '.png';
+                        img.src = 'images/black.png';
                     } else if (room == "bedroom") {
                         room = "kitchen"
-                        img.src = 'images/gameon' + room + '.png';
+                        img.src = 'images/black.png';
                     }
                 } else { // Doors in the middle
 
                 }
                 doorHit = true;
                 doorTween = Date.now() + 1250;
-                sound5.play();
+                doorSound.play();
                 break
             }
         }
@@ -642,7 +644,7 @@ window.addEventListener('click', function (event) {
 
                     flashCooldown = Date.now() + 2000; // 200 ms cooldown
                     colorTween = Date.now() + 3250;
-                    sound6.play()
+                    ficklampaswitchSound.play()
                     colorFreq = 1;
 
                     setTimeout(() => {
@@ -660,7 +662,7 @@ window.addEventListener('click', function (event) {
                         m.visible = false; //makes it invisible
                         abnormalityHit = true;
                         objectsFound += 1;
-                        sound7.play();
+                        correctSound.play();
                         break
                     }
                 }
@@ -672,6 +674,7 @@ window.addEventListener('click', function (event) {
                         const m = monster[i];
                         if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                             objectsTouched.push(m)
+                            damageSound.play();
                         }
                     }
 
@@ -692,8 +695,8 @@ window.addEventListener('click', function (event) {
 
             if (!monsterHit && !abnormalityHit && !bucketHit) {
                 console.log("Wrong");
-                const sound4 = new Audio('sounds/incorrect.mp3')
-                sound4.play()
+                const incorrect = new Audio('sounds/incorrect.mp3')
+                incorrect.play()
             }
         }
     }
