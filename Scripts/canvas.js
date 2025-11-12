@@ -78,16 +78,36 @@ const imagePopups = { // popup settings
 }
 
 let dialogues = { // dialogue lines based on fever and abnormalties found
+    Start: {
+        ["1"]: [false,
+            "We need to fix the dream",
+            "so their fever stops rising!"],
+        ["2"]: [false,
+            "Remove everything that's",
+            "out of place and make",
+            "the dream normal again."],
+    },
     Fever: {
-        ["39"]: ["They're burning up...", false],
-        ["41"]: ["They're getting too hot, I have to hurry up.'", false],
+        ["39"]: [false,
+            "They're burning up..."],
+        ["41"]: [false,
+            "They're getting too hot,",
+            "I have to hurry up.'"],
     },
     Absurdity: {
-        ["12"]: ["Their dream is already feeling more normal!", false],
-        ["9"]: ["Take that fever! More than halfway done!", false],
-        ["6"]: ["Before too long, the fever will stabilize!", false],
-        ["3"]: ["Almost there.", false],
-        ["1"]: ["I'm so close, ambatukam", false],
+        ["12"]: [false,
+            "Their dream is already",
+            "feeling more normal!"],
+        ["9"]: [false,
+            "Take that fever!",
+            "More than halfway done!"],
+        ["6"]: [false,
+            "Before too long,",
+            "the fever will stabilize!"],
+        ["3"]: [false, 
+            "Almost there."],
+        ["1"]: [false, 
+            "I'm so close!"],
     },
 }
 
@@ -106,7 +126,7 @@ let win = false;
 let flashCooldown = Date.now();
 let doorTween = Date.now();
 let colorTween = Date.now();
-let currentDialogue = "";
+let currentDialogue = [false, ""];
 
 // sounds my freind
 const backgroundSound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
@@ -373,7 +393,7 @@ function scalePos(pos, type) {
     }
 }
 function increaseFever() {
-    if (imagePopups["Menu"].Enabled < Date.now() && !dead && !win) {
+    if (imagePopups["Menu"].Enabled < Date.now() && imagePopups["Info"].Enabled < Date.now() && !dead && !win) {
         fever += 1 / 120; // increase fever by 1 every 90 seconds
     }
 }
@@ -483,7 +503,10 @@ function draw() {
         if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
             ctx.font = "30px Cursive";
             ctx.fillStyle = "rgba(255, 255, 255, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
-            ctx.fillText(currentDialogue, scalePos(900, "X"), 100);
+            
+            for (let i = 1; i < currentDialogue.length; i++) {
+                ctx.fillText(currentDialogue[i], scalePos(900, "X"), 50 + i * 40);
+            }
         }
     }
 
@@ -552,22 +575,22 @@ function draw() {
     for (const i in dialogues.Fever) {
         let m = dialogues.Fever[i];
 
-        if (fever >= parseInt(i) && !m[1]) {
-            m[1] = true;
+        if (fever >= parseInt(i) && !m[0]) {
+            m[0] = true;
             imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
 
-            currentDialogue = m[0];
+            currentDialogue = m;
         }
     }
     
     for (const i in dialogues.Absurdity) {
         let m = dialogues.Absurdity[i];
 
-        if (maxObjects-objectsFound >= parseInt(i) && !m[1]) {
-            m[1] = true;
+        if (maxObjects-objectsFound >= parseInt(i) && !m[0]) {
+            m[0] = true;
             imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
 
-            currentDialogue = m[0];
+            currentDialogue = m;
         }
     }
 
