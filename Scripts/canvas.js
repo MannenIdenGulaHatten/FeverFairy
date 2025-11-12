@@ -46,6 +46,8 @@ const imagePopups = {
     ["Menu"]: {
         Enabled: 0,
         imagesrc: "images/popup.png",
+        Size: { x: 1, y: 1 },
+        Offset: { x: 0, y: 0 },
         ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
         Exit: {},
         Buttons: [
@@ -59,10 +61,25 @@ const imagePopups = {
     ["Info"]: {
         Enabled: Date.now() + 1e9,
         imagesrc: "images/tutorial.png",
+        Size: { x: 1, y: 1 },
+        Offset: { x: 0, y: 0 },
         ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
         Exit: {},
         Buttons: []
-    }
+    },
+    ["Dialogue"]: {
+        Enabled: 0,
+        imagesrc: "images/tutorial.png",
+        Size: { x: 1, y: 1 },
+        Offset: { x: 0, y: 0 },
+        ExitHitbox: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
+        Exit: {},
+        Buttons: []
+    },
+}
+
+let dialogues = {
+    
 }
 
 // game variables (set wh
@@ -101,6 +118,7 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.z = z;
         this.room = room
         this.colorFreq = colorFreq
+
         this.image = new Image();
         this.image.src = src;
 
@@ -110,6 +128,14 @@ class imageMonsters {           // this class makes it possible to easily make a
 
         this.image_w = new Image();
         this.image_w.src = src_w;
+
+        let src_n = src
+        src_n.replace("_b", "")
+        src_n.replace("black", "")
+
+        this.image_n = new Image();
+        this.image_n.src = src_n;
+
         this.loaded = false;
         this.visible = true;
         this.image.onload = () => (this.loaded = true); // makes it wait for the images to load
@@ -124,6 +150,8 @@ class imageMonsters {           // this class makes it possible to easily make a
 
             if (white) {
                 image = this.image_w
+            } else if (false) {
+                image = this.image_n
             }
 
             ctx.drawImage( // gör paralaxx för bilderna
