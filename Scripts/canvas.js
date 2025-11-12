@@ -226,7 +226,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 490, 343, 50, 50, 1, 2, 'kitchen', 645),
-    new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 3, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/flaska_b.png', 560, 415, 50, 50, 1, 3, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/knifeholder_b.png', 540, 350, 50, 50, 1, 2, 'kitchen', 440),
@@ -282,7 +282,7 @@ const abnormalties = [
     new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
-    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 5, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/vampire_b.png',630, 330, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
 
 ]
