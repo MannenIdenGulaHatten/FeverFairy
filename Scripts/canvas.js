@@ -549,6 +549,17 @@ function draw() {
             currentDialogue = m[0];
         }
     }
+    
+    for (const i in dialogues.Absurdity) {
+        let m = dialogues.Absurdity[i];
+
+        if (maxObjects-objectsFound >= parseInt(i) && !m[1]) {
+            m[1] = true;
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+
+            currentDialogue = m[0];
+        }
+    }
 
     requestAnimationFrame(draw);
 }
@@ -657,8 +668,6 @@ window.addEventListener('click', function (event) {
                 const m = buckets[i];
                 if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
                     m.visible = false; //makes it invisible
-                    m.clicked = Date.now() + 2000
-
                     bucketHit = true;
 
                     if (colorUnlocked == 440) {
@@ -712,7 +721,6 @@ window.addEventListener('click', function (event) {
 
                             if (i == 0) {
                                 m.visible = false; //makes it invisible
-                                m.clicked = Date.now() + 2000
                                 monsterHit = true;
                                 fever += 1 / 3;
                             }
