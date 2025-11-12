@@ -59,7 +59,7 @@ const imagePopups = { // popup settings
     },
     ["Info"]: {
         Enabled: Date.now() + 1e9,
-        imagesrc: "images/tutorial.png",
+        imagesrc: "images/controlls_menu.png",
         Size: { x: 1.2, y: 1.2 },
         Offset: { x: 0, y: 0 },
         ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
@@ -68,9 +68,9 @@ const imagePopups = { // popup settings
     },
     ["Dialogue"]: {
         Enabled: 0,
-        imagesrc: "images/tutorial.png",
+        imagesrc: "images/comment.png",
         Size: { x: 0.8, y: 0.6 },
-        Offset: { x: 0.35, y: -0.35 },
+        Offset: { x: 0.325, y: -0.35 },
         ExitHitbox: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
         Exit: {},
         Buttons: []
@@ -183,7 +183,7 @@ class imageMonsters {           // this class makes it possible to easily make a
             
             if (type) { // if type is given use that image version
                 if (type == "white") { // hover system disablad so lämge
-                    //image = this.image_w
+                    image = this.image_w
                 } else if (type == "normal") {
                     image = this.image_n
                 }
