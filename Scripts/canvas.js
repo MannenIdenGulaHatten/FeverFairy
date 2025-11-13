@@ -403,7 +403,7 @@ function scalePos(pos, type) {
 }
 function increaseFever() {
     if (imagePopups["Menu"].Enabled < Date.now() && imagePopups["Info"].Enabled < Date.now() && !dead && !win) {
-        fever += 1 / 180; // increase fever by 1 every 90 seconds
+        fever += 1 / 120; // increase fever by 1 every 90 seconds
     }
 }
 
@@ -608,7 +608,7 @@ function draw() {
 
         if (fever >= parseInt(i) && !m[0]) {
             m[0] = true;
-            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+            imagePopups["Dialogue"].Enabled = Date.now() + 6500; // shows dialogue for 5 seconds
 
             currentDialogue = m;
         }
@@ -619,7 +619,7 @@ function draw() {
 
         if (maxObjects - objectsFound <= parseInt(i) && !m[0]) {
             m[0] = true;
-            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+            imagePopups["Dialogue"].Enabled = Date.now() + 6500; // shows dialogue for 5 seconds
 
             currentDialogue = m;
         }
@@ -805,7 +805,7 @@ window.addEventListener('click', function (event) {
                             if (i == 0) {
                                 m.visible = false; //makes it invisible
                                 monsterHit = true;
-                                fever += 1 / 3;
+                                fever += 1 / 2;
                             }
                         });
                 }
