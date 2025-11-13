@@ -45,14 +45,14 @@ const imagePopups = { // popup settings
     ["Menu"]: {
         Enabled: 0,
         imagesrc: "images/popup.png",
-        Size: { x: 1, y: 1 }, // scale size of image (0-1)
+        Size: { x: 2, y: 2 }, // scale size of image (0-1)
         Offset: { x: 0, y: 0 }, // scale offset of image
-        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
+        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.4 }, // relative positions for exit button
         Exit: {},
         Buttons: [ // buttons on the popup
             {
                 Name: "ExitGame",
-                Hitbox: { x1: 0.3, y1: 0.65, x2: 0.7, y2: 0.9 },
+                Hitbox: { x1: 0.3, y1: 0.55, x2: 0.7, y2: 0.9 },
                 Pos: {}
             },
         ]
@@ -233,7 +233,7 @@ class imageMonsters {           // this class makes it possible to easily make a
 const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
     //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
 
-    new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 5, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 55, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 490, 343, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 3, 'kitchen', 440),
@@ -375,9 +375,9 @@ function displayPopup(popupName) {
 
 function hideOtherPopups(selected) {
     for (const index in imagePopups) {
-        if (index != selected) {
+        if (index != selected && index != "Dialogue") {
             // hide popup
-            imagePopups[index].Enabled = 0;
+            imagePopups[index].Enabled = Date.now();
         }
     }
 }
