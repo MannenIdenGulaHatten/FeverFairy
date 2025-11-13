@@ -59,7 +59,7 @@ const imagePopups = { // popup settings
     },
     ["Info"]: {
         Enabled: Date.now() + 1e9,
-        imagesrc: "images/controlls_menu.png",
+        imagesrc: "images/tutorial.png",
         Size: { x: 1.2, y: 1.2 },
         Offset: { x: 0, y: 0 },
         ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
@@ -403,7 +403,7 @@ function scalePos(pos, type) {
 }
 function increaseFever() {
     if (imagePopups["Menu"].Enabled < Date.now() && imagePopups["Info"].Enabled < Date.now() && !dead && !win) {
-        fever += 1 / 180; // increase fever by 1 every 90 seconds
+        fever += 1 / 120; // increase fever by 1 every 90 seconds
     }
 }
 
@@ -426,11 +426,6 @@ function draw() {
     //paralax effect
     const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
-
-    /*const stenX =600;
-    const stenY =300;
-    const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
-    const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
 
     // dark background / who turned of the lights?
     if (fever < maxFever && objectsFound < maxObjects && !dead && !win) {
@@ -522,7 +517,7 @@ function draw() {
         //fever = lerp(fever, 0, 0.01);
     } else if (objectsFound >= maxObjects || win) {
         win = true;
-        // bro won 🤣🤣🤣
+        // bro won 🤣🤣🤣 <- win condition
         ctx.font = "80px Cursive";
         ctx.fillStyle = "rgb(0, 255, 0)";
         ctx.fillText("YOU WIN!", 250, 300);
@@ -810,7 +805,7 @@ window.addEventListener('click', function (event) {
                             if (i == 0) {
                                 m.visible = false; //makes it invisible
                                 monsterHit = true;
-                                fever += 1 / 3;
+                                fever += 1 / 2;
                             }
                         });
                 }
