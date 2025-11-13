@@ -303,8 +303,8 @@ const buckets = [
 
 const doors = [
     // doors
-    new imageMonsters('images/kitchenblack/door_1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/door_2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/door1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/door2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/bathroomblack/door_b.png', 1050, 255, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/door_b.png', 65, 225, 50, 50, 1, 2, 'bedroom', 565),
 
