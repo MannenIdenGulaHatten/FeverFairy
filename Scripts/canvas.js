@@ -296,7 +296,7 @@ const abnormalties = [
     new imageMonsters('images/bathroomblack/retrotv_b.png', 790, 210, 50, 50, 1, 2, 'bathroom', 645),
     new imageMonsters('images/bedroomblack/cheese_b.png', 685, 490, 50, 50, 1, 3, 'bedroom', 645),
     new imageMonsters('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2, 'bedroom', 565),
-    new imageMonsters('images/bedroomblack/ac_b2.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
+    new imageMonsters('images/bedroomblack/ac2_b.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 4, 'bathroom', 440),
@@ -746,6 +746,7 @@ window.addEventListener('click', function (event) {
 
                 }
                 doorHit = true;
+                doorTween = Date.now() + 1250;
                 sound5.play();
                 break
             }
