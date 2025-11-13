@@ -427,11 +427,6 @@ function draw() {
     const backgroundgOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
-    /*const stenX =600;
-    const stenY =300;
-    const stenOffsetX = (mouseX / canvas.width - 0.5) * maxShiftX; // paralax effect for testrock
-    const stenOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY; */
-
     // dark background / who turned of the lights?
     if (fever < maxFever && objectsFound < maxObjects && !dead && !win) {
         ctx.fillStyle = 'black';
@@ -522,7 +517,7 @@ function draw() {
         //fever = lerp(fever, 0, 0.01);
     } else if (objectsFound >= maxObjects || win) {
         win = true;
-        // bro won 🤣🤣🤣
+        // bro won 🤣🤣🤣 <- win condition
         ctx.font = "80px Cursive";
         ctx.fillStyle = "rgb(0, 255, 0)";
         ctx.fillText("YOU WIN!", 250, 300);
