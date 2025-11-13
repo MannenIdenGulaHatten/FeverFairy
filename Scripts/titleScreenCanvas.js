@@ -23,11 +23,11 @@ canvas.addEventListener('mousemove', (event) => {
   const hoverY = event.clientY - rect.top;
   console.log(hoverX+' '+hoverY);
 
-  if (hoverX >= 530 && hoverX <= 730 && hoverY >= 230 && hoverY <= 290) {
+  if (hoverX >= 530 && hoverX <= 730 && hoverY >= 300 && hoverY <= 365) {
       currentImg = img2; 
-    } else if (hoverX >= 530 && hoverX <= 730 && hoverY >= 295 && hoverY <= 350) {
+    } else if (hoverX >= 530 && hoverX <= 730 && hoverY >= 370 && hoverY <= 440) {
       currentImg = img3; 
-    } else if (hoverX >= 530 && hoverX <= 730 && hoverY >= 355 && hoverY <= 400) {
+    } else if (hoverX >= 530 && hoverX <= 730 && hoverY >= 445 && hoverY <= 515) {
       currentImg = img4; 
     } else {
       currentImg = img; 
@@ -40,9 +40,9 @@ canvas.addEventListener('click', (event) => {
   const y = event.clientY - rect.top;
     
   if (x >= 530 && x <= 730) {
-    if (y >= 230 && y <= 290)
+    if (y >= 300 && y <= 365)
       location.replace("/feverfairy/levelselect.html");
-    else if (y >= 295 && y <= 350)
+    else if (y >= 370 && y <= 440)
       location.replace("/feverfairy/credits.html");
   }
 });

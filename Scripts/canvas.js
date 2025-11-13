@@ -18,7 +18,7 @@ const flash = new Image();
 flash.src = 'images/flashlight.png'; // temp gauge image
 
 const normalBg = new Image();
-normalBg.src = 'images/comment.png'; // temp gauge image
+normalBg.src = 'images/box.png'; // temp gauge image
 
 
 let mouseX = canvas.width / 2;
