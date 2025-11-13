@@ -17,6 +17,9 @@ temp.src = 'images/thermo.png'; // temp gauge image
 const flash = new Image();
 flash.src = 'images/flashlight.png'; // temp gauge image
 
+const normalBg = new Image();
+normalBg.src = 'images/comment.png'; // temp gauge image
+
 
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
@@ -45,14 +48,14 @@ const imagePopups = { // popup settings
     ["Menu"]: {
         Enabled: 0,
         imagesrc: "images/popup.png",
-        Size: { x: 1, y: 1 }, // scale size of image (0-1)
+        Size: { x: 2, y: 2 }, // scale size of image (0-1)
         Offset: { x: 0, y: 0 }, // scale offset of image
-        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
+        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.4 }, // relative positions for exit button
         Exit: {},
         Buttons: [ // buttons on the popup
             {
                 Name: "ExitGame",
-                Hitbox: { x1: 0.3, y1: 0.65, x2: 0.7, y2: 0.9 },
+                Hitbox: { x1: 0.3, y1: 0.55, x2: 0.7, y2: 0.9 },
                 Pos: {}
             },
         ]
@@ -153,14 +156,14 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.image.src = src;
 
         let src_w = src // makes it so that it automatically finds the white and normal version of the image if it exists
-        src_w = src_w.replace("_b", "_w")
+        src_w = src_w.replace("_b.png", "_w.png")
         src_w = src_w.replace("black", "white")
 
         this.image_w = new Image();
         this.image_w.src = src_w;
 
         let src_n = src
-        src_n = src_n.replace("_b", "")
+        src_n = src_n.replace("_b.png", ".png")
         src_n = src_n.replace("black", "normal")
 
         this.image_n = new Image();
@@ -196,6 +199,8 @@ class imageMonsters {           // this class makes it possible to easily make a
                     }
                     Pos.X = canvas.width * 0.95 - Size.X
                     Pos.Y = canvas.height * 0.95 - Size.Y
+
+                    ctx.drawImage(normalBg, Pos.X - 20, Pos.Y - 20, Size.X + 40, Size.Y + 40);
                 }
             }
 
@@ -260,7 +265,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 3, 'kitchen', 565),
-    new imageMonsters('Images/kitchenBlack/counter2_b.png', 670, 380, 50, 50, 1, 4, 'kitchen', 565),
+    new imageMonsters('Images/kitchenblack/counter2_b.png', 670, 380, 50, 50, 1, 4, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/fridge_b.png', 750, 310, 130, 200, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
@@ -303,8 +308,8 @@ const buckets = [
 
 const doors = [
     // doors
-    new imageMonsters('images/kitchenblack/door_1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
-    new imageMonsters('images/kitchenblack/door_2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/door1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/door2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/bathroomblack/door_b.png', 1050, 255, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bedroomblack/door_b.png', 65, 225, 50, 50, 1, 2, 'bedroom', 565),
 
@@ -375,9 +380,9 @@ function displayPopup(popupName) {
 
 function hideOtherPopups(selected) {
     for (const index in imagePopups) {
-        if (index != selected) {
+        if (index != selected && index != "Dialogue") {
             // hide popup
-            imagePopups[index].Enabled = 0;
+            imagePopups[index].Enabled = Date.now();
         }
     }
 }
