@@ -45,14 +45,14 @@ const imagePopups = { // popup settings
     ["Menu"]: {
         Enabled: 0,
         imagesrc: "images/popup.png",
-        Size: { x: 1, y: 1 }, // scale size of image (0-1)
+        Size: { x: 2, y: 2 }, // scale size of image (0-1)
         Offset: { x: 0, y: 0 }, // scale offset of image
-        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.35 }, // relative positions for exit button
+        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.4 }, // relative positions for exit button
         Exit: {},
         Buttons: [ // buttons on the popup
             {
                 Name: "ExitGame",
-                Hitbox: { x1: 0.3, y1: 0.65, x2: 0.7, y2: 0.9 },
+                Hitbox: { x1: 0.3, y1: 0.55, x2: 0.7, y2: 0.9 },
                 Pos: {}
             },
         ]
@@ -377,7 +377,7 @@ function hideOtherPopups(selected) {
     for (const index in imagePopups) {
         if (index != selected && index != "Dialogue") {
             // hide popup
-            imagePopups[index].Enabled = 0;
+            imagePopups[index].Enabled = Date.now();
         }
     }
 }
