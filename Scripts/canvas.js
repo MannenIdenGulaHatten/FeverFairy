@@ -17,6 +17,9 @@ temp.src = 'images/thermo.png'; // temp gauge image
 const flash = new Image();
 flash.src = 'images/flashlight.png'; // temp gauge image
 
+const normalBg = new Image();
+normalBg.src = 'images/comment.png'; // temp gauge image
+
 
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
@@ -153,14 +156,14 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.image.src = src;
 
         let src_w = src // makes it so that it automatically finds the white and normal version of the image if it exists
-        src_w = src_w.replace("_b", "_w")
+        src_w = src_w.replace("_b.png", "_w.png")
         src_w = src_w.replace("black", "white")
 
         this.image_w = new Image();
         this.image_w.src = src_w;
 
         let src_n = src
-        src_n = src_n.replace("_b", "")
+        src_n = src_n.replace("_b.png", ".png")
         src_n = src_n.replace("black", "normal")
 
         this.image_n = new Image();
@@ -196,6 +199,8 @@ class imageMonsters {           // this class makes it possible to easily make a
                     }
                     Pos.X = canvas.width * 0.95 - Size.X
                     Pos.Y = canvas.height * 0.95 - Size.Y
+
+                    ctx.drawImage(normalBg, Pos.X - 20, Pos.Y - 20, Size.X + 40, Size.Y + 40);
                 }
             }
 
@@ -293,7 +298,7 @@ const abnormalties = [
     new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
     new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 4, 'bathroom', 440),
-    new imageMonsters('images/bedroomblack/bookdoor_b.png', 900, 300, 50, 50, 1, 4, 'bedroom', 440),
+    new imageMonsters('images/bedroomblack/bookdoor_b.png', 1000, 375, 50, 50, 1, 4000000, 'bedroom', 440),
 ]
 
 const buckets = [
