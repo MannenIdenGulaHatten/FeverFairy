@@ -257,7 +257,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/bathroomblack/shower_drain_b.png', 805, 505, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/shower_head_b.png', 822, 190, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bathroomblack/shower_knob_b.png', 900, 285, 50, 50, 1, 2, 'bathroom', 645),
-    new imageMonsters('images/bathroomblack/sink_b.png', 615, 320, 50, 50, 1, 2, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/sink_b.png', 615, 400, 50, 50, 1, 2, 'bathroom', 565),
     new imageMonsters('images/bathroomblack/toilet_b.png', 490, 430, 50, 50, 1, 2, 'bathroom', 645),
     new imageMonsters('images/bathroomblack/toothbrush_b.png', 622, 425, 50, 50, 1, 2, 'bathroom', 440),
     new imageMonsters('images/bathroomblack/glass_b.png', 670, 417, 50, 50, 1, 2, 'bathroom', 645),
