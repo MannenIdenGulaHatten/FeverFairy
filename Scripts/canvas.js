@@ -9,7 +9,7 @@ menu.src = 'images/menu.png' // menu image
 
 const img = new Image();
 let room = "kitchen"
-img.src = 'images/black.png'; // backround image
+img.src = 'images/gameon' + room + '.png'; // backround image
 
 const temp = new Image();
 temp.src = 'images/thermo.png'; // temp gauge image
@@ -729,25 +729,24 @@ window.addEventListener('click', function (event) {
                 if (x >= width * 0.35) { // Doors to the right
                     if (room == "kitchen") {
                         room = "bedroom"
-                        img.src = 'images/black.png';
+                        img.src = 'images/gameon' + room + '.png';
                     } else if (room == "bathroom") {
                         room = "kitchen"
-                        img.src = 'images/black.png';
+                        img.src = 'images/gameon' + room + '.png';
                     }
                 } else if (x <= width * 0.35) { // Doors to the left
                     if (room == "kitchen") {
                         room = "bathroom"
-                        img.src = 'images/black.png';
+                        img.src = 'images/gameon' + room + '.png';
                     } else if (room == "bedroom") {
                         room = "kitchen"
-                        img.src = 'images/black.png';
+                        img.src = 'images/gameon' + room + '.png';
                     }
                 } else { // Doors in the middle
 
                 }
                 doorHit = true;
-                doorTween = Date.now() + 1250;
-                doorSound.play();
+                sound5.play();
                 break
             }
         }
