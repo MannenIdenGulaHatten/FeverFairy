@@ -375,7 +375,7 @@ function displayPopup(popupName) {
 
 function hideOtherPopups(selected) {
     for (const index in imagePopups) {
-        if (index != selected) {
+        if (index != selected && index != "Dialogue") {
             // hide popup
             imagePopups[index].Enabled = 0;
         }
