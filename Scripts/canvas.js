@@ -17,6 +17,9 @@ temp.src = 'images/thermo.png'; // temp gauge image
 const flash = new Image();
 flash.src = 'images/flashlight.png'; // temp gauge image
 
+const normalBg = new Image();
+normalBg.src = 'images/comment.png'; // temp gauge image
+
 
 let mouseX = canvas.width / 2;
 let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
@@ -196,6 +199,8 @@ class imageMonsters {           // this class makes it possible to easily make a
                     }
                     Pos.X = canvas.width * 0.95 - Size.X
                     Pos.Y = canvas.height * 0.95 - Size.Y
+
+                    ctx.drawImage(normalBg, Pos.X - 20, Pos.Y - 20, Size.X + 40, Size.Y + 40);
                 }
             }
 
