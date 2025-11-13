@@ -608,7 +608,7 @@ function draw() {
 
         if (fever >= parseInt(i) && !m[0]) {
             m[0] = true;
-            imagePopups["Dialogue"].Enabled = Date.now() + 10000; // shows dialogue for 5 seconds
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
 
             currentDialogue = m;
         }
@@ -619,7 +619,7 @@ function draw() {
 
         if (maxObjects - objectsFound <= parseInt(i) && !m[0]) {
             m[0] = true;
-            imagePopups["Dialogue"].Enabled = Date.now() + 10000; // shows dialogue for 5 seconds
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
 
             currentDialogue = m;
         }
