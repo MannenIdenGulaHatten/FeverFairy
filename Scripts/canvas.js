@@ -153,14 +153,14 @@ class imageMonsters {           // this class makes it possible to easily make a
         this.image.src = src;
 
         let src_w = src // makes it so that it automatically finds the white and normal version of the image if it exists
-        src_w = src_w.replace("_b", "_w")
+        src_w = src_w.replace("_b.png", "_w.png")
         src_w = src_w.replace("black", "white")
 
         this.image_w = new Image();
         this.image_w.src = src_w;
 
         let src_n = src
-        src_n = src_n.replace("_b", "")
+        src_n = src_n.replace("_b.png", ".png")
         src_n = src_n.replace("black", "normal")
 
         this.image_n = new Image();
@@ -260,7 +260,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 3, 'kitchen', 565),
-    new imageMonsters('Images/kitchenBlack/counter2_b.png', 670, 380, 50, 50, 1, 4, 'kitchen', 565),
+    new imageMonsters('Images/kitchenblack/counter2_b.png', 670, 380, 50, 50, 1, 4, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/fridge_b.png', 750, 310, 130, 200, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
