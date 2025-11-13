@@ -16,9 +16,14 @@ img4.src = 'images/easylevel.png'
 const img5 = new Image();
 img5.src = 'images/gw_card.png'
 
+const img6 = new Image();
+img6.src = 'images/button_org.png'
+
+const img7 = new Image();
+img7.src = 'images/button_hover.png'
 
 let currentImg = img4; //default difficulty
-
+let currentButton = img6; 
 const sound = new Audio('sounds/click3.ogg');//https://gamesounds.xyz/Kenney%27s%20Sound%20Pack/UI%20Audio/click3.ogg
 
 function changeLevel(dir) {
@@ -32,34 +37,62 @@ function changeLevel(dir) {
   } else if (currentImg == img5) {
     currentImg = (dir == "ArrowRight") && img || img4;
   }
-}
+     else if (x >= 420 && x <= 945) {
+      if (currentImg == img) {
+        location.replace("/feverfairy/hardgame.html")
+      } else if (currentImg == img4) {
+        location.replace("/feverfairy/game.html")
+      }
+ }
+};
 
 function startGame(event, start, dir) {
   const rect = canvas.getBoundingClientRect();
   const x = event.clientX - rect.left;
   const y = event.clientY - rect.top;
 
+  // Start game with Enter
   if (start) {
     if (currentImg == img4) {
-      location.replace("/feverfairy/game.html")
+      location.replace("/feverfairy/game.html");
     }
+    return;
   }
 
-  if (y >= 265 && y <= 520) {        
-    if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {          
-      changeLevel(dir || ((x >= 290 && x <= 400) && "ArrowLeft") ||"ArrowRight");
-    } else if (x >= 420 && x <= 945) {
-        if (currentImg == img4) {
-          location.replace("/feverfairy/game.html")
-        }
+  // back to home button
+  if (x >= 20 && x <= 100 && y >= 20 && y <= 100) {
+    location.replace("/feverfairy/index.html");
+    return;
+  }
+
+  // arrow keys for changing difficulty
+  if (y >= 265 && y <= 520) {
+    if (x >= 290 && x <= 400) {
+      changeLevel("ArrowLeft");
+    } else if (x >= 840 && x <= 945) {
+      changeLevel("ArrowRight");
+    } 
+  }
+
+
+  if (x >= 420 && x <= 820 && y >= 265 && y <= 515) {
+    if (currentImg == img4) {
+      location.replace("/feverfairy/game.html");
     }
   }
 }
+
 canvas.addEventListener('mousemove', (event) => {
   const rect = canvas.getBoundingClientRect();
   const hoverX = event.clientX - rect.left;
   const hoverY = event.clientY - rect.top;
   console.log(hoverX+' '+hoverY);
+
+    if (hoverX >= 20 && hoverX <= 100 && hoverY >= 20 && hoverY <= 100) {
+    currentButton = img7; // hover image
+  } else {
+    currentButton = img6; // normal image
+  }
 });
 canvas.addEventListener('click', (event) => {
    startGame(event, false);
@@ -86,6 +119,7 @@ function draw() {
   ctx.drawImage(currentImg, 420, 265, 400, 250);
   ctx.drawImage(img2, 305, 350, 80, 80);
   ctx.drawImage(img3, 855, 350, 80, 80);
+  ctx.drawImage(currentButton, 20, 20, 80, 80);
 
   requestAnimationFrame(draw);
 }
