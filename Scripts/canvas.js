@@ -60,6 +60,7 @@ const imagePopups = { // popup settings
             },
         ]
     },
+
     ["Info"]: {
         Enabled: Date.now() + 1e9,
         imagesrc: "images/tutorial.png",
@@ -69,6 +70,10 @@ const imagePopups = { // popup settings
         Exit: {},
         Buttons: []
     },
+    
+
+
+
     ["Dialogue"]: {
         Enabled: 0,
         imagesrc: "images/comment.png",
@@ -747,7 +752,7 @@ window.addEventListener('click', function (event) {
                 }
                 doorHit = true;
                 doorTween = Date.now() + 1250;
-                sound5.play();
+                doorSound.play();
                 break
             }
         }
