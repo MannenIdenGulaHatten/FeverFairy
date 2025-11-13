@@ -38,8 +38,11 @@ canvas.addEventListener('click', (event) => {
 });
 
 function draw() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);  
+  ctx.fillStyle = "black";
+  ctx.fillRect(0,0, canvas.width, canvas.height);
   ctx.drawImage(currentImg, 0, 0, canvas.width, canvas.height);
+
   requestAnimationFrame(draw);
 }
 

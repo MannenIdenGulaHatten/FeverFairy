@@ -238,7 +238,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/cuttingboard_b.png', 490, 343, 50, 50, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 3, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/flaska_b.png', 560, 415, 50, 50, 1, 3, 'kitchen', 440),
-    new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 4, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/knifeholder_b.png', 540, 350, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/tophat_b.png', 820, 365, 50, 50, 1, 2, 'kitchen', 645),
     //bathroom
@@ -260,7 +260,7 @@ const monster = [ // this is where you decide the cordinates you place the image
     new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
     new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 3, 'kitchen', 565),
-    new imageMonsters('Images/kitchenBlack/counter2_b.png', 670, 380, 50, 50, 1, 1, 'kitchen', 565),
+    new imageMonsters('Images/kitchenBlack/counter2_b.png', 670, 380, 50, 50, 1, 4, 'kitchen', 565),
     new imageMonsters('images/kitchenblack/fridge_b.png', 750, 310, 130, 200, 1, 1, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 2, 'kitchen', 440),
     new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
