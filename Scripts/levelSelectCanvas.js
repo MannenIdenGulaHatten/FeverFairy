@@ -6,10 +6,16 @@ img.src = 'images/hardlevel.png';
 
 const img2 = new Image();
 img2.src = 'images/vansterselectpil.png'
+
 const img3 = new Image();
 img3.src = 'images/hogerselectpil.png'
+
 const img4 = new Image();
 img4.src = 'images/easylevel.png'
+
+const img5 = new Image();
+img5.src = 'images/gw_card.png'
+
 
 let currentImg = img4; //default difficulty
 
@@ -23,6 +29,9 @@ function changeLevel() {
     currentImg = img4;
 
   } else if (currentImg == img4) {
+    currentImg = img5;
+  }
+  else if (currentImg == img5) {
     currentImg = img;
   }
 }
@@ -37,6 +46,9 @@ function startGame(event, start,) {
       location.replace("/feverfairy/hardgame.html")
     } else if (currentImg == img4) {
       location.replace("/feverfairy/game.html")
+    }
+    else if (currentImg == img5) {
+      location.replace("/feverfairy/mediumgame.html")
     }
   }
 
