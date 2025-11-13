@@ -26,11 +26,11 @@ function changeLevel(dir) {
   .then(() => console.log('Ljudet spelas upp!'))
   .catch(err => console.error('Kunde inte spela upp ljudet:', err));
   if (currentImg == img) {
-    currentImg = (dir == "ArrowLeft") && img4 || img5;
+    currentImg = (dir == "ArrowRight") && img4 || img5;
   } else if (currentImg == img4) {
-    currentImg = (dir == "ArrowLeft") && img5 || img;
+    currentImg = (dir == "ArrowRight") && img5 || img;
   } else if (currentImg == img5) {
-    currentImg = (dir == "ArrowLeft") && img || img4;
+    currentImg = (dir == "ArrowRight") && img || img4;
   }
 }
 
@@ -45,7 +45,7 @@ function startGame(event, start, dir) {
     }
   }
 
-  if (y >= 150 && y <= 425) {        
+  if (y >= 265 && y <= 520) {        
     if ((x >= 290 && x <= 400) || (x >= 840 && x <= 945)) {          
       changeLevel(dir || ((x >= 290 && x <= 400) && "ArrowLeft") ||"ArrowRight");
     } else if (x >= 420 && x <= 945) {
@@ -55,7 +55,12 @@ function startGame(event, start, dir) {
     }
   }
 }
-
+canvas.addEventListener('mousemove', (event) => {
+  const rect = canvas.getBoundingClientRect();
+  const hoverX = event.clientX - rect.left;
+  const hoverY = event.clientY - rect.top;
+  console.log(hoverX+' '+hoverY);
+});
 canvas.addEventListener('click', (event) => {
    startGame(event, false);
 });
@@ -74,13 +79,13 @@ function draw() {
   ctx.fillStyle = "black";
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.font = "50px Arial";
+  ctx.font = "80px Arial";
   ctx.fillStyle = "white";
-  ctx.fillText("Choose who to help", 400, 80);
+  ctx.fillText("Choose who to help", 280, 135);
 
-  ctx.drawImage(currentImg, 420, 165, 400, 250);
-  ctx.drawImage(img2, 305, 250, 80, 80);
-  ctx.drawImage(img3, 855, 250, 80, 80);
+  ctx.drawImage(currentImg, 420, 265, 400, 250);
+  ctx.drawImage(img2, 305, 350, 80, 80);
+  ctx.drawImage(img3, 855, 350, 80, 80);
 
   requestAnimationFrame(draw);
 }
