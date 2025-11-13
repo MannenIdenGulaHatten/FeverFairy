@@ -517,7 +517,7 @@ function draw() {
         // bro died 🤣🤣🤣
         ctx.font = "100px Cursive";
         ctx.fillStyle = "rgb(255, 0, 0)";
-        ctx.fillText("GAME OVER", 250, 300);
+        ctx.fillText("GAME OVER", 350, 300);
         backgroundSound.volume = 0
         ambulanceSound.play()
         ambulanceSound.volume = 0.1;
@@ -528,7 +528,7 @@ function draw() {
         // bro won 🤣🤣🤣 <- win condition
         ctx.font = "80px Cursive";
         ctx.fillStyle = "rgb(0, 255, 0)";
-        ctx.fillText("YOU WIN!", 250, 300);
+        ctx.fillText("YOU WIN!", 375, 300);
         ctx.fillText("Score: " + Math.floor(fever * 100) / 100 + "°", 250, 420);
     }
 
@@ -633,16 +633,16 @@ function draw() {
         }
     }
 
-    if (Date.now() >= imagePopups["Info"].Enabled && Date.now() <= imagePopups["Info"].Enabled + 4200) {
+    if (Date.now() >= imagePopups["Info"].Enabled + 3000 && Date.now() <= imagePopups["Info"].Enabled + 7200) {
         let m = dialogues.Start["1"];
 
-        if (Date.now() >= imagePopups["Info"].Enabled + 4000) {
+        if (Date.now() >= imagePopups["Info"].Enabled + 7000) {
             m = dialogues.Start["2"];
 
-            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 9000; // shows dialogue for 5 seconds
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 12000; // shows dialogue for 5 seconds
             currentDialogue = m;
-        } else if (Date.now() <= imagePopups["Info"].Enabled + 200) {
-            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 3000; // shows dialogue for 5 seconds
+        } else if (Date.now() <= imagePopups["Info"].Enabled + 3200) {
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 6000; // shows dialogue for 5 seconds
             currentDialogue = m;
         }
     }
