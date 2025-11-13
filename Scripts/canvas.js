@@ -59,7 +59,7 @@ const imagePopups = { // popup settings
     },
     ["Info"]: {
         Enabled: Date.now() + 1e9,
-        imagesrc: "images/controlls_menu.png",
+        imagesrc: "images/tutorial.png",
         Size: { x: 1.2, y: 1.2 },
         Offset: { x: 0, y: 0 },
         ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
