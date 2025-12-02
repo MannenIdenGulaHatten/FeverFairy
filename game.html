@@ -7,8 +7,14 @@
     <link rel="stylesheet" href="style.css">
 
     <!-- <script type="text/javascript" src="Scripts/playerView.js"></script> -->
-    <script src="Scripts/removeImage.js" defer></script>
-    <script src="Scripts/canvas.js" defer></script>
+    <script src="scripts/canvas.js" defer></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            playMusic();
+          newGame("Easy");
+        });
+    </script>
 </head>
 
 <body>  
@@ -17,11 +23,6 @@
         <img class="background" src="Images/GameONKitchen.png">
         <div class="jeffer"></div>
     </div> -->
-    <div>
-        <button id="removeButton" onclick="removeMonster(this)">
-            <img class="monster" src="Images/BollTEST3 mindre.png">
-        </button>
-    </div>
 
     <canvas id="kitchenCanvas" style="border:1px solid #000000 ;"></canvas>
 </body>

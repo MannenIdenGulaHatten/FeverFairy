@@ -4,31 +4,396 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+const menu = new Image();
+menu.src = 'images/menu.png' // menu image
+
 const img = new Image();
-let room = "Kitchen"
-img.src = 'Images/GameOn' + room + '.png'; // backround ima ge
+let room = "kitchen"
+img.src = 'images/gameon' + room + '.png'; // backround image
 
-const door1 = new Image();
-door1.src = 'Images/Door1.png'; // door image
-const door2 = new Image();
-door2.src = 'Images/Door1.png'; // door image
+const temp = new Image();
+temp.src = 'images/thermo.png'; // temp gauge image
 
-let mouseX = canvas.width / 2; // gör så att "ljuset" börjar i mitten av skärmen
-let mouseY = canvas.height / 2;
+const flash = new Image();
+flash.src = 'images/flashlight.png'; // temp gauge image
 
+const normalBg = new Image();
+normalBg.src = 'images/box.png'; // temp gauge image
+
+
+let mouseX = canvas.width / 2;
+let mouseY = canvas.width / 2; // makes the light start position at the center of the screen
 // flashlight circle size
-const radius = 80;
+const radius = 150;
 // how much the room "moves" when you move the cursor
 const maxShiftX = 200;
 const maxShiftY = 200;
 
-// game variables (set when select difficulty)
+const gameInfo = { // difficulty settings
+    ["Easy"]: {
+        difficulty: "Easy",
+        startFever: 38,
+        maxFever: 43,
+        abnormalties: 15,
+    },
+    ["Hard"]: {
+        difficulty: "Hard",
+        startFever: 39,
+        maxFever: 42,
+        abnormalties: 30,
+    }
+}
+
+const imagePopups = { // popup settings
+    ["Menu"]: {
+        Enabled: 0,
+        imagesrc: "images/popup.png",
+        Size: { x: 2, y: 2 }, // scale size of image (0-1)
+        Offset: { x: 0, y: 0 }, // scale offset of image
+        ExitHitbox: { x1: 0.3, y1: 0.1, x2: 0.7, y2: 0.4 }, // relative positions for exit button
+        Exit: {},
+        Buttons: [ // buttons on the popup
+            {
+                Name: "ExitGame",
+                Hitbox: { x1: 0.3, y1: 0.55, x2: 0.7, y2: 0.9 },
+                Pos: {}
+            },
+        ]
+    },
+
+    ["Info"]: {
+        Enabled: Date.now() + 1e9,
+        imagesrc: "images/tutorial.png",
+        Size: { x: 1.2, y: 1.2 },
+        Offset: { x: 0, y: 0 },
+        ExitHitbox: { x1: 0.875, y1: 0, x2: 1, y2: 0.2 }, // relative positions for exit button
+        Exit: {},
+        Buttons: []
+    },
+    
+
+
+
+    ["Dialogue"]: {
+        Enabled: 0,
+        imagesrc: "images/comment.png",
+        Size: { x: 0.8, y: 0.6 },
+        Offset: { x: 0.325, y: -0.35 },
+        ExitHitbox: { x1: 0, y1: 0, x2: 0, y2: 0 }, // relative positions for exit button
+        Exit: {},
+        Buttons: []
+    },
+}
+
+let dialogues = { // dialogue lines based on fever and abnormalties found
+    Start: {
+        ["1"]: [false,
+            "We need to fix the dream",
+            "so their fever stops rising!"],
+        ["2"]: [false,
+            "Remove everything that's",
+            "out of place and make",
+            "the dream normal again."],
+    },
+    Fever: {
+        ["39"]: [false,
+            "They're burning up..."],
+        ["41"]: [false,
+            "They're getting too hot,",
+            "I have to hurry up.'"],
+    },
+    Absurdity: {
+        ["12"]: [false,
+            "Their dream is already",
+            "feeling more normal!"],
+        ["9"]: [false,
+            "Take that fever!",
+            "More than halfway done!"],
+        ["6"]: [false,
+            "Before too long,",
+            "the fever will stabilize!"],
+        ["3"]: [false,
+            "Almost there."],
+        ["1"]: [false,
+            "I'm so close!"],
+    },
+}
+
+// game variables (set wh
+// en select difficulty)
 let fever = 0;
-let maxFever = 67;
+let maxFever = 0;
 let difficulty = "None";
 let objectsFound = 0;
-let colorFreq = 440; // red: 440, green: 565, blue: 645 THz
+let maxObjects = 0;
+let colorFreq = 0; // red: 440, green: 565, blue: 645 THz
+let colorUnlocked = 0;
+let feverHeight = 0;
+let dead = false;
+let win = false;
+let flashCooldown = Date.now();
+let doorTween = Date.now();
+let colorTween = Date.now();
+let currentDialogue = [false, ""];
 
+// sounds my freind
+const backgroundSound = new Audio('sounds/background.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const ambulanceSound = new Audio('sounds/ambulance.mp3');//https://freesound.org/people/DRFX/sounds/341807/
+const clickSound = new Audio('sounds/click3.ogg')
+const doorSound = new Audio('sounds/dooropen.wav')
+const ficklampaswitchSound = new Audio('sounds/ficklampaswitch.wav')
+const correctSound = new Audio('sounds/correct.wav')
+const damageSound = new Audio('sounds/damage.mp3')
+
+
+class imageMonsters {           // this class makes it possible to easily make and place images on the canvas and the setting same paralaxx function as the backround. /can increase it)
+    constructor(src, x, y, width, height, paralaxx = 1, z = 1, room, colorFreq) { //paralax = 1 makes it so that it has same paralax as backround .5 would be haalf and 2 would be doubble
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.paralaxx = paralaxx;
+        this.z = z;
+        this.room = room
+        this.colorFreq = colorFreq
+
+        this.image = new Image();
+        this.image.src = src;
+
+        let src_w = src // makes it so that it automatically finds the white and normal version of the image if it exists
+        src_w = src_w.replace("_b.png", "_w.png")
+        src_w = src_w.replace("black", "white")
+
+        this.image_w = new Image();
+        this.image_w.src = src_w;
+
+        let src_n = src
+        src_n = src_n.replace("_b.png", ".png")
+        src_n = src_n.replace("black", "normal")
+
+        this.image_n = new Image();
+        this.image_n.src = src_n;
+
+        this.loaded = false;
+        this.visible = true;
+        this.clicked = 0;
+        this.image.onload = () => (this.loaded = true); // makes it wait for the images to load
+        this.image_w.onerror = () => (this.image_w = this.image); // if no white image exists use normal image
+        this.image_n.onerror = () => (this.image_n = this.image); // if no normal image exists use normal image
+    }
+
+    draw(ctx, type) {
+        if (this.loaded && (this.visible || this.clicked >= Date.now())) {
+            let offsetX = (mouseX / canvas.width - 0.5) * maxShiftX;
+            let offsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
+            let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
+            let image = this.image
+            let Pos = { X: this.x - offsetX * this.paralaxx, Y: this.y - offsetY * this.paralaxx }
+
+            if (type) { // if type is given use that image version
+                if (type == "white") { // hover system disablad so lämge
+                    image = this.image_w
+                } else if (type == "normal") {
+                    image = this.image_n
+                    if (Size.X > Size.Y) {
+                        Size.X = canvas.width / 10
+                        Size.Y = (this.image.naturalHeight / this.image.naturalWidth) * Size.X
+                    } else {
+                        Size.Y = canvas.width / 10
+                        Size.X = (this.image.naturalWidth / this.image.naturalHeight) * Size.Y
+                    }
+                    Pos.X = canvas.width * 0.95 - Size.X
+                    Pos.Y = canvas.height * 0.95 - Size.Y
+
+                    ctx.drawImage(normalBg, Pos.X - 20, Pos.Y - 20, Size.X + 40, Size.Y + 40);
+                }
+            }
+
+            ctx.drawImage( // gör paralaxx för bilderna
+                image,
+                Pos.X,
+                Pos.Y,
+                Size.X,
+                Size.Y
+            );
+        }
+    }
+
+    ifMonsterClicked(x, y) {
+        // checks if the mouse is over the image with paralaxx taken into account
+        const offsetX = (mouseX / canvas.width - 0.5) * maxShiftX * this.paralaxx;
+        const offsetY = (mouseY / canvas.height - 0.5) * maxShiftY * this.paralaxx;
+
+        const paralaxY = this.y - offsetY;
+        const paralaxX = this.x - offsetX;
+
+        let Size = getImgScaled(this.image.naturalWidth, this.image.naturalHeight);
+
+        return (
+            x >= paralaxX &&
+            x <= paralaxX + Size.X &&
+
+            y >= paralaxY &&
+            y <= paralaxY + Size.Y
+        );
+    }
+}
+
+
+const monster = [ // this is where you decide the cordinates you place the images and their height and width // aswell as how much paralaxx you want
+    //new imageMonsters('images/BollTest3 mindre.png', 800, 310, 50, 50, 1, 2), //x pos, y pos, width, height, paralax effekt, z pos 1=furniture and then + for layers example
+
+    new imageMonsters('images/kitchenblack/basket_b.png', 600, 430, 500, 50, 1, 55, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/coathanger_b.png', 830, 335, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/cuttingboard_b.png', 490, 343, 50, 50, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/dishes_b.png', 590, 380, 50, 50, 1, 3, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/flaska_b.png', 560, 415, 50, 50, 1, 3, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/fryingpan_b.png', 450, 405, 50, 50, 1, 4, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/knifeholder_b.png', 540, 350, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/tophat_b.png', 820, 365, 50, 50, 1, 2, 'kitchen', 645),
+    //bathroom
+    new imageMonsters('images/bathroomblack/shelf_b.png', 140, 285, 50, 50, 1, 2, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/carpet_b.png', 210, 592, 50, 50, 1, 2, 'bathroom', 645),
+    new imageMonsters('images/bathroomblack/deo_b.png', 280, 445, 50, 50, 1, 2, 'bathroom', 645),
+    new imageMonsters('images/bathroomblack/soap_b.png', 300, 405, 50, 50, 1, 3, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/mini_mirror_b.png', 260, 300, 50, 50, 1, 2, 'bathroom', 440),
+
+    new imageMonsters('images/bathroomblack/mirror_b.png', 615, 315, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/shower_drain_b.png', 805, 505, 50, 50, 1, 2, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/shower_head_b.png', 822, 190, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/shower_knob_b.png', 900, 285, 50, 50, 1, 2, 'bathroom', 645),
+    new imageMonsters('images/bathroomblack/sink_b.png', 615, 400, 50, 50, 1, 2, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/toilet_b.png', 490, 430, 50, 50, 1, 2, 'bathroom', 645),
+    new imageMonsters('images/bathroomblack/toothbrush_b.png', 622, 425, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bathroomblack/glass_b.png', 670, 417, 50, 50, 1, 2, 'bathroom', 645),
+    // furniture
+    new imageMonsters('images/kitchenblack/carpet_b.png', 405, 475, 530, 270, 1, 1, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/table_b.png', 528, 405, 254, 149, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/counter_b.png', 420, 380, 50, 50, 1, 3, 'kitchen', 565),
+    new imageMonsters('Images/kitchenblack/counter2_b.png', 670, 380, 50, 50, 1, 4, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/fridge_b.png', 750, 310, 130, 200, 1, 1, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/oven_b.png', 280, 400, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/ovenfan_b.png', 290, 205, 50, 50, 1, 1, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/sink_b.png', 605, 360, 84, 100, 1, 1, 'kitchen', 645),
+    //bedroom
+    new imageMonsters('images/bedroomblack/bed_b.png', 265, 425, 50, 50, 1, 1, 'bedroom', 645),
+    new imageMonsters('images/bedroomblack/painting_b.png', 420, 215, 50, 50, 1, 1, 'bedroom', 440),
+    new imageMonsters('images/bedroomblack/dogpillow_b.png', 480, 680, 50, 50, 1, 2, 'bedroom', 440),
+    new imageMonsters('images/bedroomblack/pyramid_b.png', 600, 300, 50, 50, 1, 2, 'bedroom', 645),
+    new imageMonsters('images/bedroomblack/pillow1_b.png', 530, 450, 50, 50, 1, 3, 'bedroom', 440),
+    new imageMonsters('images/bedroomblack/pillow2_b.png', 470, 450, 50, 50, 1, 3, 'bedroom', 565),
+    new imageMonsters('images/bedroomblack/lamp_b.png', 850, 300, 50, 50, 1, 3, 'bedroom', 565),
+    new imageMonsters('images/bedroomblack/night_stand_b.png', 650, 500, 50, 50, 1, 3, 'bedroom', 565),
+    new imageMonsters('images/bedroomblack/shelf_b.png', 1000, 330, 50, 50, 1, 3, 'bedroom', 440),
+    new imageMonsters('images/bedroomblack/books_b.png', 1010, 385, 50, 50, 1, 10, 'bedroom', 645),
+
+
+];
+
+const abnormalties = [
+    new imageMonsters('images/kitchenblack/banana_b.png', 800, 300, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/bird_b.png', 690, 400, 254, 149, 1, 3, 'kitchen', 645),
+    new imageMonsters('images/kitchenblack/chainsaw_b.png', 700, 375, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/chili_b.png', 430, 410, 50, 50, 1, 3, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/monkey_b.png', 515, 303, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/slide_b.png', 340, 193, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/kitchenblack/tenticle_b.png', 590, 368, 84, 100, 1, 2, 'kitchen', 645),
+    new imageMonsters('images/bathroomblack/retrotv_b.png', 790, 210, 50, 50, 1, 2, 'bathroom', 645),
+    new imageMonsters('images/bedroomblack/cheese_b.png', 685, 490, 50, 50, 1, 3, 'bedroom', 645),
+    new imageMonsters('images/bedroomblack/alien_b.png', 450, 320, 50, 50, 1, 2, 'bedroom', 565),
+    new imageMonsters('images/bedroomblack/ac2_b.png', 500, 450, 50, 50, 1, 4, 'bedroom', 645),
+    new imageMonsters('images/kitchenblack/snake_b.png', 760, 380, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/bathroomblack/toad_b.png', 500, 470, 50, 50, 1, 2, 'bathroom', 565),
+    new imageMonsters('images/bathroomblack/vampire_b.png', 630, 330, 50, 50, 1, 4, 'bathroom', 440),
+    new imageMonsters('images/bedroomblack/bookdoor_b.png', 1050, 395, 50, 50, 1, 4000000, 'bedroom', 440),
+    new imageMonsters('images/bedroomblack/clock_b.png', 1010, 355, 50, 50, 1, 4000000, 'bedroom', 440),
+]
+
+const buckets = [
+    new imageMonsters('images/bathroomblack/green_color_bucket_b.png', 390, 480, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bedroomblack/blue_color_bucket_b.png', 390, 480, 50, 50, 1, 2, 'bedroom', 565),
+]
+
+const doors = [
+    // doors
+    new imageMonsters('images/kitchenblack/door1_b.png', 970, 225, 50, 50, 1, 2, 'kitchen', 565),
+    new imageMonsters('images/kitchenblack/door2_b.png', 80, 270, 50, 50, 1, 2, 'kitchen', 440),
+    new imageMonsters('images/bathroomblack/door_b.png', 1050, 255, 50, 50, 1, 2, 'bathroom', 440),
+    new imageMonsters('images/bedroomblack/door_b.png', 65, 225, 50, 50, 1, 2, 'bedroom', 565),
+
+]
+
+function newGame(selectedDiff) {
+    // sets game variables based on selected difficulty
+    info = gameInfo[selectedDiff];
+
+    difficulty = selectedDiff;
+    fever = info.startFever;
+    maxFever = info.maxFever;
+    maxObjects = info.abnormalties;
+    objectsFound = 0
+    feverHeight = 0
+    colorFreq = 440
+    colorUnlocked = 440
+    currentDialogue = ""
+    dead = false
+    win = false
+}
+
+function playMusic() {
+    backgroundSound.play()
+    backgroundSound.volume = 0.7
+    backgroundSound.loop = true;
+}
+
+function displayPopup(popupName) {
+    const popupInfo = imagePopups[popupName];
+
+    if (popupInfo.Enabled >= Date.now()) {
+        // draw the popup
+        let img = new Image();
+        img.src = popupInfo.imagesrc;
+
+        const popupWidth = canvas.width * 0.4 * popupInfo.Size.x;
+        const popupHeight = (img.naturalHeight / img.naturalWidth) * popupWidth * popupInfo.Size.y / popupInfo.Size.x;
+
+        const popupX = (canvas.width - popupWidth) / 2 + popupInfo.Offset.x * canvas.width;
+        const popupY = (canvas.height - popupHeight) / 2 + popupInfo.Offset.y * canvas.height;
+
+        popupInfo.Exit = { // set exit button hitbox positions
+            x1: popupX + popupWidth * popupInfo.ExitHitbox.x1,
+            y1: popupY + popupHeight * popupInfo.ExitHitbox.y1,
+            x2: popupX + popupWidth * popupInfo.ExitHitbox.x2,
+            y2: popupY + popupHeight * popupInfo.ExitHitbox.y2,
+        }
+
+        // set button hitbox positions
+        popupInfo.Buttons
+            .forEach(m => {
+                m.Pos = {
+                    x1: popupX + popupWidth * m.Hitbox.x1,
+                    y1: popupY + popupHeight * m.Hitbox.y1,
+                    x2: popupX + popupWidth * m.Hitbox.x2,
+                    y2: popupY + popupHeight * m.Hitbox.y2,
+                }
+            })
+
+        ctx.drawImage(img, popupX, popupY, popupWidth, popupHeight);
+
+        return img;
+    }
+
+    return false;
+}
+
+function hideOtherPopups(selected) {
+    for (const index in imagePopups) {
+        if (index != selected && index != "Dialogue") {
+            // hide popup
+            imagePopups[index].Enabled = Date.now();
+        }
+    }
+}
 
 // clamp and lerp functions stolen from samir aswell as some other stuff but what it does is make giveen max and minimum so that the mouse / light dosent go outside the screen)
 function clamp(num, min, max) {
@@ -40,15 +405,29 @@ function lerp(x, y, a) {
 function getImgScaled(x, y) {
     const scaleX = x * canvas.width / 2880;
     const scaleY = y * canvas.height / 1620;
-    return {X: scaleX, Y: scaleY};
+    return { X: scaleX, Y: scaleY };
+}
+function scalePos(pos, type) {
+    if (type == "X") {
+        return pos * canvas.width / 1280;
+    } else if (type == "Y") {
+        return pos * canvas.height / 551;
+    }
+}
+function increaseFever() {
+    if (imagePopups["Menu"].Enabled < Date.now() && imagePopups["Info"].Enabled < Date.now() && !dead && !win) {
+        fever += 1 / 120; // increase fever by 1 every 90 seconds
+    }
 }
 
+console.log(canvas.width, canvas.height)
 let currentX = mouseX; //circle at mouse position
 let currentY = mouseY;
 // takes mouse position when move mouse
 document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    console.log(mouseX + ' ' + mouseY)
 });
 
 function draw() {
@@ -62,26 +441,216 @@ function draw() {
     const backroundgOffsetY = (mouseY / canvas.height - 0.5) * maxShiftY;
 
     // dark background / who turned of the lights?
-    ctx.fillStyle = 'black';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    if (fever < maxFever && objectsFound < maxObjects && !dead && !win) {
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-    // cuts out a circle that is the flashlight light with ctx.clip()
-    ctx.save(); 
-    ctx.beginPath();
-    ctx.arc(currentX, currentY, radius, 0, Math.PI * 2); 
-    ctx.clip();
+        // cuts out a circle that is the flashlight light with ctx.clip()
+        if (Date.now() >= imagePopups["Info"].Enabled) {
+            ctx.save();
 
-    ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.arc(currentX, currentY, radius, 0, Math.PI * 2);
+            ctx.clip();
 
-    let door1Size = getImgScaled(door1.naturalWidth, door1.naturalHeight);
-    ctx.drawImage(door1, -backgroundgOffsetX, -backroundgOffsetY, door1Size.X, door1Size.Y)
-    let door2Size = getImgScaled(door2.naturalWidth, door2.naturalHeight);
-    ctx.drawImage(door2, -backgroundgOffsetX, -backroundgOffsetY, door2Size.X, door2Size.Y)
-    
-    ctx.fillStyle = 'rgba(0, 0, 255, 0.1)'; //  gives the light a red color light with 10 % oppacity
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    
-    ctx.restore();
+            ctx.drawImage(img, -backgroundgOffsetX, -backroundgOffsetY, canvas.width, canvas.height); //  loop that draws all the images in the monster list
+
+            let allObjects = [...doors, ...buckets, ...abnormalties, ...monster]
+            let hoverObj = null;
+            allObjects
+                .slice() // dosent change the array permanently
+                .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
+                .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                    if (colorFreq == m.colorFreq && room == m.room) {
+                        if (m.ifMonsterClicked(currentX, currentY) && !hoverObj) {
+                            hoverObj = m;
+                        }
+                    }
+                });
+            allObjects
+                .slice() // dosent change the array permanently
+                .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                    if (colorFreq == m.colorFreq && room == m.room) {
+                        if (m.clicked >= Date.now()) {
+                            //m.draw(ctx, "normal")
+                        } else if (hoverObj && hoverObj === m) {
+                            m.draw(ctx, "white")
+                        } else if (m.visible) {
+                            m.draw(ctx)
+                        }
+                    }
+                });
+
+            let bgStyle = 'rgba(0, 0, 0, ';
+            let A = 0.1
+
+            if (colorFreq == 440) {
+                bgStyle = 'rgba(255, 0, 0, '; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+            } else if (colorFreq == 565) {
+                bgStyle = 'rgba(0, 255, 0, ';
+            } else if (colorFreq == 645) {
+                bgStyle = 'rgba(0, 0, 255, ';
+            } else {
+                A = 1
+            }
+
+            // creates radial gradient for flashlight light effect
+            const gradient = ctx.createRadialGradient(currentX, currentY, radius * 0.2, currentX, currentY, radius);
+            gradient.addColorStop(0, bgStyle + A + ")");      // center fully visible
+            gradient.addColorStop(0.7, bgStyle + (A + 0.2) + ")");  // mid fade
+            gradient.addColorStop(1, 'rgba(0, 0, 0, 1)');      // edge fully black
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.restore();
+
+            allObjects
+                .slice() // dosent change the array permanently
+                .sort((a, b) => a.z - b.z) // sorts based on Z value to create Z index
+                .forEach(m => { // goes through all images and draws them if in the correct room and color frequency
+                    if (colorFreq == m.colorFreq && room == m.room) {
+                        if (m.clicked >= Date.now()) {
+                            m.draw(ctx, "normal")
+                        }
+                    }
+                });
+        }
+    } else if (fever >= maxFever || dead) {
+        dead = true;
+        // bro died 🤣🤣🤣
+        ctx.font = "100px Cursive";
+        ctx.fillStyle = "rgb(255, 0, 0)";
+        ctx.fillText("GAME OVER", 350, 300);
+        backgroundSound.volume = 0
+        ambulanceSound.play()
+        ambulanceSound.volume = 0.1;
+        //startFever = 0;
+        //fever = lerp(fever, 0, 0.01);
+    } else if (objectsFound >= maxObjects || win) {
+        win = true;
+        // bro won 🤣🤣🤣 <- win condition
+        ctx.font = "80px Cursive";
+        ctx.fillStyle = "rgb(0, 255, 0)";
+        ctx.fillText("YOU WIN!", 375, 300);
+        ctx.fillText("Score: " + Math.floor(fever * 100) / 100 + "°", 250, 420);
+    }
+
+    for (const index in imagePopups) {
+        let popUp = displayPopup(index);
+
+        // dialogue popup
+        if (index == "Dialogue" && imagePopups[index].Enabled >= Date.now()) {
+            ctx.font = "25px Cursive";
+            ctx.fillStyle = "rgba(0, 0, 0, " + (imagePopups[index].Enabled - Date.now()) / 1000 + ")";
+
+            imagePopups.Dialogue.Size.y = 0.3 + (currentDialogue.length - 1) * 0.15; // dynamically resizes dialogue popup based on number of lines
+            imagePopups.Dialogue.Offset.y = -0.435 + (currentDialogue.length - 1) * 0.03;
+
+            for (let i = 1; i < currentDialogue.length; i++) {
+                ctx.fillText(currentDialogue[i], scalePos(880, "X"), 40 + i * 40);
+            }
+        }
+    }
+
+    // fever gauge thermometer
+    let tempSize = getImgScaled(temp.naturalWidth, temp.naturalHeight);
+    let flashSize = getImgScaled(flash.naturalWidth, flash.naturalHeight);
+    let menuSize = getImgScaled(menu.naturalWidth, menu.naturalHeight);
+
+    ctx.fillStyle = "rgb(255, 22, 0)";
+    let nextHeight = clamp(lerp(feverHeight, (fever - info.startFever) / (info.maxFever - info.startFever) * 330, 0.1), 0, 330);
+    ctx.fillRect(scalePos(85, "X"), 480 - nextHeight, 70, nextHeight);
+    feverHeight = nextHeight
+
+    ctx.drawImage(menu, 15, 15, menuSize.X, menuSize.Y);
+    ctx.drawImage(temp, 50, 100, tempSize.X, tempSize.Y);
+    ctx.drawImage(flash, mouseX + 40, mouseY / 5 + scalePos(360, "Y"), flashSize.X, flashSize.Y);
+
+    ctx.font = "30px Cursive";
+    ctx.fillStyle = "rgb(255, 255, 255)";
+    ctx.fillText(Math.floor(Math.min(fever, maxFever)) + "°", scalePos(95, "X"), (530));
+
+    if (colorFreq == 440) {
+        ctx.fillStyle = 'rgb(255, 0, 0)'; //  gives the light a  color light with 10 % oppacity (red, green, blue, oppacity)
+    } else if (colorFreq == 565) {
+        ctx.fillStyle = 'rgb(0, 255, 0)';
+    } else if (colorFreq == 645) {
+        ctx.fillStyle = 'rgb(0, 0, 255)';
+    } else {
+        ctx.fillStyle = 'rgb(0,0,0)';
+    }
+    ctx.fillText(colorFreq + " THz", scalePos(60, "X"), 600);
+
+    // door and color unlock tweens
+    if (doorTween >= Date.now()) {
+        ctx.fillStyle = "rgba(0, 0, 0, " + (doorTween - Date.now()) / 1000 + ")"
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "100px Cursive";
+        ctx.fillStyle = "rgba(255, 255, 255, " + (doorTween - Date.now()) / 1000 + ")";
+        ctx.fillText(room, scalePos(425, "X"), scalePos(325, "Y"));
+    } else if (colorTween >= Date.now()) {
+        let colorText1 = "";
+        let colorText2 = "";
+        let colorText3 = "";
+
+        if (colorUnlocked == 565) {
+            colorText1 = "You have unlocked the color green!";
+            colorText2 = "Use '2' to switch to it."
+            colorText3 = "('1' to switch back to red)"
+            ctx.fillStyle = "rgba(0, 100, 0, " + (colorTween - Date.now()) / 1000 + ")";
+        } else if (colorUnlocked == 645) {
+            colorText1 = "You have unlocked the color blue!";
+            colorText2 = "Use '3' to switch to it."
+            colorText3 = "('2' and '1' for other colors)"
+            ctx.fillStyle = "rgba(0, 0, 100, " + (colorTween - Date.now()) / 1000 + ")";
+        }
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "50px Cursive";
+        ctx.fillStyle = "rgba(255, 255, 255, " + (colorTween - Date.now()) / 1000 + ")";
+        ctx.fillText(colorText1, scalePos(250, "X"), scalePos(250, "Y"));
+        ctx.fillText(colorText2, scalePos(350, "X"), scalePos(300, "Y"));
+        ctx.fillText(colorText3, scalePos(325, "X"), scalePos(500, "Y"));
+    }
+
+    for (const i in dialogues.Fever) {
+        let m = dialogues.Fever[i];
+
+        if (fever >= parseInt(i) && !m[0]) {
+            m[0] = true;
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+
+            currentDialogue = m;
+        }
+    }
+
+    for (const i in dialogues.Absurdity) {
+        let m = dialogues.Absurdity[i];
+
+        if (maxObjects - objectsFound <= parseInt(i) && !m[0]) {
+            m[0] = true;
+            imagePopups["Dialogue"].Enabled = Date.now() + 5000; // shows dialogue for 5 seconds
+
+            currentDialogue = m;
+        }
+    }
+
+    if (Date.now() >= imagePopups["Info"].Enabled + 3000 && Date.now() <= imagePopups["Info"].Enabled + 7200) {
+        let m = dialogues.Start["1"];
+
+        if (Date.now() >= imagePopups["Info"].Enabled + 7000) {
+            m = dialogues.Start["2"];
+
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 12000; // shows dialogue for 5 seconds
+            currentDialogue = m;
+        } else if (Date.now() <= imagePopups["Info"].Enabled + 3200) {
+            imagePopups["Dialogue"].Enabled = imagePopups["Info"].Enabled + 6000; // shows dialogue for 5 seconds
+            currentDialogue = m;
+        }
+    }
 
     requestAnimationFrame(draw);
 }
@@ -91,16 +660,180 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
-window.addEventListener('click', function(event) {
+document.addEventListener('keydown', (event) => {
+    let nextFreq = 1;
+
+    if (event.key == "1") {
+        nextFreq = 440; // red
+    } else if (event.key == "2") {
+        nextFreq = 565; // green
+    } else if (event.key == "3") {
+        nextFreq = 645; // blue
+    }
+
+    // changes color frequency with number keys with cooldown
+    if (Date.now() >= flashCooldown && nextFreq != 1 && nextFreq != colorFreq && colorUnlocked >= nextFreq) {
+        flashCooldown = Date.now() + 2000; // 200 ms cooldown
+        ficklampaswitchSound.play()
+        colorFreq = 1;
+
+        setTimeout(() => {
+            colorFreq = nextFreq;
+        }, 1500)
+    }
+});
+
+window.addEventListener('click', function (event) {
     const width = window.innerWidth;
     const height = window.innerHeight;
     const x = event.clientX;
     const y = event.clientY;
 
-    if (room == "Kitchen" && context.isPointInPath(inBath, x, y)) {
-        room = "Bathroom"
-        img.src = 'Images/GameOn' + room + '.png';
+    console.log(objectsFound, maxObjects)
+
+    // menu button
+    if (y >= height * 0.025 && y <= height * 0.125) {
+        if (x >= width * 0.025 && x <= width * 0.125) { // if you click the menu button
+            clickSound.play()
+            imagePopups["Menu"].Enabled = Date.now() + 1e9; // shows menu for a long time
+            hideOtherPopups("Menu");
+        }
+    }
+
+    // checks if any popups are open and if you clicked on them
+    for (const index in imagePopups) {
+        let popupInfo = imagePopups[index];
+
+        if (popupInfo.Enabled >= Date.now()) {
+            const exit = popupInfo.Exit;
+
+            if (x >= exit.x1 && x <= exit.x2 && y >= exit.y1 && y <= exit.y2) {
+                popupInfo.Enabled = Date.now(); // closes popup
+                console.log("clicked exit")
+            } else {
+                popupInfo.Buttons.forEach(m => {
+                    if (x >= m.Pos.x1 && x <= m.Pos.x2 && y >= m.Pos.y1 && y <= m.Pos.y2) {
+                        if (m.Name == "ExitGame") {
+                            location.replace("/feverfairy/index.html")
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    if (!dead && Date.now() >= imagePopups["Info"].Enabled) {
+        let doorHit = false;
+        let bucketHit = false;
+        let monsterHit = false;
+        let abnormalityHit = false;
+
+        for (let i = doors.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+            const m = doors[i];
+            if (m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                if (x >= width * 0.35) { // Doors to the right
+                    if (room == "kitchen") {
+                        room = "bedroom"
+                        img.src = 'images/gameon' + room + '.png';
+                    } else if (room == "bathroom") {
+                        room = "kitchen"
+                        img.src = 'images/gameon' + room + '.png';
+                    }
+                } else if (x <= width * 0.35) { // Doors to the left
+                    if (room == "kitchen") {
+                        room = "bathroom"
+                        img.src = 'images/gameon' + room + '.png';
+                    } else if (room == "bedroom") {
+                        room = "kitchen"
+                        img.src = 'images/gameon' + room + '.png';
+                    }
+                } else { // Doors in the middle
+
+                }
+                doorHit = true;
+                doorTween = Date.now() + 1250;
+                doorSound.play();
+                break
+            }
+        }
+
+        if (!doorHit) {
+            for (let i = buckets.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                const m = buckets[i];
+                if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                    m.visible = false; //makes it invisible
+                    bucketHit = true;
+
+                    if (colorUnlocked == 440) {
+                        colorUnlocked = 565;
+                    } else if (colorUnlocked == 565) {
+                        colorUnlocked = 645;
+                    }
+
+                    flashCooldown = Date.now() + 2000; // 200 ms cooldown
+                    colorTween = Date.now() + 3250;
+                    ficklampaswitchSound.play()
+                    colorFreq = 1;
+
+                    setTimeout(() => {
+                        colorFreq = colorUnlocked;
+                    }, 1500)
+
+                    break
+                }
+            }
+
+            if (!bucketHit) {
+                for (let i = abnormalties.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                    const m = abnormalties[i];
+                    if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                        m.visible = false; //makes it invisible
+                        m.clicked = Date.now() + 2000
+                        abnormalityHit = true;
+                        objectsFound += 1;
+                        correctSound.play();
+                        imagePopups["Dialogue"].Enabled = Date.now() + 1500;
+                        currentDialogue = [false, "Found an abnormality!", "(" + objectsFound + " / ??)"];
+                        break
+                    }
+                }
+
+                if (!abnormalityHit) {
+                    let objectsTouched = [];
+
+                    for (let i = monster.length - 1; i >= 0; i -= 1) { // checks if what you click is an object in the list or
+                        const m = monster[i];
+                        if (m.visible && m.ifMonsterClicked(x, y) && m.room == room && m.colorFreq == colorFreq) {
+                            objectsTouched.push(m)
+                            damageSound.play();
+                        }
+                    }
+
+                    objectsTouched
+                        .slice() // dosent change the array permanently
+                        .sort((a, b) => b.z - a.z) // sorts based on Z value to create Z index
+                        .forEach((m, i) => {
+                            console.log(i);
+
+                            if (i == 0) {
+                                m.visible = false; //makes it invisible
+                                monsterHit = true;
+                                fever += 1 / 2;
+                            }
+                        });
+                }
+            }
+
+            // if you clicked nothing correct / incorrect sound
+            if (!monsterHit && !abnormalityHit && !bucketHit) {
+                console.log("Wrong");
+                const incorrect = new Audio('sounds/incorrect.mp3')
+                incorrect.play()
+            }
+        }
     }
 });
+
+setInterval(increaseFever, 500)
 
 img.onload = draw;
